@@ -61,6 +61,9 @@ export _ZO_ECHO=1
 zstyle ':autocomplete:*' insert-unambiguous yes # autocomplete just the common part
 zstyle ':autocomplete:*' fzf-completion yes     # use fzf autocomplete
 
+# Move .zcomdump files to cache folder
+export ZSH_COMPDUMP="$HOME/.cache/zsh/.zcomdump-$(zsh --version)"
+
 ######################################
 # iTerm2
 ######################################
@@ -190,3 +193,4 @@ source $ZSH/oh-my-zsh.sh
 
 alias cd='z'
 alias ls='exa'
+alias tree='ls --tree'

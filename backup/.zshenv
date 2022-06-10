@@ -85,6 +85,8 @@ then
     function sysupgrade {
         brew update
         brew upgrade
+        brew autoremove
+        brew cleanup
         omz update
         rustup update stable
         for plugin in $ZSH_CUSTOM/*/*

@@ -19,6 +19,9 @@ export REMOTE_URL="https://github.com/Altair-Bueno/Demeter"
 export DEMETER="$HOME/Demeter"
 
 
+# Create necesary folders
+mkdir -p "$HOME/.cache/zsh/"
+
 # Restoring backup
 if [[ -d "$DEMETER" ]]
 then
