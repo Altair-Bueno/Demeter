@@ -19,7 +19,7 @@ export REMOTE_URL="https://github.com/Altair-Bueno/Demeter"
 export DEMETER="$HOME/Demeter"
 
 
-# Create necesary folders
+# Create necessary folders
 mkdir -p "$HOME/.cache/zsh/"
 
 # Restoring backup
@@ -58,17 +58,43 @@ do
 	ln -nfs "$DEMETER/backup/$TEMP" "$HOME/$TEMP"
 done
 
+function install_software_macos() {
+  echo Install xcode commandline tools
+
+  xcode-select --install
+
+  # From https://brew.sh . https://github.com/Homebrew/install/#install-homebrew-on-macos-or-linux
+  echo Installing HomeBrew
+  export NONINTERACTIVE=1
+  command -v brew > /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
+
+  echo Installing software
+  brew install $(cat "$DEMETER/brew_packages.txt" | xargs)
+
+  # From https://ohmyz.sh/#install
+  echo Installing omz
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+  echo Installing omz plugins
+  git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
+  git clone https://github.com/marlonrichert/zsh-autocomplete.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autocomplete
+}
+
 # Creating vim folders
 cd "$HOME" || exit 100
 mkdir -p "$HOME/.vim/undodir" 2> /dev/null
 
 if [[ $(uname) == 'Darwin' ]]
 then
-    # macOS specific config
-	rm "$HOME/.gitconfig"
+  # macOS specific config
+	rm "$HOME/.gitconfig" 2> /dev/null
 	ln -nfs "$DEMETER/macOS/.gitconfig" "$HOME/.gitconfig"
-	# Setting up the .gitignore_global file
-	# git config --global core.excludesfile ~/.gitignore_global
+
+  install_software_macos
+
+  # https://gist.github.com/nepsilon/0fd0c779f76d7172f12477ba9d71bb66
+  echo Setting up git credential helper
+  git config --global credential.helper osxkeychain
 
 elif [[ $(uname) == 'Linux' ]]
 then
