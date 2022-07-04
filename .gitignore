@@ -5,3 +5,7 @@ gitlog.txt
 **/gobang
 # No idea what this is
 **/jgit
+
+# IDE
+.vscode
+.idea
