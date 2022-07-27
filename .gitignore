@@ -5,6 +5,8 @@ gitlog.txt
 **/gobang
 # No idea what this is
 **/jgit
+# Yarn
+**/yarn
 
 # IDE
 .vscode

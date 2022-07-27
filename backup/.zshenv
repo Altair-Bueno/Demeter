@@ -15,6 +15,9 @@ path+="$HOME/.jetbrains"
 # Rust cargo
 . "$HOME/.cargo/env"
 
+# Scala Cousier
+path+="$HOME/Library/Application Support/Coursier/bin"
+
 # OpenJDK Home
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home"
 
@@ -45,10 +48,9 @@ alias iterm='open -a "iterm"'
 alias python='python3.10'
 alias pip='python -m pip'
 alias ascii='asciinema'
-alias vim='nvim'
-alias vi='nvim'
 alias neofetch='macchina'
 alias exa='exa --icons'
+alias httpserv='npx http-server'
 
 ######################################
 # Custom env variables
@@ -110,3 +112,4 @@ then
     # Linux specific config
     alias open='xdg-open'
 fi
+
