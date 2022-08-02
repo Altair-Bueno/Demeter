@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "pyscripts"
+version = "0.1.0"
+description = ""
+authors = ["Altair-Bueno <67512202+Altair-Bueno@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+PyYAML = "^6.0"
+toml = "^0.10.2"
+typer = "^0.6.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+black = "^22.6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

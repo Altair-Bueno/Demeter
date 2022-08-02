@@ -49,21 +49,14 @@ alias python='python3.10'
 alias pip='python -m pip'
 alias ascii='asciinema'
 alias neofetch='macchina'
-alias exa='exa --icons'
+alias exa='exa --icons --sort=type'
 alias httpserv='npx http-server'
+alias vim='nvim'
 
 ######################################
 # Custom env variables
 ######################################
 export DEMETER="$HOME/Demeter"
-
-######################################
-# Functions
-######################################
-
-function dev {
-    cd "$HOME/Developer/$1"
-}
 
 ######################################
 # OS dependent config
@@ -75,11 +68,6 @@ then
     # WTF Microsoft. Starting a whole Python interpreter for opening vscode????
     # https://github.com/microsoft/vscode/issues/60579
     function code {
-        for arg in $*
-        do 
-            mkdir -p "$(dirname "$arg")"
-            touch "$(basename "$arg")"
-        done
         open -b com.microsoft.VSCode $*
     }
 
@@ -87,6 +75,7 @@ then
     function sysupgrade {
         brew update
         brew upgrade
+        brew upgrade --cask
         brew autoremove
         brew cleanup
         omz update
