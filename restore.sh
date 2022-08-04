@@ -84,6 +84,11 @@ function install_software_macos() {
 cd "$HOME" || exit 100
 mkdir -p "$HOME/.vim/undodir" 2> /dev/null
 
+# From astronvim docs
+git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+# Link user folder
+ln -s "$DEMETER/astrovim" "$~/.config/nvim/lua/user"
+
 if [[ $(uname) == 'Darwin' ]]
 then
   # macOS specific config

@@ -24,7 +24,7 @@
     # side-by-side = true
 	line-numbers = true
     side-by-side = true
-    syntax-theme = TwoDark
+    # syntax-theme = TwoDark
 [merge]
     conflictstyle = diff3
 

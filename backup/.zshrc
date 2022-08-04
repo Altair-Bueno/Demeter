@@ -44,7 +44,7 @@ export LESSHISTFILE=-
 #export PAGER='bat'
 
 # Bat theme
-export BAT_THEME='TwoDark'
+export BAT_THEME='base16'
 
 # Allow mousewheel scroll on bat
 # https://github.com/sharkdp/bat/issues/188
@@ -194,3 +194,6 @@ source $ZSH/oh-my-zsh.sh
 alias cd='z'
 alias ls='exa'
 alias tree='ls --tree'
+
+# Annoying af
+unset '_comps[convert]'
