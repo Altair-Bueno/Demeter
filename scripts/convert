@@ -1,26 +1,56 @@
-#!/bin/bash
+#!/usr/bin/env -S deno run -q --allow-read
 
-###############################################################################
-# Convert 1.0                                                                 #
-# Altair Bueno MIT license                                                    #
-# https://github.com/Altair-Bueno/Demeter                                     #
-#                                                                             #
-# Light wrapper around `pyscripts/src/convert.py`                             #
-#                                                                             # 
-###############################################################################
+import * as toml from "https://deno.land/std@0.152.0/encoding/toml.ts";
+import * as yaml from "https://deno.land/std@0.152.0/encoding/yaml.ts";
+import * as flags from "https://deno.land/std@0.152.0/flags/mod.ts";
+import { readAll } from "https://deno.land/std@0.152.0/streams/conversion.ts";
+import { z } from "https://deno.land/x/zod@v3.18.0/mod.ts";
 
-PYSCRIPTS="$DEMETER/scripts/pyscripts"
-CONVERT="$PYSCRIPTS/src/convert.py"
-POETRY_LOCK="$PYSCRIPTS/poetry.lock"
+const textEncoder = new TextEncoder();
+const textDecoder = new TextDecoder();
 
-if [[ ! -f "$POETRY_LOCK" ]]
-then
-    echo "Couldn't find $POETRY_LOCK, installing packages"
-    poetry install
-fi
+const ArgsValidator = z.object({
+  from: z.enum(["yaml", "json", "toml"]).default("json"),
+  to: z.enum(["yaml", "json", "toml"]).default("json"),
+  in: z.optional(z.string()),
+  out: z.optional(z.string()),
+});
 
-# Poetry doesn't support running on another directory...
-WORKING_DIR=$(pwd)
-cd "$PYSCRIPTS"
-poetry run python "$CONVERT" ${@:1}
-cd "$WORKING_DIR"
+const args = ArgsValidator.parse(flags.parse(Deno.args));
+
+let serializedInput;
+if (args.in) {
+  const file = await Deno.open(args.in);
+  serializedInput = await readAll(file);
+  file.close();
+} else {
+  serializedInput = await readAll(Deno.stdin);
+}
+const serializedInputString = textDecoder.decode(serializedInput);
+
+let obj;
+if (args.from === "yaml") {
+  obj = yaml.parse(serializedInputString);
+} else if (args.from === "toml") {
+  obj = toml.parse(serializedInputString);
+} else if (args.from === "json") {
+  obj = JSON.parse(serializedInputString);
+}
+
+let serializedOutputString;
+if (args.to === "yaml") {
+  serializedOutputString = yaml.stringify(obj);
+} else if (args.to === "toml") {
+  serializedOutputString = toml.stringify(obj);
+} else if (args.to === "json") {
+  serializedOutputString = JSON.stringify(obj);
+}
+const serializedOutput = textEncoder.encode(serializedOutputString);
+
+if (args.out) {
+  const file = await Deno.open(args.out);
+  serializedInput = await file.write(serializedOutput);
+  file.close();
+} else {
+  await Deno.stdout.write(serializedOutput);
+}
