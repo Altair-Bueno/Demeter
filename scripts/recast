@@ -8,24 +8,39 @@ import { z } from "https://deno.land/x/zod@v3.18.0/mod.ts";
 
 const textEncoder = new TextEncoder();
 const textDecoder = new TextDecoder();
+const parsedFlags = flags.parse(Deno.args);
 
-const ArgsValidator = z.object({
-  from: z.enum(["yaml", "json", "toml"]).default("json"),
-  to: z.enum(["yaml", "json", "toml"]).default("json"),
-  in: z.optional(z.string()),
-  out: z.optional(z.string()),
-});
-
-const args = ArgsValidator.parse(flags.parse(Deno.args));
-
-let serializedInput;
-if (args.in) {
-  const file = await Deno.open(args.in);
-  serializedInput = await readAll(file);
-  file.close();
-} else {
-  serializedInput = await readAll(Deno.stdin);
+// Help
+if (parsedFlags.h || parsedFlags.help) {
+  console.table({
+    "--from": {
+      description: "Input format",
+      type: "json|yaml|toml",
+      default: "json",
+    },
+    "--to": {
+      description: "Output format",
+      type: "json|yaml|toml",
+      default: "json",
+    },
+    "-o": { description: "Output file", type: "string", default: "[STDOUT]" },
+    "": { description: "Input file", type: "string", default: "[STDIN]" },
+  });
+  Deno.exit();
 }
+// Validate commandline arguments
+const args = z
+  .object({
+    from: z.enum(["yaml", "json", "toml"]).default("json"),
+    to: z.enum(["yaml", "json", "toml"]).default("json"),
+    _: z.array(z.string()).max(1),
+    o: z.optional(z.string()),
+  })
+  .parse(parsedFlags);
+
+const inputFile = args._[0] ? await Deno.open(args._[0]) : Deno.stdin;
+const serializedInput = await readAll(inputFile);
+inputFile.close();
 const serializedInputString = textDecoder.decode(serializedInput);
 
 let obj;
@@ -46,11 +61,6 @@ if (args.to === "yaml") {
   serializedOutputString = JSON.stringify(obj);
 }
 const serializedOutput = textEncoder.encode(serializedOutputString);
-
-if (args.out) {
-  const file = await Deno.open(args.out);
-  serializedInput = await file.write(serializedOutput);
-  file.close();
-} else {
-  await Deno.stdout.write(serializedOutput);
-}
+const outputFile = args.o ? await Deno.open(args.o) : Deno.stdout;
+await outputFile.write(serializedOutput);
+outputFile.close();
