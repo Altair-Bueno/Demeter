@@ -6,8 +6,14 @@ import * as flags from "https://deno.land/std@0.152.0/flags/mod.ts";
 import { readAll } from "https://deno.land/std@0.152.0/streams/conversion.ts";
 import { z } from "https://deno.land/x/zod@v3.18.0/mod.ts";
 
+// Constants and globals
+const F_JSON = "json";
+const F_YAML = "yaml";
+const F_TOML = "toml";
+const FORMATS = [F_JSON, F_YAML, F_TOML];
 const textEncoder = new TextEncoder();
 const textDecoder = new TextDecoder();
+
 const parsedFlags = flags.parse(Deno.args);
 
 // Help
@@ -15,13 +21,13 @@ if (parsedFlags.h || parsedFlags.help) {
   console.table({
     "--from": {
       description: "Input format",
-      type: "json|yaml|toml",
-      default: "json",
+      type: FORMATS,
+      default: F_JSON,
     },
     "--to": {
       description: "Output format",
-      type: "json|yaml|toml",
-      default: "json",
+      type: FORMATS,
+      default: F_JSON,
     },
     "-o": { description: "Output file", type: "string", default: "[STDOUT]" },
     "": { description: "Input file", type: "string", default: "[STDIN]" },
@@ -31,10 +37,12 @@ if (parsedFlags.h || parsedFlags.help) {
 // Validate commandline arguments
 const args = z
   .object({
-    from: z.enum(["yaml", "json", "toml"]).default("json"),
-    to: z.enum(["yaml", "json", "toml"]).default("json"),
-    _: z.array(z.string()).max(1),
+    // @ts-ignore: This file is treated as JS, but linted as TypeScript...
+    from: z.enum(FORMATS).default(F_JSON),
+    // @ts-ignore: This file is treated as JS, but linted as TypeScript...
+    to: z.enum(FORMATS).default(F_JSON),
     o: z.optional(z.string()),
+    _: z.array(z.string()).max(1),
   })
   .parse(parsedFlags);
 
@@ -44,20 +52,20 @@ inputFile.close();
 const serializedInputString = textDecoder.decode(serializedInput);
 
 let obj;
-if (args.from === "yaml") {
+if (args.from === F_YAML) {
   obj = yaml.parse(serializedInputString);
-} else if (args.from === "toml") {
+} else if (args.from === F_TOML) {
   obj = toml.parse(serializedInputString);
-} else if (args.from === "json") {
+} else if (args.from === F_JSON) {
   obj = JSON.parse(serializedInputString);
 }
 
 let serializedOutputString;
-if (args.to === "yaml") {
+if (args.to === F_YAML) {
   serializedOutputString = yaml.stringify(obj);
-} else if (args.to === "toml") {
+} else if (args.to === F_TOML) {
   serializedOutputString = toml.stringify(obj);
-} else if (args.to === "json") {
+} else if (args.to === F_JSON) {
   serializedOutputString = JSON.stringify(obj);
 }
 const serializedOutput = textEncoder.encode(serializedOutputString);
