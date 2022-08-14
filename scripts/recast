@@ -6,13 +6,15 @@ import * as flags from "https://deno.land/std@0.152.0/flags/mod.ts";
 import { readAll } from "https://deno.land/std@0.152.0/streams/conversion.ts";
 import { z } from "https://deno.land/x/zod@v3.18.0/mod.ts";
 
-// Constants and globals
+// Constants
 const F_JSON = "json";
 const F_YAML = "yaml";
 const F_TOML = "toml";
-const FORMATS = [F_JSON, F_YAML, F_TOML];
-const textEncoder = new TextEncoder();
-const textDecoder = new TextDecoder();
+const FORMATS = new Map();
+FORMATS.set(F_JSON, JSON);
+FORMATS.set(F_YAML, yaml);
+FORMATS.set(F_TOML, toml);
+const FORMATS_LIST = Array.from(FORMATS.keys());
 
 const parsedFlags = flags.parse(Deno.args);
 
@@ -21,12 +23,12 @@ if (parsedFlags.h || parsedFlags.help) {
   console.table({
     "--from": {
       description: "Input format",
-      type: FORMATS,
+      type: FORMATS_LIST,
       default: F_JSON,
     },
     "--to": {
       description: "Output format",
-      type: FORMATS,
+      type: FORMATS_LIST,
       default: F_JSON,
     },
     "-o": { description: "Output file", type: "string", default: "[STDOUT]" },
@@ -34,13 +36,14 @@ if (parsedFlags.h || parsedFlags.help) {
   });
   Deno.exit();
 }
+
 // Validate commandline arguments
 const args = z
   .object({
     // @ts-ignore: This file is treated as JS, but linted as TypeScript...
-    from: z.enum(FORMATS).default(F_JSON),
+    from: z.enum(FORMATS_LIST).default(F_JSON),
     // @ts-ignore: This file is treated as JS, but linted as TypeScript...
-    to: z.enum(FORMATS).default(F_JSON),
+    to: z.enum(FORMATS_LIST).default(F_JSON),
     o: z.optional(z.string()),
     _: z.array(z.string()).max(1),
   })
@@ -49,25 +52,14 @@ const args = z
 const inputFile = args._[0] ? await Deno.open(args._[0]) : Deno.stdin;
 const serializedInput = await readAll(inputFile);
 inputFile.close();
+
+const textDecoder = new TextDecoder();
 const serializedInputString = textDecoder.decode(serializedInput);
 
-let obj;
-if (args.from === F_YAML) {
-  obj = yaml.parse(serializedInputString);
-} else if (args.from === F_TOML) {
-  obj = toml.parse(serializedInputString);
-} else if (args.from === F_JSON) {
-  obj = JSON.parse(serializedInputString);
-}
+const obj = FORMATS.get(args.from).parse(serializedInputString);
+const serializedOutputString = FORMATS.get(args.to).stringify(obj);
 
-let serializedOutputString;
-if (args.to === F_YAML) {
-  serializedOutputString = yaml.stringify(obj);
-} else if (args.to === F_TOML) {
-  serializedOutputString = toml.stringify(obj);
-} else if (args.to === F_JSON) {
-  serializedOutputString = JSON.stringify(obj);
-}
+const textEncoder = new TextEncoder();
 const serializedOutput = textEncoder.encode(serializedOutputString);
 const outputFile = args.o ? await Deno.open(args.o) : Deno.stdout;
 await outputFile.write(serializedOutput);
