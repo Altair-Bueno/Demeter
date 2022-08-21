@@ -25,7 +25,7 @@ BREW_PACKAGES="${BREW_PACKAGES:-$DEMETER/brew_packages.txt}"
 
 if [[ $(uname) == 'Darwin' ]]
 then
-	brew list | egrep "^[^(==>)]" | xargs > "$BREW_PACKAGES"
+	brew list  > "$BREW_PACKAGES"
 elif [[ $(uname) == 'Linux' ]]
 then
 	echo not supported
