@@ -23,9 +23,6 @@ COMMIT_MESSAGE="${1:-$COMMIT_MESSAGE}"
 
 BREW_PACKAGES="${BREW_PACKAGES:-$DEMETER/brew_packages.txt}"
 
-
-cd "$DEMETER"
-
 if [[ $(uname) == 'Darwin' ]]
 then
 	brew list | egrep "^[^(==>)]" | xargs > "$BREW_PACKAGES"
@@ -39,19 +36,19 @@ echo "$COMMIT_MESSAGE
 " > "$LOG_FILE"
 
 # Has changes?
-if [[ $(git diff >> "$LOG_FILE") ]]
+if [[ $(git -C "$DEMETER" diff >> "$LOG_FILE") ]]
 then 
 	echo "No changes found"
 else 
 	# echo "true"
 	echo "Found changes, updating"
-	if [[ $( { git fetch && git merge } >> "$LOG_FILE" ) ]]
+	if [[ $( { git -C "$DEMETER" fetch && git -C "$DEMETER" merge } >> "$LOG_FILE" ) ]]
 	then
 		echo "Automatic merge failed. Check logs at $LOG_FILE"
 	else 
-  		git add --all >> "$LOG_FILE"
-		git commit -am "$COMMIT_MESSAGE" >> "$LOG_FILE"
-		git push  >> "$LOG_FILE"
+  		git -C "$DEMETER" add --all >> "$LOG_FILE"
+		git -C "$DEMETER" commit -am "$COMMIT_MESSAGE" >> "$LOG_FILE"
+		git -C "$DEMETER" push  >> "$LOG_FILE"
 		echo "Backup successful"
 	fi
 fi
