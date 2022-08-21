@@ -40,9 +40,6 @@ zstyle ':completion:*:*:man:*:*' menu select=long search
 # Disable some less nonsense
 export LESSHISTFILE=-
 
-# Use bat as pager instead
-#export PAGER='bat'
-
 # Bat theme
 export BAT_THEME='base16'
 
@@ -191,9 +188,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Other config
 alias cd='z'
 alias ls='exa'
 alias tree='ls --tree'
 
-# Annoying af
-unset '_comps[convert]'

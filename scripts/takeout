@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 ###############################################################################
-# Takeout 1.0                                                                 #
+# Takeout 2.0                                                                 #
 # Altair Bueno MIT license                                                    #
 # https://github.com/Altair-Bueno/Demeter                                     #
 #                                                                             #
@@ -14,15 +14,25 @@
 # Right click > Services > Take files out of folder                           #
 ###############################################################################
 
+target_directory="${1:-$PWD}"
+parent_directory="$(dirname target_directory)"
 
-if [ -d "$1" ] 
+if ! [[  -d "$target_directory" ]]
 then
-	cd "$1" 
-fi 
+	echo "$target_directory is not a directory"
+	exit 1
+fi
 
-for FILE in *
-do
-	mv "$FILE" ../ || (echo "Error moving files"; exit 1)
-done
-rm -fr "$(pwd)"
-exit
+if [[ "/" = "$target_directory" ]]
+then 
+	echo "Cannot run `takeout` on root directory"
+	exit 2
+fi
+
+# `man zshexpn`. Glob Qualifiers
+for FILE in $target_directory/*(D)
+do 
+	mv "$FILE" "$parent_directory" || exit $?
+done 
+
+rmdir "$target_directory"

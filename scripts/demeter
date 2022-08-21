@@ -15,21 +15,20 @@
 #    `$HOME/Demeter/scripts/demeter`                                          #
 ###############################################################################
 
-export DEMETER="$HOME/Demeter"
-if [[ -z "$1" ]]
-then 
-	export COMMIT_MESSAGE="[$(date '+%d/%m/%y')]: Scheduled job on $(uname -n)"
-else 
-	export COMMIT_MESSAGE="$1"
-fi
+DEMETER="${DEMETER:-$HOME/Demeter}"
+LOG_FILE="${LOG_FILE:-$DEMETER/gitlog.txt}"
 
-export LOG_FILE="$DEMETER/gitlog.txt"
+COMMIT_MESSAGE="[$(date '+%d/%m/%y')]: Scheduled job on $(uname -n)"
+COMMIT_MESSAGE="${1:-$COMMIT_MESSAGE}"
+
+BREW_PACKAGES="${BREW_PACKAGES:-$DEMETER/brew_packages.txt}"
+
 
 cd "$DEMETER"
 
 if [[ $(uname) == 'Darwin' ]]
 then
-	brew list | egrep "^[^(==>)]" | xargs > brew_packages.txt
+	brew list | egrep "^[^(==>)]" | xargs > "$BREW_PACKAGES"
 elif [[ $(uname) == 'Linux' ]]
 then
 	echo not supported

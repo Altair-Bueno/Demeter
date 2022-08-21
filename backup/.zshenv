@@ -30,12 +30,6 @@ path+='/usr/local/bin/stack'
 # Stack binaries
 path+="$HOME/.local/bin"
 
-# Glassfish
-export GLASSFISH_HOME=/usr/local/opt/glassfish/libexec
-
-# Python 3.10
-path+='/usr/local/opt/python@3.10/bin'
-
 # Volta package manager
 export VOLTA_HOME="$HOME/.volta"
 path+="$VOLTA_HOME/bin"
@@ -67,34 +61,16 @@ then
 
     # WTF Microsoft. Starting a whole Python interpreter for opening vscode????
     # https://github.com/microsoft/vscode/issues/60579
-    function code {
-        open -b com.microsoft.VSCode $*
-    }
-
-    # Upgrade all Homebrew packages, zsh plugins and omz
-    function sysupgrade {
-        brew update
-        brew upgrade
-        brew upgrade --cask
-        brew autoremove
-        brew cleanup
-        omz update
-        rustup update stable
-        for plugin in $ZSH_CUSTOM/*/*
-        do
-            if [[ -d "$plugin" ]]
-            then
-                git -C "$plugin" pull
-            fi
-        done 
-    }
-
+    # Note: Apparently they switch to bash!!
+    # alias code="open -b com.microsoft.VSCode"
+    
     # From https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/macos
-    function man-preview {
-        man -w "$@" &> /dev/null && man -t "$@" | open -f -a Preview || man "$@"
-    }
     function quick-look {
         (( $# > 0 )) && qlmanage -p $* &> /dev/null &
+    }
+    # `map` for the macOS keyboard
+    function pbmap {
+        pbpaste | $* | pbcopy
     }
 elif [[ $(uname) == 'Linux' ]]
 then

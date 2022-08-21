@@ -1,0 +1,30 @@
+#!/usr/bin/env zsh -i
+# Enable interactive mode to access `omz`
+
+function update_homebrew {
+    brew update
+    brew upgrade
+    brew upgrade --cask
+    brew autoremove
+    brew cleanup
+}
+
+function update_omz {
+    omz update
+
+    for plugin in $ZSH_CUSTOM/*/*
+    do
+        if [[ -d "$plugin" ]]
+        then
+            git -C "$plugin" pull
+        fi
+    done 
+}
+
+function update_tools {
+    rustup update stable
+}
+
+update_homebrew
+update_omz
+update_tools
