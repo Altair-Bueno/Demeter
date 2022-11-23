@@ -1,6 +1,25 @@
 #!/usr/bin/env zsh -i
 # Enable interactive mode to access `omz`
 
+###############################################################################
+# sysupgrade 1.0                                                              #
+# Altair Bueno MIT license                                                    #
+# https://github.com/Altair-Bueno/Demeter                                     #
+#                                                                             #
+# Updates toolchains and software installed on a macOS system                 #
+#                                                                             #
+# Usage:                                                                      #
+# sysupgrade [flags]                                                          #
+# --all       Update all                                                      #
+# --homebrew  Homebrew                                                        #
+# --pip       pip                                                             #
+# --rust      Rust                                                            #
+# --omz       OMZ and plugins                                                 #
+# --xcode     xcode CLI tools                                                 #
+###############################################################################
+
+declare -A cli
+
 function update_homebrew {
     brew update
     brew upgrade
@@ -8,6 +27,8 @@ function update_homebrew {
     brew autoremove
     brew cleanup
 }
+
+cli[--homebrew]=update_homebrew
 
 function update_omz {
     omz update
@@ -21,10 +42,34 @@ function update_omz {
     done 
 }
 
-function update_tools {
+cli[--omz]=update_omz
+
+function update_rust {
     rustup update stable
 }
 
-update_homebrew
-update_omz
-update_tools
+cli[--rust]=update_rust
+
+function update_xcode {
+    softwareupdate --install -a
+}
+
+cli[--xcode]=update_xcode
+
+function update_pip {
+    pip install --upgrade pip
+}
+
+cli[--pip]=update_pip
+
+if (( $*[(Ie)--all] )); then
+    for v in ${(v)cli}; do
+        echo "# Running $v"
+        $v 
+    done
+else
+    for arg in $*; do
+        echo "# Running $cli[$arg]"
+        $cli[$arg]
+    done
+fi

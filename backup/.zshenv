@@ -34,18 +34,23 @@ path+="$HOME/.local/bin"
 export VOLTA_HOME="$HOME/.volta"
 path+="$VOLTA_HOME/bin"
 
+# Basictex
+path+='/Library/TeX/texbin'
+
 ######################################
 # Aliases
 ######################################
 alias nvm='volta'
 alias iterm='open -a "iterm"'
-alias python='python3.10'
+alias python='python3.11'
 alias pip='python -m pip'
 alias ascii='asciinema'
 alias neofetch='macchina'
 alias exa='exa --icons --sort=type'
 alias httpserv='npx http-server'
 alias vim='nvim'
+alias http='xh'
+alias https='xhs'
 
 ######################################
 # Custom env variables

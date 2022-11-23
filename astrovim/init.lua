@@ -83,16 +83,6 @@ local config = {
     -- Add plugins, the packer syntax without the "use"
     init = {
       "joshdick/onedark.vim",
-      {
-        'ekickx/clipboard-image.nvim',
-        config = function ()
-          require("clipboard-image.nvim").setup {
-            default= {
-              img_dir = "resources",
-            }
-          }
-        end 
-      },
       -- You can disable default plugins as follows:
       -- ["goolord/alpha-nvim"] = { disable = true },
 

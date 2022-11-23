@@ -75,7 +75,7 @@ do
     arguments+="--filter=$filter"
 done
 
-echo "Creating $out_name ..."
+echo "$out_name"
 # Execute pandoc and remove empty file
 pandoc $arguments $* || exit $?
 

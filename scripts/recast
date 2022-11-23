@@ -1,10 +1,13 @@
-#!/usr/bin/env -S deno run -q --allow-read
+#!/usr/bin/env -S deno run -q --allow-read --allow-write --allow-env
 
 import * as toml from "https://deno.land/std@0.152.0/encoding/toml.ts";
 import * as yaml from "https://deno.land/std@0.152.0/encoding/yaml.ts";
-import * as flags from "https://deno.land/std@0.152.0/flags/mod.ts";
 import { readAll } from "https://deno.land/std@0.152.0/streams/conversion.ts";
-import { z } from "https://deno.land/x/zod@v3.18.0/mod.ts";
+import yargs from "https://deno.land/x/yargs@v17.5.1-deno/deno.ts";
+
+const RECAST = "recast";
+const RECAST_DESC = `Transform a serialization format into another`;
+const RECAST_VERSION = "0.1.0";
 
 // Constants
 const F_JSON = "json";
@@ -16,40 +19,41 @@ FORMATS.set(F_YAML, yaml);
 FORMATS.set(F_TOML, toml);
 const FORMATS_LIST = Array.from(FORMATS.keys());
 
-const parsedFlags = flags.parse(Deno.args);
-
-// Help
-if (parsedFlags.h || parsedFlags.help) {
-  console.table({
-    "--from": {
-      description: "Input format",
-      type: FORMATS_LIST,
-      default: F_JSON,
-    },
-    "--to": {
-      description: "Output format",
-      type: FORMATS_LIST,
-      default: F_JSON,
-    },
-    "-o": { description: "Output file", type: "string", default: "[STDOUT]" },
-    "": { description: "Input file", type: "string", default: "[STDIN]" },
-  });
-  Deno.exit();
-}
-
-// Validate commandline arguments
-const args = z
-  .object({
-    // @ts-ignore: This file is treated as JS, but linted as TypeScript...
-    from: z.enum(FORMATS_LIST).default(F_JSON),
-    // @ts-ignore: This file is treated as JS, but linted as TypeScript...
-    to: z.enum(FORMATS_LIST).default(F_JSON),
-    o: z.optional(z.string()),
-    _: z.array(z.string()).max(1),
+const args = yargs(Deno.args)
+  // @ts-ignore: This file is treated as JS, but linted as TypeScript...
+  .command("$0 [input]", RECAST_DESC, (yargs) => {
+    yargs.positional("input", {
+      description: "Input file. Defaults to STDIN",
+      string: true,
+    });
   })
-  .parse(parsedFlags);
+  .options({
+    from: {
+      description: "Input format",
+      string: true,
+      choices: FORMATS_LIST,
+      default: F_JSON,
+    },
+    to: {
+      description: "Output format",
+      string: true,
+      choices: FORMATS_LIST,
+      default: F_JSON,
+    },
+    o: {
+      description: "Output file. Defaults to STDOUT",
+      string: true,
+    },
+  })
+  .completion("completion")
+  .scriptName(RECAST)
+  .version(RECAST_VERSION)
+  .help()
+  .strict()
+  .env(false)
+  .parse();
 
-const inputFile = args._[0] ? await Deno.open(args._[0]) : Deno.stdin;
+const inputFile = args.input ? await Deno.open(args.input) : Deno.stdin;
 const serializedInput = await readAll(inputFile);
 inputFile.close();
 

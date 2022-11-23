@@ -55,12 +55,14 @@ eval "$(zoxide init zsh)"
 export _ZO_ECHO=1
 
 # zsh autocomplete https://github.com/marlonrichert/zsh-autocomplete/blob/main/.zshrc
-zstyle ':autocomplete:*' insert-unambiguous yes # autocomplete just the common part
+# zstyle ':autocomplete:*' insert-unambiguous yes # autocomplete just the common part
 zstyle ':autocomplete:*' fzf-completion yes     # use fzf autocomplete
 
 # Move .zcomdump files to cache folder
 export ZSH_COMPDUMP="$HOME/.cache/zsh/.zcomdump-$(zsh --version)"
 
+# From https://www.reddit.com/r/zsh/comments/wxlmjo/configure_up_arrow_to_get_last_command_from_this/
+setopt NO_SHARE_HISTORY
 ######################################
 # iTerm2
 ######################################
@@ -155,9 +157,8 @@ plugins=(
 	colored-man-pages 
 	fast-syntax-highlighting
 	# fzf-tab
-	zsh-autocomplete
-	# git 
-	# macos # Added useful functions to .zshrc instead
+	# zsh-autocomplete
+	zsh-autopair
 )
 
 source $ZSH/oh-my-zsh.sh
