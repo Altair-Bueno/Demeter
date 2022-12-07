@@ -42,9 +42,10 @@ then
     out_name='Book.pdf'
 else 
     # One file
-    s="$1"
-    s="${s##*/}"
-    out_name="${s%.*}.pdf"
+    out_name=$(sed -n "s|\(.*\)\.md|\1.pdf|gp" <<< "$1")
+    # s="$1"
+    # s="${s##*/}"
+    # out_name="${s%.*}.pdf"
 fi
 
 # List of arguments

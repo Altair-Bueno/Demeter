@@ -18,7 +18,9 @@ docbook-xsl
 docker
 docker-compose
 exa
+faas-cli
 fd
+flyctl
 fontconfig
 freetype
 fzf
@@ -38,6 +40,7 @@ guile
 harfbuzz
 helm
 highway
+htop
 hyperfine
 icu4c
 imagemagick
@@ -48,7 +51,6 @@ jless
 jpeg-turbo
 jpeg-xl
 jq
-jsonschema
 kubernetes-cli
 lazygit
 less
@@ -145,6 +147,7 @@ trunk
 unbound
 unibilium
 vde
+virtualenv
 viu
 volta
 wasmer
@@ -159,6 +162,7 @@ zoxide
 zstd
 adobe-acrobat-reader
 appcleaner
+balenaetcher
 basictex
 firefox
 google-drive
