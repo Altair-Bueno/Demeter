@@ -30,9 +30,8 @@ path+='/usr/local/bin/stack'
 # Stack binaries
 path+="$HOME/.local/bin"
 
-# Volta package manager
-export VOLTA_HOME="$HOME/.volta"
-path+="$VOLTA_HOME/bin"
+# fnm (nvm)
+eval "$(fnm env --use-on-cd)"
 
 # Basictex
 path+='/Library/TeX/texbin'
@@ -40,7 +39,7 @@ path+='/Library/TeX/texbin'
 ######################################
 # Aliases
 ######################################
-alias nvm='volta'
+alias nvm='fnm'
 alias iterm='open -a "iterm"'
 alias python='python3.11'
 alias pip='python -m pip'

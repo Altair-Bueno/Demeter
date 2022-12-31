@@ -42,6 +42,7 @@ export LESSHISTFILE=-
 
 # Bat theme
 export BAT_THEME='base16'
+export BAT_STYLE='plain,rule,header-filename,header-filesize'
 
 # Allow mousewheel scroll on bat
 # https://github.com/sharkdp/bat/issues/188
@@ -193,4 +194,5 @@ source $ZSH/oh-my-zsh.sh
 alias cd='z'
 alias ls='exa'
 alias tree='ls --tree'
+alias cat='bat'
 

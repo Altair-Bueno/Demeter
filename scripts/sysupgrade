@@ -1,5 +1,4 @@
-#!/usr/bin/env zsh -i
-# Enable interactive mode to access `omz`
+#!/usr/bin/env zsh
 
 ###############################################################################
 # sysupgrade 1.0                                                              #
@@ -31,15 +30,18 @@ function update_homebrew {
 cli[--homebrew]=update_homebrew
 
 function update_omz {
-    omz update
+    # We spawn new zsh instances to run omz-specific commands inside
+    zsh -i -c 'omz update'
 
+    zsh -i -c '
     for plugin in $ZSH_CUSTOM/*/*
     do
         if [[ -d "$plugin" ]]
         then
             git -C "$plugin" pull
         fi
-    done 
+    done
+    '
 }
 
 cli[--omz]=update_omz
@@ -73,3 +75,4 @@ else
         $cli[$arg]
     done
 fi
+

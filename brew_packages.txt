@@ -21,6 +21,7 @@ exa
 faas-cli
 fd
 flyctl
+fnm
 fontconfig
 freetype
 fzf
@@ -40,7 +41,6 @@ guile
 harfbuzz
 helm
 highway
-htop
 hyperfine
 icu4c
 imagemagick
@@ -52,7 +52,6 @@ jpeg-turbo
 jpeg-xl
 jq
 kubernetes-cli
-lazygit
 less
 libassuan
 libde265
@@ -99,6 +98,7 @@ lz4
 lzo
 m4
 macchina
+macos-trash
 maven
 mpdecimal
 mpfr
@@ -111,7 +111,6 @@ ninja
 npth
 oha
 oniguruma
-openapi-generator
 openexr
 openjdk
 openjpeg
@@ -126,16 +125,12 @@ pinentry-mac
 pixman
 pkg-config
 pngpaste
-poetry
-ponysay
-python@3.10
+pnpm
 python@3.11
 qemu
 readline
 ripgrep
-sd
 shared-mime-info
-six
 snappy
 sqlite
 telnet
@@ -147,9 +142,7 @@ trunk
 unbound
 unibilium
 vde
-virtualenv
 viu
-volta
 wasmer
 webp
 x265
