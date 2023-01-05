@@ -39,6 +39,7 @@ gobang
 graphite2
 guile
 harfbuzz
+helix
 helm
 highway
 hyperfine
@@ -74,7 +75,6 @@ libslirp
 libsoxr
 libssh
 libtasn1
-libtermkey
 libtiff
 libtool
 libunistring
@@ -82,7 +82,6 @@ libusb
 libuv
 libvmaf
 libvpx
-libvterm
 libx11
 libxau
 libxcb
@@ -92,8 +91,6 @@ libxrender
 lima
 little-cms2
 lrzsz
-luajit
-luv
 lz4
 lzo
 m4
@@ -102,9 +99,7 @@ macos-trash
 maven
 mpdecimal
 mpfr
-msgpack
 ncurses
-neovim
 netcat
 nettle
 ninja
@@ -137,10 +132,8 @@ telnet
 termscp
 testdisk
 tokei
-tree-sitter
 trunk
 unbound
-unibilium
 vde
 viu
 wasmer

@@ -193,6 +193,3 @@ source $ZSH/oh-my-zsh.sh
 # Other config
 alias cd='z'
 alias ls='exa'
-alias tree='ls --tree'
-alias cat='bat'
-

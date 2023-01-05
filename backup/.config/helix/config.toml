@@ -1,0 +1,17 @@
+theme = "Onedarker"
+
+[editor]
+line-number = "relative"
+cursorline = true
+completion-trigger-len = 2
+rulers = [80]
+bufferline = "multiple"
+color-modes = true
+
+[editor.lsp]
+display-messages = true
+
+[editor.cursor-shape]
+normal = "block"
+insert = "bar"
+select = "bar"

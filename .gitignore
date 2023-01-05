@@ -1,12 +1,8 @@
 gitlog.txt
 # Cloud storage credentials
 **/rclone
-# Database credentials
-**/gobang
 # No idea what this is
 **/jgit
-# Yarn
-**/yarn
 
 # IDE
 .vscode

@@ -47,14 +47,17 @@ alias ascii='asciinema'
 alias neofetch='macchina'
 alias exa='exa --icons --sort=type'
 alias httpserv='npx http-server'
-alias vim='nvim'
+alias vim='hx'
 alias http='xh'
 alias https='xhs'
+alias cat='bat'
+alias tree='exa --tree'
 
 ######################################
 # Custom env variables
 ######################################
 export DEMETER="$HOME/Demeter"
+export XDG_DATA_HOME=".config"
 
 ######################################
 # OS dependent config
