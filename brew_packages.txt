@@ -23,6 +23,7 @@ jq
 kubernetes-cli
 less
 libomp
+luajit
 macchina
 macos-trash
 maven
