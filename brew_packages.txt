@@ -36,6 +36,7 @@ pngpaste
 pnpm
 python@3.11
 ripgrep
+starship
 tako8ki/tap/gobang
 telnet
 testdisk

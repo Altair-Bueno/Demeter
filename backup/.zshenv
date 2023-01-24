@@ -1,3 +1,29 @@
+
+######################################
+# Other
+######################################
+
+# Performance analisis
+# Exec zprof on shell
+# zmodload zsh/zprof
+
+######################################
+# General environment variables
+######################################
+export DEMETER="$HOME/Demeter"
+export XDG_DATA_HOME=".config"
+export EDITOR='hx'
+export MANPATH="/usr/local/man:$MANPATH"
+# Disable some less nonsense
+export LESSHISTFILE=-
+# Move .zcomdump files to cache folder
+export ZSH_COMPDUMP="$HOME/.cache/zsh/.zcomdump-$(zsh --version)"
+# Disable magic functions
+#https://github.com/ohmyzsh/ohmyzsh/issues/5569
+DISABLE_MAGIC_FUNCTIONS=true
+# Disable compinit to improve performance
+skip_global_compinit=1
+
 ################################################################################
 # SDKs
 ################################################################################
@@ -35,54 +61,3 @@ eval "$(fnm env --use-on-cd)"
 
 # Basictex
 path+='/Library/TeX/texbin'
-
-######################################
-# Aliases
-######################################
-alias nvm='fnm'
-alias iterm='open -a "iterm"'
-alias python='python3.11'
-alias pip='python -m pip'
-alias venv='python -m venv'
-alias ascii='asciinema'
-alias neofetch='macchina'
-alias exa='exa --icons --sort=type'
-alias httpserv='npx http-server'
-alias vim='hx'
-alias http='xh'
-alias https='xhs'
-alias cat='bat'
-alias tree='exa --tree'
-
-######################################
-# Custom env variables
-######################################
-export DEMETER="$HOME/Demeter"
-export XDG_DATA_HOME=".config"
-
-######################################
-# OS dependent config
-######################################
-if [[ $(uname) == 'Darwin' ]]
-then
-    # macOS specific config
-
-    # WTF Microsoft. Starting a whole Python interpreter for opening vscode????
-    # https://github.com/microsoft/vscode/issues/60579
-    # Note: Apparently they switch to bash!!
-    # alias code="open -b com.microsoft.VSCode"
-    
-    # From https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/macos
-    function quick-look {
-        (( $# > 0 )) && qlmanage -p $* &> /dev/null &
-    }
-    # `map` for the macOS keyboard
-    function pbmap {
-        pbpaste | $* | pbcopy
-    }
-elif [[ $(uname) == 'Linux' ]]
-then
-    # Linux specific config
-    alias open='xdg-open'
-fi
-
