@@ -11,7 +11,7 @@ So you fucked it up. Now what? No problemo, i've got you covered:
 
 ```bash
 # Check the `Linux` section before doing anything
-curl "https://raw.githubusercontent.com/Altair-Bueno/Demeter/master/restore.sh" | bash
+curl "https://raw.githubusercontent.com/Altair-Bueno/Demeter/master/restore.sh" | zsh
 ```
 
 ## Linux

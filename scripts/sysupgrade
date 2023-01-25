@@ -13,7 +13,7 @@
 # --homebrew  Homebrew                                                        #
 # --pip       pip                                                             #
 # --rust      Rust                                                            #
-# --omz       OMZ and plugins                                                 #
+# --omz       Omz plugins                                                 #
 # --xcode     xcode CLI tools                                                 #
 ###############################################################################
 
@@ -31,8 +31,6 @@ cli[--homebrew]=update_homebrew
 
 function update_omz {
     # We spawn new zsh instances to run omz-specific commands inside
-    zsh -i -c 'omz update'
-
     zsh -i -c '
     for plugin in $ZSH_CUSTOM/*/*
     do

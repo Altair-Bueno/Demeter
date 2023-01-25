@@ -1,0 +1,29 @@
+version = "0.7.1"
+home = "/Users/compux72"
+config_dir = "/Users/compux72/.config/sheldon"
+data_dir = ".config/sheldon"
+config_file = "/Users/compux72/.config/sheldon/plugins.toml"
+
+[[plugins]]
+name = "fast-syntax-highlighting"
+source_dir = ".config/sheldon/repos/github.com/zdharma-continuum/fast-syntax-highlighting"
+files = [".config/sheldon/repos/github.com/zdharma-continuum/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"]
+apply = ["source"]
+
+[[plugins]]
+name = "zsh-autopair"
+source_dir = ".config/sheldon/repos/github.com/hlissner/zsh-autopair"
+files = [".config/sheldon/repos/github.com/hlissner/zsh-autopair/zsh-autopair.plugin.zsh"]
+apply = ["source"]
+
+[[plugins]]
+name = "powerlevel10k"
+source_dir = ".config/sheldon/repos/github.com/romkatv/powerlevel10k"
+files = [".config/sheldon/repos/github.com/romkatv/powerlevel10k/powerlevel10k.zsh-theme"]
+apply = ["source"]
+
+[templates]
+PATH = "export PATH=\"{{ dir }}:$PATH\""
+path = "path=( \"{{ dir }}\" $path )"
+fpath = "fpath=( \"{{ dir }}\" $fpath )"
+source = "{% for file in files %}source \"{{ file }}\"\n{% endfor %}"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 ###############################################################################
 # Restore 1.0                                                                 #
@@ -50,7 +50,7 @@ fi
 cd "$DEMETER/backup" || exit 100
 
 echo "Creating links"
-for TEMP in $(ls -A)
+for TEMP in *(D)
 do
 	echo "Linking $TEMP"
 	# Delete the file before making the symlink, just in case
