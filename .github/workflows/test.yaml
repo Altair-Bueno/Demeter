@@ -1,6 +1,6 @@
 # This github action will check if the backup was successfully restored on
 # macos and Ubuntu
-name: Test backup script
+name: Test restore script
 on:
   workflow_dispatch:
 jobs:
@@ -10,6 +10,7 @@ jobs:
         os: ["macos-latest"]
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: actions/checkout@v3
       - name: Install backup
         run: zsh ./restore.sh
         shell: zsh {0}
