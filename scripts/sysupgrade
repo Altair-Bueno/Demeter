@@ -29,20 +29,12 @@ function update_homebrew {
 
 cli[--homebrew]=update_homebrew
 
-function update_omz {
+function update_zsh {
     # We spawn new zsh instances to run omz-specific commands inside
-    zsh -i -c '
-    for plugin in $ZSH_CUSTOM/*/*
-    do
-        if [[ -d "$plugin" ]]
-        then
-            git -C "$plugin" pull
-        fi
-    done
-    '
+    sheldon lock
 }
 
-cli[--omz]=update_omz
+cli[--zsh]=update_zsh
 
 function update_rust {
     rustup update stable

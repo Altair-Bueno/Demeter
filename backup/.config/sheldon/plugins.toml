@@ -12,9 +12,9 @@
 
 shell = "zsh"
 
-# [plugins.omz]
-# github = 'ohmyzsh/ohmyzsh'
-# use = ['plugins/zsh-completions/*.zsh', 'plugins/fzf/*.zsh']
+[plugins.omz]
+github = 'ohmyzsh/ohmyzsh'
+use = ['plugins/zsh-completions/*.zsh', 'plugins/fzf/*.zsh']
 
 [plugins.fast-syntax-highlighting]
 github = 'zdharma-continuum/fast-syntax-highlighting'

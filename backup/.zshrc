@@ -20,7 +20,7 @@ P10K_SCRIPT=~/.config/zsh/.p10k.zsh
 eval "$(sheldon source)"
 eval "$(zoxide init zsh)"
 # eval "$(starship init zsh)"
-source ~/.config/zsh/.iterm2_shell_integration.zsh
+source "${XDG_DATA_HOME:-$HOME/.config}/zsh/.iterm2_shell_integration.zsh"
 
 ################################################################################
 # Aliases
@@ -47,25 +47,10 @@ alias tree='exa --tree'
 ################################################################################
 if [[ $(uname) == 'Darwin' ]]
 then
-    # macOS specific config
-
-    # WTF Microsoft. Starting a whole Python interpreter for opening vscode????
-    # https://github.com/microsoft/vscode/issues/60579
-    # Note: Apparently they switch to bash!!
-    # alias code="open -b com.microsoft.VSCode"
-    
-    # From https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/macos
-    function quick-look {
-        (( $# > 0 )) && qlmanage -p $* &> /dev/null &
-    }
-    # `map` for the macOS keyboard
-    function pbmap {
-        pbpaste | $* | pbcopy
-    }
+    source "${XDG_DATA_HOME:-$HOME/.config}/zsh/os/macos.zsh"
 elif [[ $(uname) == 'Linux' ]]
 then
-    # Linux specific config
-    alias open='xdg-open'
+    source "${XDG_DATA_HOME:-$HOME/.config}/zsh/os/linux.zsh"
 fi
 
 ################################################################################

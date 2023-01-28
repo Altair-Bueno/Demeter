@@ -1,25 +1,31 @@
 version = "0.7.1"
 home = "/Users/compux72"
 config_dir = "/Users/compux72/.config/sheldon"
-data_dir = ".config/sheldon"
+data_dir = "/Users/compux72/.config/sheldon"
 config_file = "/Users/compux72/.config/sheldon/plugins.toml"
 
 [[plugins]]
+name = "omz"
+source_dir = "/Users/compux72/.config/sheldon/repos/github.com/ohmyzsh/ohmyzsh"
+files = ["/Users/compux72/.config/sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/fzf/fzf.plugin.zsh"]
+apply = ["source"]
+
+[[plugins]]
 name = "fast-syntax-highlighting"
-source_dir = ".config/sheldon/repos/github.com/zdharma-continuum/fast-syntax-highlighting"
-files = [".config/sheldon/repos/github.com/zdharma-continuum/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"]
+source_dir = "/Users/compux72/.config/sheldon/repos/github.com/zdharma-continuum/fast-syntax-highlighting"
+files = ["/Users/compux72/.config/sheldon/repos/github.com/zdharma-continuum/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"]
 apply = ["source"]
 
 [[plugins]]
 name = "zsh-autopair"
-source_dir = ".config/sheldon/repos/github.com/hlissner/zsh-autopair"
-files = [".config/sheldon/repos/github.com/hlissner/zsh-autopair/zsh-autopair.plugin.zsh"]
+source_dir = "/Users/compux72/.config/sheldon/repos/github.com/hlissner/zsh-autopair"
+files = ["/Users/compux72/.config/sheldon/repos/github.com/hlissner/zsh-autopair/zsh-autopair.plugin.zsh"]
 apply = ["source"]
 
 [[plugins]]
 name = "powerlevel10k"
-source_dir = ".config/sheldon/repos/github.com/romkatv/powerlevel10k"
-files = [".config/sheldon/repos/github.com/romkatv/powerlevel10k/powerlevel10k.zsh-theme"]
+source_dir = "/Users/compux72/.config/sheldon/repos/github.com/romkatv/powerlevel10k"
+files = ["/Users/compux72/.config/sheldon/repos/github.com/romkatv/powerlevel10k/powerlevel10k.zsh-theme"]
 apply = ["source"]
 
 [templates]
