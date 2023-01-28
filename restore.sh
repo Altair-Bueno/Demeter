@@ -63,7 +63,7 @@ function link_backup {
 
 function setup_macos() {
   : Install xcode commandline tools
-  xcode-select --install
+  xcode-select --install || true
 
   : Installing HomeBrew and software "https://github.com/Homebrew/install/#install-homebrew-on-macos-or-linux"
   export NONINTERACTIVE=1
