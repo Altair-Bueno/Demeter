@@ -9,7 +9,9 @@ utilities, they should work fine with any standard UNIX-like system that uses
 
 So you fucked it up. Now what? No problemo, i've got you covered:
 
-```bash
+- Install `zsh`
+
+```zsh
 # Check the `Linux` section before doing anything
 curl "https://raw.githubusercontent.com/Altair-Bueno/Demeter/master/restore.sh" | zsh
 ```
@@ -19,27 +21,11 @@ curl "https://raw.githubusercontent.com/Altair-Bueno/Demeter/master/restore.sh" 
 Run these additional instructions **before** running the script above if your 
 system runs linux
 
-1. Install `zsh`
-2. Set up `zsh` as the default shell
-3. Install all the software listed on `brew_packages.txt`
-4. Set up GitHub access token on git using the OS `credential store`. Here are
+1. Set up `zsh` as the default shell
+2. Install all the software listed on `brew_packages.txt`
+3. Set up GitHub access token on git using the OS `credential store`. Here are
    instructions for
    [Linux](https://stackoverflow.com/questions/5343068/is-there-a-way-to-cache-https-credentials-for-pushing-commits/18362082#18362082)
-
-# omz
-
-First install [omz](https://ohmyz.sh/)
-
-## External plugins
-
-- [zsh-autocomplete](https://github.com/marlonrichert/zsh-autocomplete)
-- [fast-syntax-highlighting](https://github.com/zdharma-continuum/fast-syntax-highlighting)
-
-## Theme
-
-I'm using [powerlevel10k](https://github.com/romkatv/powerlevel10k). The,
-[p10k](backup/.p10k.zsh) script is already on this backup, so just install the
-theme after running the restore script
 
 # Colorscheme
 
@@ -60,17 +46,12 @@ I'm currently using One Dark. You can find it for:
 
 - [Align to grid Finder](https://apple.stackexchange.com/questions/50508/how-can-i-make-all-folders-in-finder-snap-to-grid)
 - Set iterm2 configuration folder to `$HOME/Demeter/iterm2`
-
-# LaTex & pandoc
-
-- [Theme](https://github.com/Wandmalfarbe/pandoc-latex-template)
-- [Mermaid filter](https://github.com/raghur/mermaid-filter)
+- [Natural text editing on iTerm2](https://medium.com/@Clovis_app/configuration-of-a-beautiful-efficient-terminal-and-prompt-on-osx-in-7-minutes-827c29391961):
+  iTerm → Preferences → Profiles → Keys → Load Preset… → Natural Text Editing
 
 # Other config
 
 - Terminal size: `100x30`
-- [Natural text editing on iTerm2](https://medium.com/@Clovis_app/configuration-of-a-beautiful-efficient-terminal-and-prompt-on-osx-in-7-minutes-827c29391961):
-  iTerm → Preferences → Profiles → Keys → Load Preset… → Natural Text Editing
 
 # If you want your own backup system
 
