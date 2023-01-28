@@ -1,4 +1,3 @@
-autoconf
 bat
 colima
 coreutils
@@ -7,7 +6,6 @@ deno
 docker
 docker-compose
 exa
-faas-cli
 fd
 flyctl
 fnm
@@ -16,21 +14,17 @@ git-delta
 gnu-getopt
 gnupg
 helix
-helm
 hyperfine
 jless
 jq
-kubernetes-cli
 less
 libomp
-luajit
 macchina
 macos-trash
 maven
-mpfr
 netcat
 oha
-pandoc-include-code
+pandoc
 pinentry-mac
 pngpaste
 pnpm
@@ -48,5 +42,4 @@ veeso/termscp/termscp
 viu
 wasmer
 xh
-xvid
 zoxide
