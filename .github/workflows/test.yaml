@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Install backup
-        run: curl "$RESTORE" | zsh
+        run: curl "$RESTORE" | /bin/zsh
       - name: Check backup
         run: |
           test -d $HOME/Demeter
