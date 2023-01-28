@@ -26,13 +26,13 @@ then
 fi
 
 # LaTeX engine used to generate the PDF
-pdf_engine='xelatex'
+pdf_engine='tectonic'
 # LaTex template
 template='eisvogel'
 # Pandoc filters to appy
 filters=(
     # 'mermaid-filter'
-    'pandoc-include-code'
+    # 'pandoc-include-code'
 )
 
 # Extract output file name

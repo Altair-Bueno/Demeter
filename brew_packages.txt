@@ -39,6 +39,7 @@ ripgrep
 sheldon
 starship
 tako8ki/tap/gobang
+tectonic
 telnet
 testdisk
 tokei
