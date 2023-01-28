@@ -3,8 +3,6 @@
 name: Test backup script
 on:
   workflow_dispatch:
-env:
-  RESTORE: "https://raw.githubusercontent.com/Altair-Bueno/Demeter/master/restore.sh"
 jobs:
   build:
     strategy:
@@ -13,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Install backup
-        run: eval `curl "$RESTORE"`
+        run: zsh ./restore.sh
         shell: zsh {0}
       - name: Check backup
         run: |
