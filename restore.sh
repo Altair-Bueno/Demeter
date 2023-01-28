@@ -21,11 +21,11 @@ set -ex
 export REMOTE_URL="${REMOTE_URL:-https://github.com/Altair-Bueno/Demeter}"
 # Where is the backup folder. VSC folder name and system folder must match
 export DEMETER="$HOME/Demeter"
+required_paths=( "$HOME/.cache/zsh/" )
+
 ###############################################################################
-
+# Functions
 function preamble {
-	required_paths=( "$HOME/.cache/zsh/" )
-
 	for p in $required_paths
 	do
 		mkdir -p "$p"
@@ -55,8 +55,6 @@ function link_backup {
 	: "Linking backup"
 	for TEMP in $DEMETER/backup/*(D)
 	do
-		# Delete the file before making the symlink, just in case
-		rm "$HOME/$TEMP" 2> /dev/null || true
 		ln -nfs "$TEMP" "$HOME/"
 	done
 }
@@ -68,7 +66,7 @@ function setup_macos() {
   : Installing HomeBrew and software "https://github.com/Homebrew/install/#install-homebrew-on-macos-or-linux"
   export NONINTERACTIVE=1
   command -v brew > /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
-  cat "$DEMETER/brew_packages.txt" | xargs brew install
+  cat "$DEMETER/brew_packages.txt" | xargs -t brew install
 
   : Link macos config
   rm "$HOME/.gitconfig" 2> /dev/null
@@ -78,22 +76,33 @@ function setup_macos() {
   git config --global credential.helper osxkeychain
 }
 
+function setup_linux {
+    # Linux specific config
+	rm "$HOME/.gitconfig"
+	ln -nfs "$DEMETER/linux/.gitconfig" "$HOME/.gitconfig"
+}
+
+function setup_freebsd {
+	# FreeBSD specific config
+	rm "$HOME/.gitconfig"
+	ln -nfs "$DEMETER/bsd/.gitconfig" "$HOME/.gitconfig"
+}
+
+###############################################################################
+# Script
 preamble
 clone_demeter_repository
 link_backup
 
-if [[ $(uname) == 'Darwin' ]]
-then
-	setup_macos
-elif [[ $(uname) == 'Linux' ]]
-then
-    # Linux specific config
-	rm "$HOME/.gitconfig"
-	ln -nfs "$DEMETER/linux/.gitconfig" "$HOME/.gitconfig"
-	
-elif [[ $(uname) == 'FreeBSD' ]]
-then
-    # FreeBSD specific config
-	rm "$HOME/.gitconfig"
-	ln -nfs "$DEMETER/bsd/.gitconfig" "$HOME/.gitconfig"
-fi
+case $(uname) in
+  'Darwin')
+    setup_macos
+    ;;
+  'Linux')
+    setup_linux
+    ;;
+  'FreeBSD')
+    setup_freebsd
+    ;;
+esac
+
