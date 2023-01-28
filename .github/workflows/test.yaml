@@ -9,19 +9,14 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ "ubuntu-latest", "macos-latest"]
-    runs-on : ${{ matrix.os }}
+        os: ["ubuntu-latest", "macos-latest"]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Install backup
-        run: curl "$RESTORE" | bash
+        run: curl "$RESTORE" | zsh
       - name: Check backup
         run: |
           test -d $HOME/Demeter
-          test -f $HOME/.vimrc
-          test -f $HOME/.p10k.zsh
+          test -f $HOME/.zshrc
+          test -f $HOME/.zshenv
           cat $HOME/.gitconfig | grep "67512202+Altair-Bueno@users.noreply.github.com"
-      - name: Update and reinstall
-        run: curl "$RESTORE" | bash
-      - name: Check home dir content
-        run: ls -la $HOME
-      
