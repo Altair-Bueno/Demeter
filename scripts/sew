@@ -19,9 +19,11 @@
 #                                                                             #
 ###############################################################################
 
+set -e
+
 if [[ $# -eq 0 ]]
 then 
-    echo "Usage: sew [pandoc-arguments] FILES..."
+    echo "Usage: sew FILES..."
     exit 1
 fi
 
@@ -29,10 +31,13 @@ fi
 pdf_engine='tectonic'
 # LaTex template
 template='eisvogel'
-# Pandoc filters to appy
+# Pandoc filters to apply
 filters=(
     # 'mermaid-filter'
     # 'pandoc-include-code'
+)
+cleanup_files=(
+    # 'mermaid-filter.err'
 )
 
 # Extract output file name
@@ -43,9 +48,6 @@ then
 else 
     # One file
     out_name=$(sed -n "s|\(.*\)\.md|\1.pdf|gp" <<< "$1")
-    # s="$1"
-    # s="${s##*/}"
-    # out_name="${s%.*}.pdf"
 fi
 
 # List of arguments
@@ -78,7 +80,7 @@ done
 
 echo "$out_name"
 # Execute pandoc and remove empty file
-pandoc $arguments $* || exit $?
+pandoc $arguments $*
 
 # Delete unnecesary file
-rm 'mermaid-filter.err' 2> /dev/null || true
+[[ -z $cleanup_files ]] || rm $cleanup_files
