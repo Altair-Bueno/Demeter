@@ -15,23 +15,26 @@ P10K_SCRIPT=~/.config/zsh/.p10k.zsh
 [[ ! -f "$P10K_SCRIPT" ]] || source "$P10K_SCRIPT"
 
 ################################################################################
-# Plugins and shell extensions
+# Plugins, completitions and shell extensions
 ################################################################################
+autoload -U compinit
+compinit -u -d "$HOME/.cache/zsh/.zcomdump-$ZSH_VERSION"
+
 eval "$(sheldon source)"
 eval "$(zoxide init zsh)"
 # eval "$(starship init zsh)"
-source "${XDG_DATA_HOME:-$HOME/.config}/zsh/.iterm2_shell_integration.zsh"
 
 ################################################################################
 # Aliases
 ################################################################################
 alias cd='z'
 alias ls='exa'
-alias l='ls -l'
+alias l='ls -al'
+alias ll='ls -l'
 alias nvm='fnm'
-alias iterm='open -a "iterm"'
+# alias iterm='open -a "iterm"'
 alias python='python3.11'
-alias pip='python -m pip'
+# alias pip='python -m pip'
 alias venv='python -m venv'
 alias neofetch='macchina'
 alias exa='exa --icons --sort=type'
@@ -43,18 +46,7 @@ alias cat='bat'
 alias tree='exa --tree'
 
 ################################################################################
-# OS dependent config
-################################################################################
-if [[ $(uname) == 'Darwin' ]]
-then
-    source "${XDG_DATA_HOME:-$HOME/.config}/zsh/os/macos.zsh"
-elif [[ $(uname) == 'Linux' ]]
-then
-    source "${XDG_DATA_HOME:-$HOME/.config}/zsh/os/linux.zsh"
-fi
-
-################################################################################
 # Finalize 
 ################################################################################
-autoload -U compinit
-compinit
+source "${XDG_DATA_HOME:-$HOME/.config}/zsh/os/$(uname).zsh"
+

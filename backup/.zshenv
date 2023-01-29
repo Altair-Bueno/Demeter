@@ -13,14 +13,12 @@ export XDG_DATA_HOME="$HOME/.config"
 export EDITOR='hx'
 export MANPATH="/usr/local/man:$MANPATH"
 export LESSHISTFILE=-
-# Move .zcomdump files to cache folder
-export ZSH_COMPDUMP="$HOME/.cache/zsh/.zcomdump-$ZSH_VERSION"
-# Bat theme
 export BAT_THEME='base16'
 export BAT_STYLE='plain,rule,header-filename,header-filesize'
 export _ZO_ECHO=1
 # Disable compinit to improve performance
 skip_global_compinit=1
+HISTFILE=.config/zsh/.history
 # Disable do you wish to see all x posibilities
 # https://github.com/marlonrichert/zsh-autocomplete/issues/388
 # zstyle ':completion:*' list-prompt   ''
@@ -33,6 +31,8 @@ zstyle ':autocomplete:*' insert-unambiguous yes # autocomplete just the common p
 zstyle ':autocomplete:*' fzf-completion yes     # use fzf autocomplete
 # From https://www.reddit.com/r/zsh/comments/wxlmjo/configure_up_arrow_to_get_last_command_from_this/
 setopt NO_SHARE_HISTORY
+setopt auto_cd
+
 
 ################################################################################
 # SDKs

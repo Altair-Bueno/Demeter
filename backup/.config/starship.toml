@@ -2,6 +2,7 @@
 
 right_format = """$cmd_duration$git_status$time"""
 format = """$os$directory$character"""
+add_newline = false
 
 [os]
 disabled = false
