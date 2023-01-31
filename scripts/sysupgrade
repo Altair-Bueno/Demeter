@@ -9,11 +9,10 @@
 #                                                                             #
 # Usage:                                                                      #
 # sysupgrade [flags]                                                          #
-# --all       Update all                                                      #
-# --homebrew  Homebrew                                                        #
+# --brew  Homebrew                                                            #
 # --pip       pip                                                             #
 # --rust      Rust                                                            #
-# --omz       Omz plugins                                                 #
+# --zsh       Zsh plugins                                                     #
 # --xcode     xcode CLI tools                                                 #
 ###############################################################################
 
@@ -27,42 +26,47 @@ function update_homebrew {
     brew cleanup
 }
 
-cli[--homebrew]=update_homebrew
+cli[brew]=update_homebrew
 
 function update_zsh {
     # We spawn new zsh instances to run omz-specific commands inside
     sheldon lock
 }
 
-cli[--zsh]=update_zsh
+cli[zsh]=update_zsh
 
 function update_rust {
     rustup update stable
 }
 
-cli[--rust]=update_rust
+cli[rust]=update_rust
 
 function update_xcode {
     softwareupdate --install -a
 }
 
-cli[--xcode]=update_xcode
+cli[xcode]=update_xcode
 
 function update_pip {
     pip install --upgrade pip
 }
 
-cli[--pip]=update_pip
+cli[pip]=update_pip
 
-if (( $*[(Ie)--all] )); then
-    for v in ${(v)cli}; do
-        echo "# Running $v"
-        $v 
-    done
+
+################################################################################
+
+if [[ -z $* ]]
+then
+    upgrade_list=( ${(k)cli} )
 else
-    for arg in $*; do
-        echo "# Running $cli[$arg]"
-        $cli[$arg]
-    done
+    upgrade_list=( $* )
 fi
+
+for upgrade in $upgrade_list
+do
+    ($cli[$upgrade] 2>&1 | sed "s/^/[$upgrade]\t: /") &
+done
+
+wait
 
