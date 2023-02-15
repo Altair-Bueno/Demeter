@@ -8,34 +8,39 @@
 # Updates toolchains and software installed on a macOS system                 #
 #                                                                             #
 # Usage:                                                                      #
-# sysupgrade [flags]                                                          #
-# --brew  Homebrew                                                            #
-# --pip       pip                                                             #
-# --rust      Rust                                                            #
-# --zsh       Zsh plugins                                                     #
-# --xcode     xcode CLI tools                                                 #
+# sysupgrade [toolchain]                                                      #
+#                                                                             #
+# Toolchain Description                                                      #
+# brew      Homebrew                                                         #
+# pip       pip                                                              #
+# rust      Rust                                                             #
+# zsh       Zsh plugins                                                      #
+# xcode     xcode CLI tools                                                  #
 ###############################################################################
 
 declare -A cli
 
 function update_homebrew {
+    export HOMEBREW_COLOR=true
     brew update
     brew upgrade
     brew upgrade --cask
     brew autoremove
     brew cleanup
+    unset HOMEBREW_COLOR
 }
 
 cli[brew]=update_homebrew
 
 function update_zsh {
     # We spawn new zsh instances to run omz-specific commands inside
-    sheldon lock
+    sheldon --color=always lock --update
 }
 
 cli[zsh]=update_zsh
 
 function update_rust {
+    rustup self update
     rustup update stable
 }
 
@@ -65,7 +70,7 @@ fi
 
 for upgrade in $upgrade_list
 do
-    ($cli[$upgrade] 2>&1 | sed "s/^/[$upgrade]\t: /") &
+    ($cli[$upgrade] |& sed "s/^/[$upgrade]\t| /") &
 done
 
 wait

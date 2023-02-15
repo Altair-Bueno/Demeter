@@ -18,7 +18,6 @@ export BAT_STYLE='plain,rule,header-filename,header-filesize'
 export _ZO_ECHO=1
 # Disable compinit to improve performance
 skip_global_compinit=1
-HISTFILE=.config/zsh/.history
 # Disable do you wish to see all x posibilities
 # https://github.com/marlonrichert/zsh-autocomplete/issues/388
 # zstyle ':completion:*' list-prompt   ''
@@ -33,10 +32,12 @@ zstyle ':autocomplete:*' fzf-completion yes     # use fzf autocomplete
 setopt NO_SHARE_HISTORY
 setopt auto_cd
 
-
 ################################################################################
 # SDKs
 ################################################################################
+
+# GNU sed
+path=( '/usr/local/opt/gnu-sed/libexec/gnubin' $path )
 
 # Homebrew installed tools
 path+='/usr/local/bin'
@@ -45,15 +46,9 @@ path+='/usr/local/sbin'
 # Commandline utils made with zsh
 path+="$HOME/Demeter/scripts"
 
-# JetBrains toolbox shell script location
-path+="$HOME/.jetbrains"
-
 # Rust cargo
 path+="$HOME/.cargo/bin"
 fpath+=($HOME/.rustup/toolchains/*/share/zsh/site-functions)
-
-# Scala Cousier
-path+="$HOME/Library/Application Support/Coursier/bin"
 
 # OpenJDK Home
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home"
@@ -64,11 +59,6 @@ path+='/usr/local/opt/bison/bin'
 # Stack
 path+='/usr/local/bin/stack'
 
-# Stack binaries
-path+="$HOME/.local/bin"
-
 # fnm (nvm)
 eval "$(fnm env --use-on-cd)"
 
-# Basictex
-path+='/Library/TeX/texbin'

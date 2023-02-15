@@ -7,7 +7,7 @@
 	name = Altair-Bueno
 	email = 67512202+Altair-Bueno@users.noreply.github.com
 [core]
-	excludesfile = /Users/compux72/.gitignore_global
+	# excludesfile = /Users/compux72/.gitignore_global
 	autocrlf = input
 	pager = delta
 [init]

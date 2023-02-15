@@ -19,6 +19,7 @@ P10K_SCRIPT=~/.config/zsh/.p10k.zsh
 ################################################################################
 autoload -U compinit
 compinit -u -d "$HOME/.cache/zsh/.zcomdump-$ZSH_VERSION"
+HISTFILE="${XDG_DATA_HOME:-$HOME/.config}/zsh/.history"
 
 eval "$(sheldon source)"
 eval "$(zoxide init zsh)"
