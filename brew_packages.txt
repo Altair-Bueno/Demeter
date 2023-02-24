@@ -1,4 +1,5 @@
 bat
+biber
 colima
 coreutils
 croc
@@ -11,16 +12,14 @@ faas-cli
 fd
 flyctl
 fnm
+fx
 fzf
 git-delta
-gnu-getopt
 gnu-sed
 gnupg
 helix
 helm
 hyperfine
-jless
-jq
 kubernetes-cli
 less
 libomp
@@ -30,11 +29,12 @@ maven
 mono
 netcat
 oha
+onefetch
 pandoc
-pinentry-mac
 pngpaste
 pnpm
 ripgrep
+sccache
 sheldon
 starship
 tako8ki/tap/gobang
@@ -44,7 +44,7 @@ testdisk
 tokei
 trunk
 veeso/termscp/termscp
-viu
 wasmer
+watch
 xh
 zoxide

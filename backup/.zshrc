@@ -33,9 +33,9 @@ alias ls='exa'
 alias l='ls -al'
 alias ll='ls -l'
 alias nvm='fnm'
-# alias iterm='open -a "iterm"'
+alias iterm='open -a "iterm"'
 alias python='python3.11'
-# alias pip='python -m pip'
+alias pip='python -m pip'
 alias venv='python -m venv'
 alias neofetch='macchina'
 alias exa='exa --icons --sort=type'
@@ -45,6 +45,8 @@ alias http='xh'
 alias https='xhs'
 alias cat='bat'
 alias tree='exa --tree'
+alias jq="fx"
+alias jless="fx"
 
 ################################################################################
 # Finalize 

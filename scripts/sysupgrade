@@ -58,6 +58,13 @@ function update_pip {
 
 cli[pip]=update_pip
 
+function upgrade_node {
+    fnm install --latest
+    pnpm up -g
+}
+
+cli[node]=upgrade_node
+
 
 ################################################################################
 
