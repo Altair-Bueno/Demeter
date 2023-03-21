@@ -1,6 +1,8 @@
-theme = 'Custom'
+#theme = 'Custom'
+theme = "BD"
 long_kernel = true
 long_shell = true
+
 show = [
     'Host',
     'Machine',
@@ -9,7 +11,7 @@ show = [
     'DesktopEnvironment',
     'WindowManager',
     'Resolution',
-#    'Backlight',
+    'Backlight',
     'Packages',
 #    'LocalIP',
     'Terminal',

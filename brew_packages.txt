@@ -1,5 +1,6 @@
 bat
 biber
+cmatrix
 colima
 coreutils
 croc
@@ -10,9 +11,9 @@ docker-compose
 exa
 faas-cli
 fd
+finefindus/tap/artem
 flyctl
 fnm
-fx
 fzf
 git-delta
 gnu-sed
@@ -20,9 +21,11 @@ gnupg
 helix
 helm
 hyperfine
+jaq
 kubernetes-cli
 less
 libomp
+lolcat
 macchina
 macos-trash
 maven

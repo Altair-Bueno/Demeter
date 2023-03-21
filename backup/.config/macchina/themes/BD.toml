@@ -1,0 +1,26 @@
+# Custom - Hydrogen
+
+# spacing         = 2
+# padding         = 2
+hide_ascii      = false
+separator       = ""
+separator_color = "#94186a"
+key_color       = "#d65813"
+
+
+# - https://github.com/JaxiiRuff/stuff/blob/6261b0cfa3978b229d89b46e473a95e57c262b88/Duke.sh
+# - https://www.reddit.com/r/unixporn/comments/11cnkvp/gnome_i_think_i_made_the_most_furry_pc_you_could/
+[custom_ascii]
+path            = "~/Demeter/ascii/bd-color.ascii"
+
+[palette]
+type            = "Dark" # Light or Full
+glyph           = " "
+visible         = true
+
+[bar]
+glyph           = ""
+symbol_open     = '['
+symbol_close    = ']'
+hide_delimiters = false
+visible         = false

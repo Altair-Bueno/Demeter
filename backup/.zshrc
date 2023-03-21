@@ -45,8 +45,11 @@ alias http='xh'
 alias https='xhs'
 alias cat='bat'
 alias tree='exa --tree'
-alias jq="fx"
-alias jless="fx"
+alias jq="jaq"
+# Kubernetes releated
+alias k='kubectl'
+alias kget='kubectl get'
+alias kdesc='kubectl describe'
 
 ################################################################################
 # Finalize 

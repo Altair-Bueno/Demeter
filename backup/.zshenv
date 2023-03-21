@@ -17,6 +17,7 @@ export BAT_THEME='base16'
 export BAT_STYLE='plain,rule,header-filename,header-filesize'
 export _ZO_ECHO=1
 export SCCACHE_CACHE_SIZE='5G'
+export NODE_REPL_HISTORY=""
 # Disable compinit to improve performance
 skip_global_compinit=1
 # Disable do you wish to see all x posibilities
@@ -56,9 +57,6 @@ export JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home"
 
 # Bison
 path+='/usr/local/opt/bison/bin'
-
-# Stack
-path+='/usr/local/bin/stack'
 
 # macOS dev tools
 path+='/Library/Developer/CommandLineTools/usr/bin/'
