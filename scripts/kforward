@@ -1,21 +1,31 @@
 #!/bin/sh
 set -e
 
-# CONFIG VARS
-KUBE_FORWARD_PORT_RANGE="${KUBE_FORWARD_PORT_RANGE:-3000-32000}"
+################################################################################
+# Args
+KUBE_FORWARD_PORT_RANGE="${1:-3000-32000}"
+KUBE_FORWARD_SEPARATOR="${2:-:}"
 
 ################################################################################
 # Prompt for service
-KUBE_SERVICE="$(kubectl get svc --all-namespaces -ojsonpath="{range .items[*]}{.metadata.namespace}:{.metadata.name},{end}" | tr ',' "\n" | fzf)"
+KUBE_SERVICE="$(kubectl get svc --all-namespaces -ojsonpath="{range .items[*]}{.metadata.namespace}$KUBE_FORWARD_SEPARATOR{.metadata.name},{end}" \
+    | tr ',' "\n" \
+    | fzf)"
 # Extract service namespace and name
-KUBE_SERVICE_NAMESPACE=$(cut '-d:' -f1 <<< $KUBE_SERVICE)
-KUBE_SERVICE_NAME=$(cut '-d:' -f2 <<< $KUBE_SERVICE)
+KUBE_SERVICE_NAMESPACE=$(cut "-d$KUBE_FORWARD_SEPARATOR" -f1 <<< "$KUBE_SERVICE")
+KUBE_SERVICE_NAME=$(cut "-d$KUBE_FORWARD_SEPARATOR" -f2 <<< "$KUBE_SERVICE")
 
 # Obtain service port
 KUBE_SERVICE_PORT="$(kubectl get "--namespace=$KUBE_SERVICE_NAMESPACE" "service/$KUBE_SERVICE_NAME" '-ojsonpath={.spec.ports[0].port}')"
 
 # Start port forwarding
-KUBE_FORWARD_PORT="$(shuf -i "$KUBE_FORWARD_PORT_RANGE" -n 1)"
+if [[ "$KUBE_FORWARD_PORT_RANGE" =~ '-' ]] 
+then
+    KUBE_FORWARD_PORT="$(shuf -i "$KUBE_FORWARD_PORT_RANGE" -n 1)"
+else    
+    KUBE_FORWARD_PORT="$KUBE_FORWARD_PORT_RANGE"
+fi
+
 echo "Starting port forwarding..."
 echo "http://localhost:$KUBE_FORWARD_PORT"
 echo "https://localhost:$KUBE_FORWARD_PORT"
