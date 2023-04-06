@@ -10,6 +10,7 @@ color-modes = true
 
 [editor.lsp]
 display-messages = true
+display-inlay-hints = true
 
 [editor.cursor-shape]
 normal = "block"

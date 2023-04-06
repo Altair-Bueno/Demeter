@@ -46,10 +46,13 @@ alias https='xhs'
 alias cat='bat'
 alias tree='exa --tree'
 alias jq="jaq"
+alias watch='watch -c'
 # Kubernetes releated
 alias k='kubectl'
 alias kget='kubectl get'
+alias kdel='kubectl delete'
 alias kdesc='kubectl describe'
+alias klogs='kubectl logs'
 
 ################################################################################
 # Finalize 

@@ -38,6 +38,7 @@ pngpaste
 pnpm
 ripgrep
 sccache
+sd
 sheldon
 starship
 tako8ki/tap/gobang

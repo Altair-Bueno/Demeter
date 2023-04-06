@@ -1,2 +1,11 @@
-#!/bin/sh
-kubectl config use-context $(kubectl config get-contexts -o name | fzf --height=10 --prompt="Kubernetes Context> ")
+#!/usr/bin/env bash
+set -eo pipefail
+
+if [[ -n "$1" ]]
+then
+  CONTEXT="$1"
+else
+  CONTEXT="$(kubectl config get-contexts -o name | fzf --height 10%)"
+fi
+
+kubectl config use-context "$CONTEXT"

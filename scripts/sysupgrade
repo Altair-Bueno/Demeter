@@ -24,7 +24,7 @@ function update_homebrew {
     export HOMEBREW_COLOR=true
     brew update
     brew upgrade
-    brew upgrade --cask
+    brew list --cask | xargs brew upgrade --cask
     brew autoremove
     brew cleanup
     unset HOMEBREW_COLOR
