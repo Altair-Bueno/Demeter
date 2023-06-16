@@ -39,7 +39,7 @@ alias pip='python -m pip'
 alias venv='python -m venv'
 alias neofetch='macchina'
 alias exa='exa --icons --sort=type'
-alias httpserv='npx http-server'
+alias httpserv='pnpx http-server'
 alias vim='hx'
 alias http='xh'
 alias https='xhs'
@@ -53,6 +53,8 @@ alias kget='kubectl get'
 alias kdel='kubectl delete'
 alias kdesc='kubectl describe'
 alias klogs='kubectl logs'
+alias kedit='kubectl edit'
+alias krestart='kubectl rollout restart deployment'
 
 ################################################################################
 # Finalize 
