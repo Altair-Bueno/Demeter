@@ -5,7 +5,8 @@
 	smudge = git-lfs smudge -- %f
 [user]
 	name = Altair-Bueno
-	email = 67512202+Altair-Bueno@users.noreply.github.com
+	email = altair.bueno@uma.es
+	# email = 67512202+Altair-Bueno@users.noreply.github.com
 [core]
 	# excludesfile = /Users/compux72/.gitignore_global
 	autocrlf = input
