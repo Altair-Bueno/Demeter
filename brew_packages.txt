@@ -10,7 +10,8 @@ deno
 docker
 docker-buildx
 docker-compose
-exa
+dotnet
+eza
 fd
 finefindus/tap/artem
 fnm
@@ -31,11 +32,12 @@ maven
 mit-scheme
 netcat
 oha
+oven-sh/bun/bun
 pandoc
-pkcs11-helper
 pngpaste
 pnpm
 python@3.11
+python@3.12
 ripgrep
 sd
 sheldon

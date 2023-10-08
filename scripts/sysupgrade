@@ -46,11 +46,11 @@ function update_rust {
 
 cli[rust]=update_rust
 
-function update_xcode {
-    softwareupdate --install -a
-}
-
-cli[xcode]=update_xcode
+# function update_xcode {
+#     softwareupdate --install -a
+# }
+# 
+# cli[xcode]=update_xcode
 
 function update_pip {
     pip install --upgrade pip

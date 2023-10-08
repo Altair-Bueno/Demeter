@@ -29,12 +29,12 @@ eval "$(zoxide init zsh)"
 # Aliases
 ################################################################################
 alias cd='z'
-alias ls='exa'
+alias ls='eza'
 alias l='ls -al'
 alias ll='ls -l'
 alias nvm='fnm'
 alias iterm='open -a "iterm"'
-alias python='python3.11'
+alias python='python3.12'
 alias pip='python -m pip'
 alias venv='python -m venv'
 alias neofetch='macchina'
@@ -44,7 +44,7 @@ alias vim='hx'
 alias http='xh'
 alias https='xhs'
 alias cat='bat'
-alias tree='exa --tree'
+alias tree='eza --tree'
 alias jq="jaq"
 alias watch='watch -c'
 # Kubernetes releated

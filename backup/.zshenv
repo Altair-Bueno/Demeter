@@ -38,28 +38,28 @@ setopt auto_cd
 # SDKs
 ################################################################################
 
-# GNU sed
-path=( '/usr/local/opt/gnu-sed/libexec/gnubin' $path )
+path=(
+    # Commandline utils made with zsh
+    "$HOME/Demeter/scripts"
+    # Rust cargo
+    "$HOME/.cargo/bin"
+    # Homebrew
+    '/usr/local/bin' 
+    '/usr/local/sbin'
+    # GNU sed
+    '/usr/local/opt/gnu-sed/libexec/gnubin' 
+    # macOS dev tools
+    '/Library/Developer/CommandLineTools/usr/bin'
+    $path 
+)
 
-# Homebrew installed tools
-path+='/usr/local/bin'
-path+='/usr/local/sbin'
-
-# Commandline utils made with zsh
-path+="$HOME/Demeter/scripts"
-
-# Rust cargo
-path+="$HOME/.cargo/bin"
-fpath+=($HOME/.rustup/toolchains/*/share/zsh/site-functions)
+fpath+=(
+    "$HOME/.rustup/toolchains/*/share/zsh/site-functions"
+    $fpath
+)
 
 # OpenJDK Home
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home"
-
-# Bison
-path+='/usr/local/opt/bison/bin'
-
-# macOS dev tools
-path+='/Library/Developer/CommandLineTools/usr/bin/'
 
 # fnm (nvm)
 eval "$(fnm env --use-on-cd)"
