@@ -22,19 +22,19 @@ class LockPayload:
     pid: int
     socket_addr: str
 
-def start(remote: str, port: int, lock_file: Path, forward_addr: str): 
+def start(remote: str, port: int, lock_file: Path, forward_addr: str):
     if exists(lock_file):
         raise FileExistsError(f"Lock file already exists: {lock_file}")
     cmd = [
-        "ssh", 
+        "ssh",
         "-D",
-        f"{forward_addr}:{port}", 
-        remote, 
+        f"{forward_addr}:{port}",
+        remote,
         "tail -f /dev/null"
     ]
     with open(DEFAULT_LOG_FILE, "w") as log_file:
         process = Popen(cmd, stdin=DEVNULL, stdout=log_file, stderr=log_file)
-    
+
     payload = LockPayload(pid=process.pid, socket_addr=f"socks5://{forward_addr}:{port}", remote=remote)
 
     with open(lock_file, "wt") as lock:
@@ -47,7 +47,7 @@ def status(lock_file: Path):
         with open(lock_file) as lock:
             lock_content = lock.read()
         payload = LockPayload(**loads(lock_content))
-        
+
         # Check if process is still running
         kill(payload.pid, 0)
         print(lock_content)
@@ -55,7 +55,7 @@ def status(lock_file: Path):
         remove(lock_file)
         raise SystemExit("Socket was killed") from e
     except:
-        print("Not running")    
+        print("Not running")
 
 def stop(lock_file: Path):
     with open(lock_file, "rt") as lock:
@@ -72,34 +72,34 @@ class SocksProxyArgumentParser(ArgumentParser):
             type=Path,
             default=DEFAULT_LOCK_FILE,
             metavar="FILE",
-            help="location of the lock file", 
+            help="location of the lock file",
         )
         subparsers = self.add_subparsers(parser_class=ArgumentParser, required=True)
-        
+
         start_parser = subparsers.add_parser("start")
         start_parser.add_argument(
             "remote",
             type=str,
-            help="remote address to perform SOCKS5 proxy", 
+            help="remote address to perform SOCKS5 proxy",
         )
         start_parser.add_argument(
             "--forward_addr",
             type=str,
             metavar="ADDR",
             default=DEFAULT_FORWARD_ADDR,
-            help="forward address", 
+            help="forward address",
         )
         start_parser.add_argument(
-            "-p", 
-            "--port", 
+            "-p",
+            "--port",
             type=int,
             nargs=1,
-            default=DEFAULT_PORT, 
-            help="port used for redirection", 
+            default=DEFAULT_PORT,
+            help="port used for redirection",
             dest="port",
         )
         start_parser.set_defaults(func=start)
-        
+
         stop_parser = subparsers.add_parser("stop")
         stop_parser.set_defaults(func=stop)
 
