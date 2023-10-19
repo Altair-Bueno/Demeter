@@ -1,8 +1,6 @@
 bat
-bdw-gc
 biber
 cmake
-cmatrix
 colima
 coreutils
 croc
@@ -32,9 +30,7 @@ maven
 mit-scheme
 netcat
 oha
-oven-sh/bun/bun
 pandoc
-pngpaste
 pnpm
 python@3.11
 python@3.12
@@ -45,7 +41,6 @@ starship
 tako8ki/tap/gobang
 tectonic
 telnet
-testdisk
 tokei
 trunk
 veeso/termscp/termscp
