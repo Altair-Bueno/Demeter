@@ -14,3 +14,4 @@
 
 [credential]
 	helper = libsecret
+	credentialStore = secretservice

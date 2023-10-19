@@ -78,7 +78,7 @@ function setup_macos() {
 
 function setup_linux {
     # Linux specific config
-	rm "$HOME/.gitconfig"
+	rm "$HOME/.gitconfig" || true
 	ln -nfs "$DEMETER/linux/.gitconfig" "$HOME/.gitconfig"
 }
 

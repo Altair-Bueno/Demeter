@@ -34,8 +34,6 @@ alias l='ls -al'
 alias ll='ls -l'
 alias nvm='fnm'
 alias iterm='open -a "iterm"'
-alias python='python3.12'
-alias pip='python -m pip'
 alias venv='python -m venv'
 alias neofetch='macchina'
 alias exa='exa --icons --sort=type'
@@ -61,3 +59,13 @@ alias krestart='kubectl rollout restart deployment'
 ################################################################################
 source "${XDG_DATA_HOME:-$HOME/.config}/zsh/os/$(uname).zsh"
 
+################################################################################
+# Terminal configuration
+################################################################################
+
+if [[ "$TERM" = "xterm-256color" ]]
+then
+  preexec() { 
+    print -Pn "\e]0;$1 - ${PWD/$HOME/\~}\a" 
+  }
+fi

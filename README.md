@@ -18,7 +18,7 @@ curl "https://raw.githubusercontent.com/Altair-Bueno/Demeter/master/restore.sh" 
 
 ## Linux
 
-Run these additional instructions **before** running the script above if your 
+Run these additional instructions **before** running the script above if your
 system runs linux
 
 1. Set up `zsh` as the default shell
@@ -34,7 +34,6 @@ I'm currently using One Dark. You can find it for:
 - [Visual Studio Code](https://github.com/one-dark/vscode-one-dark-theme)
 - [iTerm2](https://github.com/one-dark/iterm-one-dark-theme)
 - [JetBrains' IDEs](https://github.com/one-dark/jetbrains-one-dark-theme)
-- [nvim](https://github.com/navarasu/onedark.nvim)
 
 # Font
 
