@@ -1,3 +1,11 @@
 font-jetbrains-mono-nerd-font
 iterm2
 visual-studio-code
+appcleaner
+font-jetbrains-mono-nerd-font
+google-chrome
+google-drive
+iterm2
+maccy
+rectangle
+visual-studio-code
