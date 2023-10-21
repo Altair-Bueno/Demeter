@@ -66,8 +66,9 @@ function setup_macos() {
   : Installing HomeBrew and software "https://github.com/Homebrew/install/#install-homebrew-on-macos-or-linux"
   export NONINTERACTIVE=1
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  cat "$DEMETER/brew_tap.txt" | xargs -t brew tap
-  cat "$DEMETER/brew_packages.txt" | xargs -t brew install
+  cat "$DEMETER/packages/brew/tap.txt" | xargs -tn 1 brew tap
+  cat "$DEMETER/packages/brew/packages.txt" | xargs -t brew install
+  cat "$DEMETER/packages/brew/cask.txt" | xargs -t brew install --cask
 
   : Link macos config
   rm "$HOME/.gitconfig" || true
