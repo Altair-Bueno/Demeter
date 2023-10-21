@@ -53,7 +53,7 @@ cli[rust]=update_rust
 # cli[xcode]=update_xcode
 
 function update_pip {
-    pip install --upgrade pip
+    pip3 install --upgrade pip
 }
 
 cli[pip]=update_pip
