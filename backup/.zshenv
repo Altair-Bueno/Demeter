@@ -47,9 +47,7 @@ path=(
     '/usr/local/bin' 
     '/usr/local/sbin'
     # GNU sed
-    '/usr/local/opt/gnu-sed/libexec/gnubin' 
-    # macOS dev tools
-    '/Library/Developer/CommandLineTools/usr/bin'
+    '/usr/local/opt/gnu-sed/libexec/gnubin'
     $path 
 )
 
