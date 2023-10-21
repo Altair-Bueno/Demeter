@@ -92,7 +92,7 @@
       "int" : 0
     },
     "landscapeSnapAreas" : {
-
+      "string" : "null"
     },
     "launchOnLogin" : {
       "bool" : true
@@ -125,7 +125,7 @@
       "int" : 0
     },
     "portraitSnapAreas" : {
-
+      "string" : "null"
     },
     "relaunchOpensMenu" : {
       "bool" : false
@@ -185,7 +185,7 @@
       "float" : 190
     },
     "subsequentExecutionMode" : {
-      "int" : 1
+      "int" : 0
     },
     "SUEnableAutomaticChecks" : {
       "bool" : false

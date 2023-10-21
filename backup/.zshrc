@@ -58,13 +58,3 @@ alias krestart='kubectl rollout restart deployment'
 ################################################################################
 source "${XDG_DATA_HOME:-$HOME/.config}/zsh/os/$(uname).zsh"
 
-################################################################################
-# Terminal configuration
-################################################################################
-
-if [[ "$TERM" = "xterm-256color" ]]
-then
-  preexec() { 
-    print -Pn "\e]0;$1 - ${PWD/$HOME/\~}\a" 
-  }
-fi
