@@ -44,8 +44,6 @@ alias cat='bat'
 alias tree='eza --tree'
 alias jq="jaq"
 alias watch='watch -c'
-alias python='python3'
-alias pip='python3 -m pip'
 # Kubernetes releated
 alias k='kubectl'
 alias kget='kubectl get'

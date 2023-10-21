@@ -19,3 +19,14 @@ rectangle
 telegram
 visual-studio-code
 whatsapp
+appcleaner
+autofirma
+font-jetbrains-mono-nerd-font
+google-chrome
+google-drive
+iterm2
+maccy
+rectangle
+telegram
+visual-studio-code
+whatsapp
