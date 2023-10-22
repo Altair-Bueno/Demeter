@@ -33,13 +33,8 @@ alias ls='eza'
 alias l='ls -al'
 alias ll='ls -l'
 alias nvm='fnm'
-alias iterm='open -a "iterm"'
 alias venv='python -m venv'
-alias exa='exa --icons --sort=type'
-alias httpserv='pnpx http-server'
-alias vim='hx'
-alias http='xh'
-alias https='xhs'
+alias httpserv='python -m http.server'
 alias cat='bat'
 alias tree='eza --tree'
 alias jq="jaq"
@@ -56,5 +51,5 @@ alias krestart='kubectl rollout restart deployment'
 ################################################################################
 # Finalize 
 ################################################################################
-source "${XDG_DATA_HOME:-$HOME/.config}/zsh/os/$(uname).zsh"
+source "$DEMETER/backup/.config/zsh/os/$(uname).zsh"
 
