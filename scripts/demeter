@@ -30,7 +30,7 @@ then
 	mkdir -p "$(dirname "$BREW_TAP")" "$(dirname "$BREW_PACKAGE")" "$(dirname "$BREW_CASK")"
 	brew tap > "$BREW_TAP"
 	brew leaves > "$BREW_PACKAGE"
-	brew list --cask >> "$BREW_CASK"
+	brew list --cask > "$BREW_CASK"
 else
 	echo Freezing packages is not supported on non-macOS systems
 fi
