@@ -1,86 +1,59 @@
-#!/bin/zsh
+#!/usr/bin/env python3 -sS -OO
+from __future__ import annotations
 
-###############################################################################
-# Sew 1.0                                                                     #
-# Altair Bueno MIT license                                                    #
-# https://github.com/Altair-Bueno/Demeter                                     #
-#                                                                             #
-# Create books (PDF files) from multiple pdf files easily                     #
-#                                                                             #
-# Book                                                                        #
-#    ├── metadata.yaml                                                        #
-#    ├── resources                                                            #
-#    │   └── A1.png                                                           #
-#    ├── Chapter-1                                                            #
-#    │   └── ej1.md                                                           #
-#    ...                                                                      #
-#                                                                             #
-# sew Chapter**/*.md                                                          #
-#                                                                             #
-###############################################################################
+from dataclasses import dataclass, field
+from itertools import chain
+from os import getenv, remove
+from pathlib import Path
+from subprocess import run
+from sys import argv, stdin, stdout, stderr
+from tomllib import load
 
-set -e
+XDG_DATA_HOME = Path(getenv("XDG_DATA_HOME", "~/.config")).expanduser().resolve()
+SETTINGS_PATH = XDG_DATA_HOME / "sew.toml"
 
-if [[ $# -eq 0 ]]
-then 
-    echo "Usage: sew FILES..."
-    exit 1
-fi
+@dataclass
+class Settings:
+    book: str = "Book"
+    suffix: str = ".pdf"
+    cleanup: list = field(default_factory=list)
+    pandoc: dict[str, object] = field(default_factory=dict)
+    exec: dict[str, object] = field(default_factory=dict)
 
-# LaTeX engine used to generate the PDF
-pdf_engine='tectonic'
-# LaTex template
-template='eisvogel'
-# Pandoc filters to apply
-filters=(
-    # 'mermaid-filter'
-    # 'pandoc-include-code'
-)
-cleanup_files=(
-    # 'mermaid-filter.err'
-)
+    @staticmethod
+    def from_file(path: Path) -> Settings:
+        try:
+            with open(path, "rb") as f:
+                return Settings(**load(f))
+        except FileNotFoundError:
+            return Settings()
 
-# Extract output file name
-if [[ "$#" -gt 1 ]] 
-then
-    # Multiple files
-    out_name='Book.pdf'
-else 
-    # One file
-    out_name=$(sed -n "s|\(.*\)\.md|\1.pdf|gp" <<< "$1")
-fi
+def format_arg(k: str,v: object) -> list[str]:
+    if isinstance(v, list):
+        return [f"--{k}={value}" for value in v]
+    elif isinstance(v, dict):
+        return [f"--{k}={a}={b}" for a,b in v.items()]
+    else:
+        return [f"--{k}={v}"]
 
-# List of arguments
-arguments=(
-    # Disable floating images pandoc
-    # https://stackoverflow.com/a/58840456
-    # https://gist.github.com/Altair-Bueno/1d50eb67449a971ddf7fb9deb435b6f8
-    "--include-in-header=$HOME/.pandoc/header/disable_float.tex"
-    "--output=$out_name"
-    "--pdf-engine=$pdf_engine"
-    "--template=$template"
-    # https://github.com/jgm/pandoc/issues/3752#issuecomment-1004352568
-    "--from=markdown+rebase_relative_paths"
-)
+def main(arguments: list[str], settings: Settings):
+    if arguments_len := len(arguments) == 1:
+        raise SystemExit(f"USAGE: {Path(arguments[0]).name} FILES... [PANDOC_ARGS...]")
+    
+    name = Path(arguments[1] if arguments_len == 2 else settings.book).with_suffix(settings.suffix)
 
-# Add metadata block if file is present
-if [[ -f 'metadata.yml' ]]
-then 
-    arguments+='--metadata-file=metadata.yml'
-elif [[ -f 'metadata.yaml' ]]
-then
-    arguments+='--metadata-file=metadata.yaml'
-fi
+    args = list(chain(
+        ["pandoc"], 
+        format_arg("output", name),
+        chain.from_iterable(format_arg(k,v) for k,v in settings.pandoc.items()),
+        arguments[1:]
+    ))
+    print(name)
+    run(args, **settings.exec, stderr=stderr,stdout=stdout,stdin=stdin)
+    
+    for path in settings.cleanup: remove(path)
 
-# Prepare filters
-for filter in $filters
-do 
-    arguments+="--filter=$filter"
-done
-
-echo "$out_name"
-# Execute pandoc and remove empty file
-pandoc $arguments $*
-
-# Delete unnecesary file
-[[ -z $cleanup_files ]] || rm $cleanup_files
+if __name__ == "__main__":
+    import gc
+    gc.disable()
+    main(argv, Settings.from_file(SETTINGS_PATH))
