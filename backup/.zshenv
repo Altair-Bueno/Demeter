@@ -40,16 +40,12 @@ setopt auto_cd
 
 path=(
     # Commandline utils made with zsh
-    "$HOME/Demeter/scripts"
+    "$DEMETER/scripts"
     # Rust cargo
     "$HOME/.cargo/bin"
     # Homebrew
     '/usr/local/bin' 
     '/usr/local/sbin'
-    # GNU sed
-    '/usr/local/opt/gnu-sed/libexec/gnubin' 
-    # macOS dev tools
-    '/Library/Developer/CommandLineTools/usr/bin'
     $path 
 )
 
@@ -57,10 +53,3 @@ fpath+=(
     "$HOME/.rustup/toolchains/*/share/zsh/site-functions"
     $fpath
 )
-
-# OpenJDK Home
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home"
-
-# fnm (nvm)
-eval "$(fnm env --use-on-cd)"
-

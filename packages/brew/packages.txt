@@ -1,8 +1,6 @@
 bat
-bdw-gc
 biber
 cmake
-cmatrix
 colima
 coreutils
 croc
@@ -13,8 +11,6 @@ docker-compose
 dotnet
 eza
 fd
-finefindus/tap/artem
-fnm
 fzf
 git-delta
 gnupg
@@ -26,17 +22,15 @@ k9s
 kubernetes-cli
 less
 libtool
-macchina
 macos-trash
 maven
 mit-scheme
+neofetch
 netcat
+node
 oha
-oven-sh/bun/bun
 pandoc
-pngpaste
 pnpm
-python@3.11
 python@3.12
 ripgrep
 sd
@@ -45,7 +39,6 @@ starship
 tako8ki/tap/gobang
 tectonic
 telnet
-testdisk
 tokei
 trunk
 veeso/termscp/termscp

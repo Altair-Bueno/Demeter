@@ -1,8 +1,8 @@
 version = "0.7.3"
-home = "/home/compux72"
-config_dir = "/home/compux72/.config/sheldon"
-data_dir = "/home/compux72/.config/sheldon"
-config_file = "/home/compux72/.config/sheldon/plugins.toml"
+home = "/Users/compux72"
+config_dir = "/Users/compux72/.config/sheldon"
+data_dir = "/Users/compux72/.config/sheldon"
+config_file = "/Users/compux72/.config/sheldon/plugins.toml"
 
 [[plugins]]
 name = "pre"
@@ -10,32 +10,32 @@ raw = "# OMZ configuration\nZSH_CACHE_DIR=\"${XDG_CACHE_HOME:-$HOME/.cache}/zsh\
 
 [[plugins]]
 name = "omz"
-source_dir = "/home/compux72/.config/sheldon/repos/github.com/ohmyzsh/ohmyzsh"
-files = ["/home/compux72/.config/sheldon/repos/github.com/ohmyzsh/ohmyzsh/lib/clipboard.zsh", "/home/compux72/.config/sheldon/repos/github.com/ohmyzsh/ohmyzsh/lib/completion.zsh", "/home/compux72/.config/sheldon/repos/github.com/ohmyzsh/ohmyzsh/lib/directories.zsh", "/home/compux72/.config/sheldon/repos/github.com/ohmyzsh/ohmyzsh/lib/history.zsh", "/home/compux72/.config/sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/fzf/fzf.plugin.zsh"]
+source_dir = "/Users/compux72/.config/sheldon/repos/github.com/ohmyzsh/ohmyzsh"
+files = ["/Users/compux72/.config/sheldon/repos/github.com/ohmyzsh/ohmyzsh/lib/clipboard.zsh", "/Users/compux72/.config/sheldon/repos/github.com/ohmyzsh/ohmyzsh/lib/completion.zsh", "/Users/compux72/.config/sheldon/repos/github.com/ohmyzsh/ohmyzsh/lib/directories.zsh", "/Users/compux72/.config/sheldon/repos/github.com/ohmyzsh/ohmyzsh/lib/history.zsh", "/Users/compux72/.config/sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/fzf/fzf.plugin.zsh"]
 apply = ["source"]
 
 [plugins.hooks]
 
 [[plugins]]
 name = "fast-syntax-highlighting"
-source_dir = "/home/compux72/.config/sheldon/repos/github.com/zdharma-continuum/fast-syntax-highlighting"
-files = ["/home/compux72/.config/sheldon/repos/github.com/zdharma-continuum/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"]
+source_dir = "/Users/compux72/.config/sheldon/repos/github.com/zdharma-continuum/fast-syntax-highlighting"
+files = ["/Users/compux72/.config/sheldon/repos/github.com/zdharma-continuum/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"]
 apply = ["source"]
 
 [plugins.hooks]
 
 [[plugins]]
 name = "zsh-autopair"
-source_dir = "/home/compux72/.config/sheldon/repos/github.com/hlissner/zsh-autopair"
-files = ["/home/compux72/.config/sheldon/repos/github.com/hlissner/zsh-autopair/zsh-autopair.plugin.zsh"]
+source_dir = "/Users/compux72/.config/sheldon/repos/github.com/hlissner/zsh-autopair"
+files = ["/Users/compux72/.config/sheldon/repos/github.com/hlissner/zsh-autopair/zsh-autopair.plugin.zsh"]
 apply = ["source"]
 
 [plugins.hooks]
 
 [[plugins]]
 name = "powerlevel10k"
-source_dir = "/home/compux72/.config/sheldon/repos/github.com/romkatv/powerlevel10k"
-files = ["/home/compux72/.config/sheldon/repos/github.com/romkatv/powerlevel10k/powerlevel10k.zsh-theme"]
+source_dir = "/Users/compux72/.config/sheldon/repos/github.com/romkatv/powerlevel10k"
+files = ["/Users/compux72/.config/sheldon/repos/github.com/romkatv/powerlevel10k/powerlevel10k.zsh-theme"]
 apply = ["source"]
 
 [plugins.hooks]

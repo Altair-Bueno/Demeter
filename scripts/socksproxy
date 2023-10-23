@@ -1,14 +1,20 @@
 #!/usr/bin/env python3 -sS -OO
-from argparse import ArgumentParser
-from dataclasses import dataclass, asdict
-from pathlib import Path
-import os
-import json
+from __future__ import annotations
 
-DEFAULT_LOCK_FILE = Path("/tmp/socksproxy.lock")
-DEFAULT_LOG_FILE = Path("/tmp/socksproxy.log")
-DEFAULT_FORWARD_ADDR = "127.0.0.1"
-DEFAULT_PORT = 1080
+from argparse import ArgumentParser
+from pathlib import Path
+from dataclasses import dataclass, asdict
+from json import load, loads, dump
+from os.path import exists
+from os import kill, remove, name, environ
+from signal import SIGKILL
+from subprocess import Popen, DEVNULL
+
+_tmp = Path(environ["TEMP"] if name == 'nt' else "/tmp")
+DEFAULT_LOCK_FILE    = _tmp / "socksproxy.lock"
+DEFAULT_LOG_FILE     = _tmp / "socksproxy.log"
+DEFAULT_FORWARD_ADDR       = "127.0.0.1"
+DEFAULT_PORT               = 1080
 
 @dataclass
 class LockPayload:
@@ -16,94 +22,97 @@ class LockPayload:
     pid: int
     socket_addr: str
 
-    def as_dict(self) -> dict[str, object]:
-        return asdict(self)
-
-def start(remote: str, port: int, lock_file: Path, forward_addr: str): 
-    if os.path.exists(lock_file):
+def start(remote: str, port: int, lock_file: Path, forward_addr: str):
+    if exists(lock_file):
         raise FileExistsError(f"Lock file already exists: {lock_file}")
-    
+    cmd = [
+        "ssh",
+        "-D",
+        f"{forward_addr}:{port}",
+        remote,
+        "tail -f /dev/null"
+    ]
     with open(DEFAULT_LOG_FILE, "w") as log_file:
-        from subprocess import Popen, DEVNULL
-        
-        cmd = ["ssh", "-D", f"{forward_addr}:{port}", remote, "tail -f /dev/null"]
         process = Popen(cmd, stdin=DEVNULL, stdout=log_file, stderr=log_file)
-    
+
     payload = LockPayload(pid=process.pid, socket_addr=f"socks5://{forward_addr}:{port}", remote=remote)
 
     with open(lock_file, "wt") as lock:
-        json.dump(payload.as_dict(), lock, indent=2)
+        dump(asdict(payload), lock, indent=2)
 
     print(payload.socket_addr)
 
 def status(lock_file: Path):
     try:
         with open(lock_file) as lock:
-            msg = lock.read()
+            lock_content = lock.read()
+        payload = LockPayload(**loads(lock_content))
+
+        # Check if process is still running
+        kill(payload.pid, 0)
+        print(lock_content)
+    except ProcessLookupError as e:
+        remove(lock_file)
+        raise SystemExit("Socket was killed") from e
     except:
-        msg = f"Missing lock file at {lock_file}"
-    
-    print(msg)
+        print("Not running")
 
-def stop(lock_file: str):
+def stop(lock_file: Path):
     with open(lock_file, "rt") as lock:
-        obj = json.load(lock)
-    payload = LockPayload(**obj)
-    os.remove(lock_file)
+        payload = LockPayload(**load(lock))
+    remove(lock_file)
 
-    from signal import SIGKILL
-    os.kill(payload.pid, SIGKILL)
+    kill(payload.pid, SIGKILL)
 
 class SocksProxyArgumentParser(ArgumentParser):
     def __init__(self, *args,**kwargs) -> None:
-        super().__init__(*args, **kwargs)
+        super().__init__(*args, description='Manages a SOCKS5 proxy', **kwargs)
         self.add_argument(
             "--lock_file",
             type=Path,
             default=DEFAULT_LOCK_FILE,
             metavar="FILE",
-            help="location of the lock file", 
+            help="location of the lock file",
         )
         subparsers = self.add_subparsers(parser_class=ArgumentParser, required=True)
-        
+
         start_parser = subparsers.add_parser("start")
         start_parser.add_argument(
             "remote",
             type=str,
-            help="remote address to perform SOCKS5 proxy", 
+            help="remote address to perform SOCKS5 proxy",
         )
         start_parser.add_argument(
             "--forward_addr",
             type=str,
             metavar="ADDR",
             default=DEFAULT_FORWARD_ADDR,
-            help="forward address", 
+            help="forward address",
         )
         start_parser.add_argument(
-            "-p", 
-            "--port", 
+            "-p",
+            "--port",
             type=int,
             nargs=1,
-            default=DEFAULT_PORT, 
-            help="port used for redirection", 
+            default=DEFAULT_PORT,
+            help="port used for redirection",
             dest="port",
         )
         start_parser.set_defaults(func=start)
-        
+
         stop_parser = subparsers.add_parser("stop")
         stop_parser.set_defaults(func=stop)
 
         status_parser = subparsers.add_parser("status")
         status_parser.set_defaults(func=status)
 
+def _run(*_, func, **kwargs):
+    func(**kwargs)
+
+def main():
+    ns = SocksProxyArgumentParser().parse_args()
+    _run(**vars(ns))
 
 if __name__ == '__main__':
-    from sys import argv
-    executable = Path(argv[0])
-    parser = SocksProxyArgumentParser(prog=executable.name, description='Manages a SOCKS5 proxy')
-    ns = parser.parse_args()
-    
-    func = ns.func
-    args = vars(ns)
-    del args["func"]
-    func(**args)
+    main()
+

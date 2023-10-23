@@ -65,15 +65,14 @@ function setup_macos() {
 
   : Installing HomeBrew and software "https://github.com/Homebrew/install/#install-homebrew-on-macos-or-linux"
   export NONINTERACTIVE=1
-  command -v brew > /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
-  cat "$DEMETER/brew_packages.txt" | xargs -t brew install
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  cat "$DEMETER/packages/brew/tap.txt" | xargs -tn 1 brew tap
+  cat "$DEMETER/packages/brew/packages.txt" | xargs -t brew install
+  cat "$DEMETER/packages/brew/cask.txt" | xargs -t brew install --cask
 
   : Link macos config
-  rm "$HOME/.gitconfig" 2> /dev/null
+  rm "$HOME/.gitconfig" || true
   ln -nfs "$DEMETER/macOS/.gitconfig" "$HOME/.gitconfig"
-
-  : Setting up git credential helper "https://gist.github.com/nepsilon/0fd0c779f76d7172f12477ba9d71bb66"
-  git config --global credential.helper osxkeychain
 }
 
 function setup_linux {
