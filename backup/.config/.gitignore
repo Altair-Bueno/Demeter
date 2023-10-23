@@ -19,6 +19,9 @@ gvfs-metadata/
 ibus/
 menus/
 systemd/
+evolution/
+geary/
+gedit/
 .gsd-keyboard*
 okularrc
 okularpartrc
