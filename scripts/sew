@@ -37,19 +37,20 @@ def format_arg(k: str,v: object) -> list[str]:
         return [f"--{k}={v}"]
 
 def main(arguments: list[str], settings: Settings):
-    if arguments_len := len(arguments) == 1:
-        raise SystemExit(f"USAGE: {Path(arguments[0]).name} FILES... [PANDOC_ARGS...]")
+    if len(arguments) == 1:
+        executable = Path(arguments[0]).name
+        raise SystemExit(f"USAGE: {executable} FILES... [PANDOC_ARGS...]")
     
-    name = Path(arguments[1] if arguments_len == 2 else settings.book).with_suffix(settings.suffix)
+    output_name = Path(arguments[1] if len(arguments) == 2 else settings.book).with_suffix(settings.suffix)
 
-    args = list(chain(
+    exec_args = list(chain(
         ["pandoc"], 
-        format_arg("output", name),
+        format_arg("output", output_name),
         chain.from_iterable(format_arg(k,v) for k,v in settings.pandoc.items()),
         arguments[1:]
     ))
-    print(name)
-    run(args, **settings.exec, stderr=stderr,stdout=stdout,stdin=stdin)
+    print(output_name)
+    run(exec_args, **settings.exec, stderr=stderr,stdout=stdout,stdin=stdin)
     
     for path in settings.cleanup: remove(path)
 
