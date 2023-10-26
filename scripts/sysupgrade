@@ -52,7 +52,7 @@ declare -A cli
 [[ -x "$(command -v rustup)" ]]  && cli[rust]=update_rust 
 [[ -x "$(command -v brew)" ]]    && cli[brew]=update_homebrew
 [[ -x "$(command -v yay)" ]]     && cli[arch]=update_arch
-[[ -x "$(command -v git)" ]]     && cli[conf]=update_config
+# [[ -x "$(command -v git)" ]]     && cli[conf]=update_config
 
 if [[ -z $* ]]
 then
