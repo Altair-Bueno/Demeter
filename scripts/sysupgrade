@@ -35,20 +35,24 @@ function update_pip {
         grep -v 'file://'| \
         xargs python3 -m pip install --upgrade pip
 }
-function upgrade_pnpm {
+function update_pnpm {
     pnpm up -g
+}
+function update_config {
+    git -C "$DEMETER" pull
 }
 
 ################################################################################
 
 declare -A cli
 
-[[ -x "$(command -v pnpm)" ]]    && cli[node]=upgrade_pnpm
+[[ -x "$(command -v pnpm)" ]]    && cli[node]=update_pnpm
 [[ -x "$(command -v zsh)" ]]     && cli[zsh]=update_zsh
 [[ -x "$(command -v python3)" ]] && cli[pip]=update_pip
 [[ -x "$(command -v rustup)" ]]  && cli[rust]=update_rust 
 [[ -x "$(command -v brew)" ]]    && cli[brew]=update_homebrew
 [[ -x "$(command -v yay)" ]]     && cli[arch]=update_arch
+[[ -x "$(command -v git)" ]]     && cli[conf]=update_config
 
 if [[ -z $* ]]
 then
