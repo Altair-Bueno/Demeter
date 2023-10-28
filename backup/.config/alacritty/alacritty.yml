@@ -1,3 +1,5 @@
+import:
+  - ~/.config/alacritty/alacritty-theme/themes/one_dark.yaml
 env:
   # ssh color
   # https://github.com/alacritty/alacritty/issues/2210
