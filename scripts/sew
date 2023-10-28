@@ -6,11 +6,13 @@ from itertools import chain
 from os import getenv, remove
 from pathlib import Path
 from subprocess import run
-from sys import argv, stdin, stdout, stderr
+from sys import argv, stderr, stdin, stdout
+
 from tomllib import load
 
-XDG_DATA_HOME = Path(getenv("XDG_DATA_HOME", "~/.config")).expanduser().resolve()
-SETTINGS_PATH = XDG_DATA_HOME / "sew.toml"
+_XDG_DATA_HOME = Path(getenv("XDG_DATA_HOME", "~/.config")).expanduser().resolve()
+SETTINGS_PATH = _XDG_DATA_HOME / "sew.toml"
+
 
 @dataclass
 class Settings:
@@ -28,33 +30,39 @@ class Settings:
         except FileNotFoundError:
             return Settings()
 
-def format_arg(k: str,v: object) -> list[str]:
+
+def format_arg(k: str, v: object) -> list[str]:
     if isinstance(v, list):
         return [f"--{k}={value}" for value in v]
     elif isinstance(v, dict):
-        return [f"--{k}={a}={b}" for a,b in v.items()]
+        return [f"--{k}={a}={b}" for a, b in v.items()]
     else:
         return [f"--{k}={v}"]
+
 
 def main(arguments: list[str], settings: Settings):
     if len(arguments) == 1:
         executable = Path(arguments[0]).name
         raise SystemExit(f"USAGE: {executable} FILES... [PANDOC_ARGS...]")
-    
-    output_name = Path(arguments[1] if len(arguments) == 2 else settings.book).with_suffix(settings.suffix)
 
-    exec_args = list(chain(
-        ["pandoc"], 
-        format_arg("output", output_name),
-        chain.from_iterable(format_arg(k,v) for k,v in settings.pandoc.items()),
-        arguments[1:]
-    ))
-    print(output_name)
-    run(exec_args, **settings.exec, stderr=stderr,stdout=stdout,stdin=stdin)
-    
-    for path in settings.cleanup: remove(path)
+    output_name = arguments[1] if len(arguments) == 2 else settings.book
+    output_path = Path(output_name).with_suffix(settings.suffix)
+
+    exec_args = chain(
+        ["pandoc"],
+        format_arg("output", output_path),
+        chain.from_iterable(format_arg(k, v) for k, v in settings.pandoc.items()),
+        arguments[1:],
+    )
+    print(output_path)
+    run(list(exec_args), **settings.exec, stderr=stderr, stdout=stdout, stdin=stdin)
+
+    for path in settings.cleanup:
+        remove(path)
+
 
 if __name__ == "__main__":
     import gc
+
     gc.disable()
     main(argv, Settings.from_file(SETTINGS_PATH))
