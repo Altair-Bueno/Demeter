@@ -10,6 +10,14 @@ window:
   dimensions:
     columns: 100
     lines: 30
+key_bindings:
+  # iTerm2 Natural Text Editing
+  - { key: Right, mods: Alt, chars: "\ef" }
+  - { key: Right, mods: Control, chars: "\x05" }
+  - { key: Left, mods: Alt, chars: "\eb" }
+  - { key: Left, mods: Control, chars: "\x01" }
+  - { key: Delete, mods: Alt, chars: "\x1b\x7f" }
+  - { key: Delete, mods: Control, chars: "\x15" }
 font:
   size: 12
   normal:
