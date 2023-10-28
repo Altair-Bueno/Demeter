@@ -3,9 +3,15 @@ autofirma
 font-jetbrains-mono-nerd-font
 google-chrome
 google-drive
+iina
+intellij-idea
 iterm2
 maccy
+mongodb-compass
+obs
+qlmarkdown
 rectangle
+syntax-highlight
 telegram
 visual-studio-code
 whatsapp
