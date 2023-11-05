@@ -11,11 +11,8 @@ source "$DEMETER/backup/.config/zsh/.p10k.zsh"
 ################################################################################
 # Shell settings
 ################################################################################
-autoload -U compinit
-compinit -u -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.zcomdump-$ZSH_VERSION"
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.history"
 ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
-skip_global_compinit=1
 # Disable do you wish to see all x posibilities https://github.com/marlonrichert/zsh-autocomplete/issues/388
 # zstyle ':completion:*' list-prompt   ''
 # zstyle ':completion:*' select-prompt ''
@@ -27,7 +24,11 @@ zstyle ':autocomplete:*' insert-unambiguous yes # autocomplete just the common p
 zstyle ':autocomplete:*' fzf-completion yes     # use fzf autocomplete
 # From https://www.reddit.com/r/zsh/comments/wxlmjo/configure_up_arrow_to_get_last_command_from_this/
 setopt NO_SHARE_HISTORY
-setopt auto_cd
+setopt AUTO_CD
+# Setup completitions
+autoload -U compinit
+compinit -u -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.zcomdump-$ZSH_VERSION"
+skip_global_compinit=1
 
 ################################################################################
 # Aliases
@@ -36,7 +37,6 @@ alias cd='z'
 alias ls='eza'
 alias l='ls -al'
 alias ll='ls -l'
-alias nvm='fnm'
 alias venv='python -m venv'
 alias httpserv='python -m http.server'
 alias cat='bat'
