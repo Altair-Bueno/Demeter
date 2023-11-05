@@ -1,3 +1,15 @@
 [submodule "backup/.config/alacritty/alacritty-theme"]
-	path = backup/.config/alacritty/alacritty-theme
+	path = submodules/alacritty-theme
 	url = https://github.com/alacritty/alacritty-theme
+[submodule "submodules/ohmyzsh"]
+	path = submodules/ohmyzsh
+	url = https://github.com/ohmyzsh/ohmyzsh
+[submodule "submodules/zsh-autopair"]
+	path = submodules/zsh-autopair
+	url = https://github.com/hlissner/zsh-autopair
+[submodule "submodules/powerlevel10k"]
+	path = submodules/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k
+[submodule "submodules/fast-syntax-highlighting"]
+	path = submodules/fast-syntax-highlighting
+	url = https://github.com/zdharma-continuum/fast-syntax-highlighting

@@ -2,28 +2,32 @@
 # P10k theme
 ################################################################################
 ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-P10K_SCRIPT=~/.config/zsh/.p10k.zsh
-[[ ! -f "$P10K_SCRIPT" ]] || source "$P10K_SCRIPT"
+# Customize P10k
+source "$DEMETER/backup/.config/zsh/.p10k.zsh"
 
 ################################################################################
-# Plugins, completitions and shell extensions
+# Shell settings
 ################################################################################
 autoload -U compinit
-compinit -u -d "$HOME/.cache/zsh/.zcomdump-$ZSH_VERSION"
-HISTFILE="${XDG_DATA_HOME:-$HOME/.config}/zsh/.history"
-
-eval "$(sheldon source)"
-eval "$(zoxide init zsh)"
-# eval "$(starship init zsh)"
+compinit -u -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.zcomdump-$ZSH_VERSION"
+HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.history"
+ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+skip_global_compinit=1
+# Disable do you wish to see all x posibilities https://github.com/marlonrichert/zsh-autocomplete/issues/388
+# zstyle ':completion:*' list-prompt   ''
+# zstyle ':completion:*' select-prompt ''
+# Case insensitive completions https://stackoverflow.com/a/69533208/19176002
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*:*:man:*:*' menu select=long search
+# zsh autocomplete https://github.com/marlonrichert/zsh-autocomplete/blob/main/.zshrc
+zstyle ':autocomplete:*' insert-unambiguous yes # autocomplete just the common part
+zstyle ':autocomplete:*' fzf-completion yes     # use fzf autocomplete
+# From https://www.reddit.com/r/zsh/comments/wxlmjo/configure_up_arrow_to_get_last_command_from_this/
+setopt NO_SHARE_HISTORY
+setopt auto_cd
 
 ################################################################################
 # Aliases
@@ -49,7 +53,14 @@ alias kedit='kubectl edit'
 alias krestart='kubectl rollout restart deployment'
 
 ################################################################################
-# Finalize 
+# Plugins
 ################################################################################
 source "$DEMETER/backup/.config/zsh/os/$(uname).zsh"
+source "$DEMETER/submodules/ohmyzsh/lib/"{completion,clipboard,directories,history}.zsh
+source "$DEMETER/submodules/ohmyzsh/plugins/"{fzf/fzf,kubectl/kubectl}.plugin.zsh
+source "$DEMETER/submodules/zsh-autopair/autopair.zsh"
+source "$DEMETER/backup/.config/zsh/.iterm2_shell_integration.zsh"
+source "$DEMETER/submodules/powerlevel10k/powerlevel10k.zsh-theme"
+source "$DEMETER/submodules/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 
+eval "$(zoxide init zsh)"
