@@ -41,6 +41,7 @@ function clone_demeter_repository {
 		then
 			echo "Updating backup..."
 			git -C "$DEMETER" pull
+			git -C "$DEMETER" submodule update --init --recursive
 		else 
 			: "This script expected a different remote server, exiting..."
 			exit 1

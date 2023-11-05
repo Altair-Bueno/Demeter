@@ -22,9 +22,6 @@ function update_homebrew {
 function update_arch {
     yay
 }
-function update_zsh {
-    sheldon --color=always lock --update
-}
 function update_rust {
     rustup self update
     rustup update stable
@@ -40,6 +37,7 @@ function update_pnpm {
 }
 function update_config {
     git -C "$DEMETER" pull
+    git -C "$DEMETER" submodule update --recursive --remote
 }
 
 ################################################################################
@@ -47,7 +45,6 @@ function update_config {
 declare -A cli
 
 [[ -x "$(command -v pnpm)" ]]    && cli[node]=update_pnpm
-[[ -x "$(command -v zsh)" ]]     && cli[zsh]=update_zsh
 [[ -x "$(command -v python3)" ]] && cli[pip]=update_pip
 [[ -x "$(command -v rustup)" ]]  && cli[rust]=update_rust 
 [[ -x "$(command -v brew)" ]]    && cli[brew]=update_homebrew
