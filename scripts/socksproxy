@@ -1,20 +1,21 @@
-#!/usr/bin/env python3 -sS -OO
+#!/usr/bin/env -S python3 -sS -OO
 from __future__ import annotations
 
 from argparse import ArgumentParser
-from pathlib import Path
-from dataclasses import dataclass, asdict
-from json import load, loads, dump
+from dataclasses import asdict, dataclass
+from json import dump, load, loads
+from os import environ, kill, name, remove
 from os.path import exists
-from os import kill, remove, name, environ
+from pathlib import Path
 from signal import SIGKILL
-from subprocess import Popen, DEVNULL
+from subprocess import DEVNULL, Popen
 
-_tmp = Path(environ["TEMP"] if name == 'nt' else "/tmp")
-DEFAULT_LOCK_FILE    = _tmp / "socksproxy.lock"
-DEFAULT_LOG_FILE     = _tmp / "socksproxy.log"
-DEFAULT_FORWARD_ADDR       = "127.0.0.1"
-DEFAULT_PORT               = 1080
+TMP_DIR = Path(environ["TEMP"] if name == "nt" else "/tmp")
+DEFAULT_LOCK_FILE = TMP_DIR / "socksproxy.lock"
+DEFAULT_LOG_FILE = TMP_DIR / "socksproxy.log"
+DEFAULT_FORWARD_ADDR = "127.0.0.1"
+DEFAULT_PORT = 1080
+
 
 @dataclass
 class LockPayload:
@@ -22,51 +23,51 @@ class LockPayload:
     pid: int
     socket_addr: str
 
-def start(remote: str, port: int, lock_file: Path, forward_addr: str):
+
+def start(remote: str, port: int, lock_file: Path, forward_addr: str, **_):
     if exists(lock_file):
         raise FileExistsError(f"Lock file already exists: {lock_file}")
-    cmd = [
-        "ssh",
-        "-D",
-        f"{forward_addr}:{port}",
-        remote,
-        "tail -f /dev/null"
-    ]
+    cmd = ["ssh", "-D", f"{forward_addr}:{port}", remote, "tail -f /dev/null"]
     with open(DEFAULT_LOG_FILE, "w") as log_file:
         process = Popen(cmd, stdin=DEVNULL, stdout=log_file, stderr=log_file)
 
-    payload = LockPayload(pid=process.pid, socket_addr=f"socks5://{forward_addr}:{port}", remote=remote)
+    payload = LockPayload(
+        pid=process.pid, socket_addr=f"socks5://{forward_addr}:{port}", remote=remote
+    )
 
     with open(lock_file, "wt") as lock:
         dump(asdict(payload), lock, indent=2)
 
     print(payload.socket_addr)
 
-def status(lock_file: Path):
+
+def status(lock_file: Path, **_):
     try:
         with open(lock_file) as lock:
             lock_content = lock.read()
         payload = LockPayload(**loads(lock_content))
 
-        # Check if process is still running
+        # Signal 0 checks if a process is still running
         kill(payload.pid, 0)
         print(lock_content)
     except ProcessLookupError as e:
         remove(lock_file)
         raise SystemExit("Socket was killed") from e
-    except:
-        print("Not running")
+    except Exception as e:
+        raise SystemExit("Not running") from e
 
-def stop(lock_file: Path):
+
+def stop(lock_file: Path, **_):
     with open(lock_file, "rt") as lock:
         payload = LockPayload(**load(lock))
     remove(lock_file)
 
     kill(payload.pid, SIGKILL)
 
+
 class SocksProxyArgumentParser(ArgumentParser):
-    def __init__(self, *args,**kwargs) -> None:
-        super().__init__(*args, description='Manages a SOCKS5 proxy', **kwargs)
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, description="Manages a SOCKS5 proxy", **kwargs)
         self.add_argument(
             "--lock_file",
             type=Path,
@@ -98,21 +99,20 @@ class SocksProxyArgumentParser(ArgumentParser):
             help="port used for redirection",
             dest="port",
         )
-        start_parser.set_defaults(func=start)
+        start_parser.set_defaults(command=start)
 
         stop_parser = subparsers.add_parser("stop")
-        stop_parser.set_defaults(func=stop)
+        stop_parser.set_defaults(command=stop)
 
         status_parser = subparsers.add_parser("status")
-        status_parser.set_defaults(func=status)
+        status_parser.set_defaults(command=status)
 
-def _run(*_, func, **kwargs):
-    func(**kwargs)
 
 def main():
-    ns = SocksProxyArgumentParser().parse_args()
-    _run(**vars(ns))
+    args = SocksProxyArgumentParser().parse_args()
+    args = vars(args)
+    args["command"](**args)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
-
