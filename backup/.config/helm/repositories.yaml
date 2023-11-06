@@ -10,3 +10,21 @@ repositories:
   password: ""
   url: https://fission.github.io/fission-charts/
   username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: nvgfd
+  pass_credentials_all: false
+  password: ""
+  url: https://nvidia.github.io/gpu-feature-discovery
+  username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: nvdp
+  pass_credentials_all: false
+  password: ""
+  url: https://nvidia.github.io/k8s-device-plugin
+  username: ""
