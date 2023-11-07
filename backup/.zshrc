@@ -25,6 +25,9 @@ zstyle ':autocomplete:*' fzf-completion yes     # use fzf autocomplete
 # From https://www.reddit.com/r/zsh/comments/wxlmjo/configure_up_arrow_to_get_last_command_from_this/
 setopt NO_SHARE_HISTORY
 setopt AUTO_CD
+setopt HIST_IGNORE_SPACE
+setopt PUSHD_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
 # Setup completitions
 autoload -U compinit
 compinit -u -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.zcomdump-$ZSH_VERSION"
