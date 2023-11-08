@@ -10,6 +10,7 @@ devhelp/
 dleyna-renderer-service.conf
 EOS-greeter.conf
 eos-update-notifier.first_init
+epiphany/
 evolution/
 flatpak/
 fnm/
