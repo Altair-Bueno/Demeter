@@ -12,6 +12,8 @@ source "$DEMETER/backup/.config/zsh/.p10k.zsh"
 # Shell settings
 ################################################################################
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.history"
+HISTSIZE=1000
+SAVEHIST=1000
 ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 # Disable do you wish to see all x posibilities https://github.com/marlonrichert/zsh-autocomplete/issues/388
 # zstyle ':completion:*' list-prompt   ''
@@ -26,6 +28,7 @@ zstyle ':autocomplete:*' fzf-completion yes     # use fzf autocomplete
 setopt NO_SHARE_HISTORY
 setopt AUTO_CD
 setopt HIST_IGNORE_SPACE
+setopt appendhistory
 setopt PUSHD_IGNORE_DUPS
 setopt HIST_IGNORE_ALL_DUPS
 # Setup completitions
