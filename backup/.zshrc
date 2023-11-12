@@ -69,6 +69,7 @@ plugins=(
   "$DEMETER/backup/.config/zsh/.iterm2_shell_integration.zsh"
   "$DEMETER/submodules/powerlevel10k/powerlevel10k.zsh-theme"
   "$DEMETER/submodules/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+  "$DEMETER/submodules/zsh-no-ps2/zsh-no-ps2.plugin.zsh"
 )
 for plugin in $plugins 
 do
