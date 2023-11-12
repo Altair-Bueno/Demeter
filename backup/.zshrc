@@ -61,12 +61,18 @@ alias krestart='kubectl rollout restart deployment'
 ################################################################################
 # Plugins
 ################################################################################
-source "$DEMETER/backup/.config/zsh/os/$(uname).zsh"
-source "$DEMETER/submodules/ohmyzsh/lib/"{completion,clipboard,directories,history}.zsh
-source "$DEMETER/submodules/ohmyzsh/plugins/"{fzf/fzf,kubectl/kubectl}.plugin.zsh
-source "$DEMETER/submodules/zsh-autopair/autopair.zsh"
-source "$DEMETER/backup/.config/zsh/.iterm2_shell_integration.zsh"
-source "$DEMETER/submodules/powerlevel10k/powerlevel10k.zsh-theme"
-source "$DEMETER/submodules/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+plugins=(
+  "$DEMETER/backup/.config/zsh/os/$(uname).zsh"
+  "$DEMETER/submodules/ohmyzsh/lib/"{completion,clipboard,directories,history}.zsh
+  "$DEMETER/submodules/ohmyzsh/plugins/"{fzf/fzf,kubectl/kubectl}.plugin.zsh
+  "$DEMETER/submodules/zsh-autopair/autopair.zsh"
+  "$DEMETER/backup/.config/zsh/.iterm2_shell_integration.zsh"
+  "$DEMETER/submodules/powerlevel10k/powerlevel10k.zsh-theme"
+  "$DEMETER/submodules/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+)
+for plugin in $plugins 
+do
+  source "$plugin"
+done
 
 eval "$(zoxide init zsh)"
