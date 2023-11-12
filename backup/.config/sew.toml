@@ -4,4 +4,4 @@ template = "eisvogel"
 from = "markdown+rebase_relative_paths"
 
 [exec]
-timeout = 10
+timeout = 1000
