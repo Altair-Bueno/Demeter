@@ -1,7 +1,7 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env -S zsh -eo pipefail
 
 ###############################################################################
-# kforward 1.0                                                                #
+# kforward 2.0                                                                #
 # Altair Bueno MIT license                                                    #
 # https://github.com/Altair-Bueno/Demeter                                     #
 #                                                                             #
@@ -10,49 +10,74 @@
 # desired service to connect                                                  #
 ###############################################################################
 
-set -e
-
-# Args
-KUBE_FORWARD_PORT_RANGE="${1:-3000-32000}"
-KUBE_FORWARD_SEPARATOR="${2:-/}"
-
-if [[ "$KUBE_FORWARD_PORT_RANGE" =~ '[[:digit:]]+-[[:digit:]]+' ]] 
-then
-    KUBE_FORWARD_PORT="$(shuf -i "$KUBE_FORWARD_PORT_RANGE" -n 1)"
-elif [[ "$KUBE_FORWARD_PORT_RANGE" =~ '[[:digit:]]+' ]]
-then
-    KUBE_FORWARD_PORT="$KUBE_FORWARD_PORT_RANGE"
-else
-    echo "Invalid port range $KUBE_FORWARD_PORT_RANGE"
-    exit 1
-fi
-
-################################################################################
-# Prompt for service
-KUBE_SERVICE="$(
-    kubectl get svc \
+function kubectl_get {
+    local resource="$1"
+    kubectl get "$resource" \
         --all-namespaces \
-        "-ojsonpath={range .items[*]}{.metadata.namespace}$KUBE_FORWARD_SEPARATOR{.metadata.name}{'\n'}{end}" \
-        | fzf 
-)"
-# Extract service namespace and name
-KUBE_SERVICE_NAMESPACE=$(cut "-d$KUBE_FORWARD_SEPARATOR" -f1 <<< "$KUBE_SERVICE")
-KUBE_SERVICE_NAME=$(cut "-d$KUBE_FORWARD_SEPARATOR" -f2 <<< "$KUBE_SERVICE")
+        "-ojsonpath={range .items[*]}{.kind}/{.metadata.namespace}/{.metadata.name}{'\n'}{end}" \
+        | tr '[:upper:]' '[:lower:]' 
+}
 
-# Obtain service port
-KUBE_SERVICE_PORT="$(
-    kubectl get \
-    "--namespace=$KUBE_SERVICE_NAMESPACE" \
-    "service/$KUBE_SERVICE_NAME" \
-    "-ojsonpath={range .spec.ports[*]}{.port}{'\n'}{end}" \
-    | fzf --select-1
-)"
+function kubectl_get_ports {
+    local namespace="$1"
+    local kind="$2"
+    local name="$3"
 
-echo "Starting port forwarding..."
-echo "http://localhost:$KUBE_FORWARD_PORT"
-echo "https://localhost:$KUBE_FORWARD_PORT"
+    kubectl get "$kind" \
+        "--namespace=$namespace" \
+        "$name" \
+        "-ojsonpath={range .spec.ports[*]}{.port}/{.name}{'\n'}{end}"
+}
 
-kubectl port-forward \
-    "--namespace=$KUBE_SERVICE_NAMESPACE" \
-    "service/$KUBE_SERVICE_NAME" \
-    "$KUBE_FORWARD_PORT:$KUBE_SERVICE_PORT"
+function kubectl_port_forward {
+    local namespace="$1"
+    local kind="$2"
+    local name="$3"
+    local local_port="$4"
+    local resource_port="$5"
+    kubectl port-forward \
+        "--namespace=$namespace" \
+        "$kind/$name" \
+        "$local_port:$resource_port"
+}
+
+function main {
+    local local_port="$1"
+    local resource
+    local resource_port
+
+    resource="$(
+        kubectl_get "services" \
+        | fzf '--header=Choose a service' '--preview=kubectl get "--namespace=$(cut -d / -f 2 <<<{})" "$(cut -d / -f 1,3 <<<{})" -oyaml | bat --language=yaml --color=always --plain'
+    )"
+    local kind="$(cut -d / -f 1 <<<"$resource")"
+    local namespace="$(cut -d / -f 2 <<<"$resource")"
+    local name="$(cut -d / -f 3 <<<"$resource")"
+
+    resource_port="$(
+    kubectl_get_ports "$namespace" "$kind" "$name" \
+        | fzf --select-1 --no-sort '--header=Choose a TCP port' \
+        | cut -d / -f 1
+    )"
+
+    echo "Forwarding to local port: $local_port"
+    echo "http://localhost:$local_port"
+    echo "https://localhost:$local_port"
+    kubectl_port_forward "$namespace" "$kind" "$name" "$local_port" "$resource_port"
+}
+
+
+while getopts "p:r:" opt; do
+    case "$opt" in
+        p)
+        local local_port="$OPTARG"
+        if [[ ! "$local_port" =~ '[[:digit:]]+' ]]
+        then
+            echo "Invalid port: $local_port"
+            exit 1
+        fi
+        ;;
+    esac
+done
+
+main "${local_port:-8080}"
