@@ -29,15 +29,24 @@ fi
 
 ################################################################################
 # Prompt for service
-KUBE_SERVICE="$(kubectl get svc --all-namespaces -ojsonpath="{range .items[*]}{.metadata.namespace}$KUBE_FORWARD_SEPARATOR{.metadata.name},{end}" \
-    | tr ',' "\n" \
-    | fzf)"
+KUBE_SERVICE="$(
+    kubectl get svc \
+        --all-namespaces \
+        "-ojsonpath={range .items[*]}{.metadata.namespace}$KUBE_FORWARD_SEPARATOR{.metadata.name}{'\n'}{end}" \
+        | fzf 
+)"
 # Extract service namespace and name
 KUBE_SERVICE_NAMESPACE=$(cut "-d$KUBE_FORWARD_SEPARATOR" -f1 <<< "$KUBE_SERVICE")
 KUBE_SERVICE_NAME=$(cut "-d$KUBE_FORWARD_SEPARATOR" -f2 <<< "$KUBE_SERVICE")
 
 # Obtain service port
-KUBE_SERVICE_PORT="$(kubectl get "--namespace=$KUBE_SERVICE_NAMESPACE" "service/$KUBE_SERVICE_NAME" '-ojsonpath={.spec.ports[0].port}')"
+KUBE_SERVICE_PORT="$(
+    kubectl get \
+    "--namespace=$KUBE_SERVICE_NAMESPACE" \
+    "service/$KUBE_SERVICE_NAME" \
+    "-ojsonpath={range .spec.ports[*]}{.port}{'\n'}{end}" \
+    | fzf --select-1
+)"
 
 echo "Starting port forwarding..."
 echo "http://localhost:$KUBE_FORWARD_PORT"
