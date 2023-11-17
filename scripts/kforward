@@ -10,9 +10,8 @@
 # desired service to connect                                                  #
 ###############################################################################
 
-function kubectl_get {
-    local resource="$1"
-    kubectl get "$resource" \
+function kubectl_get_services {
+    kubectl get "services" \
         --all-namespaces \
         "-ojsonpath={range .items[*]}{.kind}/{.metadata.namespace}/{.metadata.name}{'\n'}{end}" \
         | tr '[:upper:]' '[:lower:]' 
@@ -47,7 +46,7 @@ function main {
     local resource_port
 
     resource="$(
-        kubectl_get "services" \
+        kubectl_get_services \
         | fzf '--header=Choose a service' '--preview=kubectl get "--namespace=$(cut -d / -f 2 <<<{})" "$(cut -d / -f 1,3 <<<{})" -oyaml | bat --language=yaml --color=always --plain'
     )"
     local kind="$(cut -d / -f 1 <<<"$resource")"
