@@ -42,16 +42,20 @@ function kubectl_port_forward {
 
 function main {
     local local_port="$1"
+    local query="$2"
     local resource
     local resource_port
 
     resource="$(
         kubectl_get_services \
-        | fzf '--header=Choose a service' '--preview=kubectl get "--namespace=$(cut -d / -f 2 <<<{})" "$(cut -d / -f 1,3 <<<{})" -oyaml | bat --language=yaml --color=always --plain'
+        | fzf '--header=Choose a service' \
+            --delimiter=/ "--query=$query" \
+            '--preview=kubectl get --namespace {2} {1,3} -oyaml | bat --language=yaml --color=always --plain'
     )"
-    local kind="$(cut -d / -f 1 <<<"$resource")"
-    local namespace="$(cut -d / -f 2 <<<"$resource")"
-    local name="$(cut -d / -f 3 <<<"$resource")"
+    [[ "$resource" =~ '(.*)/(.*)/(.*)' ]]
+    local kind="${match[1]}"
+    local namespace="${match[2]}"
+    local name="${match[3]}"
 
     resource_port="$(
     kubectl_get_ports "$namespace" "$kind" "$name" \
@@ -59,14 +63,14 @@ function main {
         | cut -d / -f 1
     )"
 
-    echo "Forwarding to local port: $local_port"
+    echo "Forwarding $resource to local port $local_port"
     echo "http://localhost:$local_port"
     echo "https://localhost:$local_port"
     kubectl_port_forward "$namespace" "$kind" "$name" "$local_port" "$resource_port"
 }
 
 
-while getopts "p:r:" opt; do
+while getopts "p:hd" opt; do
     case "$opt" in
         p)
         local local_port="$OPTARG"
@@ -76,7 +80,27 @@ while getopts "p:r:" opt; do
             exit 1
         fi
         ;;
+        d)
+        set -x
+        ;;
+        h)
+        cat <<EOF
+usage: $(basename "$0") [-h] [-p PORT] [query]
+
+Port forwards a Kubernetes service to your local computer
+
+positional arguments:
+  query                query to start the search with
+
+options:
+  -h                   show this help message and exit
+  -d                   enable debug mode
+  -p PORT              local port to use (defaults to 8080)
+EOF
+        exit
+        ;;
     esac
 done
+shift $((OPTIND-1))
 
-main "${local_port:-8080}"
+main "${local_port:-8080}" "$@"
