@@ -1,4 +1,4 @@
-#!/usr/bin/env python3 -sS -OO
+#!/usr/bin/env -S python3 -sS -OO
 from __future__ import annotations
 
 from dataclasses import dataclass, field

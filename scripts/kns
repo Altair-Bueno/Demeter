@@ -1,2 +1,10 @@
-#!/bin/sh
-kubectl config set-context --current "--namespace=$(kubectl get namespaces -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' | fzf)"
+#!/usr/bin/env -S zsh -eo pipefail
+local namespace
+namespace="$(
+    kubectl get namespaces \
+        -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' \
+    | fzf "--query=$@" \
+        '--header=Choose a namespace' \
+        '--preview=kubectl get all --namespace {}'
+)"
+kubectl config set-context --current "--namespace=$namespace"

@@ -16,3 +16,6 @@
 [submodule "submodules/zsh-no-ps2"]
 	path = submodules/zsh-no-ps2
 	url = https://github.com/romkatv/zsh-no-ps2.git
+[submodule "submodules/fzf-tab"]
+	path = submodules/fzf-tab
+	url = https://github.com/Aloxaf/fzf-tab
