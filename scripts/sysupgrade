@@ -37,6 +37,7 @@ function update_pnpm {
 }
 function update_config {
     git -C "$DEMETER" pull
+    git -C "$DEMETER" submodule update --init --recursive
     git -C "$DEMETER" submodule update --recursive --remote
 }
 
