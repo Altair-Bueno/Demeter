@@ -1,11 +1,8 @@
-#!/usr/bin/env bash
-set -eo pipefail
-
-if [[ -n "$1" ]]
-then
-  CONTEXT="$1"
-else
-  CONTEXT="$(kubectl config get-contexts -o name | fzf --height 10%)"
-fi
-
-kubectl config use-context "$CONTEXT"
+#!/usr/bin/env -S zsh -eo pipefail
+local context
+context="$(
+    kubectl config get-contexts -o name \
+    | fzf "--query=$@" --select-1 \
+        '--header=Choose a context'
+)"
+kubectl config use-context "$context"
