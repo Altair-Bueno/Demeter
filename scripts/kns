@@ -3,7 +3,7 @@ local namespace
 namespace="$(
     kubectl get namespaces \
         -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' \
-    | fzf "--query=$@" \
+    | fzf "--query=$@" --select-1 \
         '--header=Choose a namespace' \
         '--preview=kubectl get all --namespace {}'
 )"
