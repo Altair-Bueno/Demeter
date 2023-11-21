@@ -49,7 +49,7 @@ function main {
     resource="$(
         kubectl_get_services \
         | fzf '--header=Choose a service' \
-            --delimiter=/ "--query=$query" \
+            --delimiter=/ "--query=$query" --select-1 \
             '--preview=kubectl get --namespace {2} {1,3} -oyaml | bat --language=yaml --color=always --plain'
     )"
     [[ "$resource" =~ '(.*)/(.*)/(.*)' ]]
