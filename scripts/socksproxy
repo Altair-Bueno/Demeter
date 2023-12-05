@@ -115,4 +115,8 @@ def main():
 
 
 if __name__ == "__main__":
+    import sys, gc
+    sys.tracebacklimit = 0
+    gc.disable()
+    
     main()
