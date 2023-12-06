@@ -24,7 +24,10 @@ path=(
     $path
 )
 
-fpath+=(
+fpath=(
     "$HOME/.rustup/toolchains/*/share/zsh/site-functions"
     $fpath
 )
+
+path=(${(u)path})
+fpath=(${(u)fpath})
