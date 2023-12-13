@@ -21,6 +21,8 @@ path=(
     # Homebrew
     '/usr/local/bin' 
     '/usr/local/sbin'
+    # Local binaries
+    "$HOME/.local/bin"
     $path
 )
 
