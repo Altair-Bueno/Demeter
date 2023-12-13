@@ -40,9 +40,7 @@ skip_global_compinit=1
 # Aliases
 ################################################################################
 alias cd='z'
-alias ls='eza'
-alias l='ls -al --sort=type'
-alias ll='l'
+alias ls='eza --sort=type'
 alias venv='python -m venv'
 alias httpserv='python -m http.server'
 alias cat='bat'
