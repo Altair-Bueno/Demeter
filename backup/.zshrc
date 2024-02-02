@@ -31,6 +31,7 @@ setopt HIST_IGNORE_SPACE
 setopt appendhistory
 setopt PUSHD_IGNORE_DUPS
 setopt HIST_IGNORE_ALL_DUPS
+unsetopt BEEP
 # Setup completitions
 autoload -U compinit
 compinit -u -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.zcomdump-$ZSH_VERSION"
