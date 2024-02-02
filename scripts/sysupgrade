@@ -40,6 +40,9 @@ function update_config {
     git -C "$DEMETER" submodule update --init --recursive
     git -C "$DEMETER" submodule update --recursive --remote
 }
+function update_flatpak {
+    flatpak update
+}
 
 ################################################################################
 
@@ -49,8 +52,8 @@ declare -A cli
 [[ -x "$(command -v python3)" ]] && cli[pip]=update_pip
 [[ -x "$(command -v rustup)" ]]  && cli[rust]=update_rust 
 [[ -x "$(command -v brew)" ]]    && cli[brew]=update_homebrew
-# [[ -x "$(command -v yay)" ]]     && cli[arch]=update_arch
 [[ -x "$(command -v git)" ]]     && cli[conf]=update_config
+[[ -x "$(command -v flatpak)" ]] && cli[fltpk]=update_flatpak
 
 if [[ -z $* ]]
 then
