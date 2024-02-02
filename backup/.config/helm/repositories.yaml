@@ -28,3 +28,30 @@ repositories:
   password: ""
   url: https://nvidia.github.io/k8s-device-plugin
   username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: jupyterhub
+  pass_credentials_all: false
+  password: ""
+  url: https://hub.jupyter.org/helm-chart/
+  username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: bitnami
+  pass_credentials_all: false
+  password: ""
+  url: https://charts.bitnami.com/bitnami
+  username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: grafana
+  pass_credentials_all: false
+  password: ""
+  url: https://grafana.github.io/helm-charts
+  username: ""

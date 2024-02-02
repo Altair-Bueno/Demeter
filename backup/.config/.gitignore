@@ -3,10 +3,12 @@ autostart/
 budgie*
 Budgie-xdg-terminals.list
 Code/
+Code Cache/
 connections.db
 dconf/
 desktop-directories/
 devhelp/
+Dictionaries/
 dleyna-renderer-service.conf
 EOS-greeter.conf
 eos-update-notifier.first_init
@@ -23,6 +25,8 @@ GNOME-xdg-terminals.list
 goa-*/
 google-chrome/
 gpaste/
+GPUCache/
+grilo-plugins/
 .gsd-keyboard*
 gtk-*/
 gvfs-metadata/
@@ -33,12 +37,18 @@ icons/
 iterm2/AppSupport
 JetBrains/
 keyrings/
+libvirt/
+Local Storage/
+logs/
 menus/
 Microsoft*
 mimeapps.list
+MongoDB Compass/
 monitors.xml*
+MQTT-Explorer/
 nautilus/
 nemo/
+obs-studio/
 okular/
 okularpartrc
 okularrc
@@ -49,12 +59,17 @@ pulse/
 QtProject.conf
 recently-used.xbel
 session/
+Session Storage/
 systemd/
 teams/
 TelegramDesktop/
+totem/
 Trash/
 user-dirs.dirs
 variety/
+VisualParadigm/
+wireshark/
 xdg-terminals.list
 xreader/
+yelp/
 zoxide
