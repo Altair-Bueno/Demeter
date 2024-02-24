@@ -34,6 +34,8 @@ class Settings:
 def format_arg(k: str, v: object) -> list[str]:
     if isinstance(v, list):
         return [f"--{k}={value}" for value in v]
+    elif isinstance(v, bool) and v:
+        return [f"--{k}"]
     elif isinstance(v, dict):
         return [f"--{k}={a}={b}" for a, b in v.items()]
     else:

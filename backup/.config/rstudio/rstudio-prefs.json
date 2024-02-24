@@ -1,4 +1,7 @@
 {
     "jobs_tab_visibility": "shown",
-    "show_terminal_tab": false
+    "show_terminal_tab": false,
+    "initial_working_directory": "~",
+    "spelling_dictionary_language": "es_ES",
+    "posix_terminal_shell": "bash"
 }

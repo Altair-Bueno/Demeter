@@ -58,6 +58,7 @@ Postman/
 pulse/
 QtProject.conf
 recently-used.xbel
+rstudio/
 session/
 Session Storage/
 systemd/
@@ -72,4 +73,9 @@ wireshark/
 xdg-terminals.list
 xreader/
 yelp/
+zed/*
 zoxide
+
+!rstudio/rstudio-prefs.json
+!zed/keymap.json
+!zed/settings.json

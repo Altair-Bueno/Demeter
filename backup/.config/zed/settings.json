@@ -7,11 +7,21 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "features": {
+    "copilot": false
+  },
+  "base_keymap": "JetBrains",
+  "theme": "One Dark",
   "autosave": "on_focus_change",
+  "auto_update": false,
   "format_on_save": "on",
   "buffer_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_features": {
+    "calt": false,
+    "liga": false
+  },
   "buffer_font_size": 15,
-  "soft_wrap": "preferred_line_length",
+  "hour_format": "hour24",
   "terminal": {
     "font_family": "JetBrainsMono Nerd Font",
     "font_size": 15
