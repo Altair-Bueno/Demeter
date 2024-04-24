@@ -8,7 +8,6 @@ deno
 docker
 docker-buildx
 docker-compose
-dotnet
 eza
 fd
 fzf
@@ -27,12 +26,11 @@ maven
 mit-scheme
 neofetch
 netcat
-node
 oha
 pandoc
 pnpm
+prettier
 python@3.11
-python@3.12
 ripgrep
 sd
 sheldon
