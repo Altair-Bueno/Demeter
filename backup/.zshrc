@@ -71,7 +71,7 @@ plugins=(
   "$DEMETER/submodules/zsh-no-ps2/zsh-no-ps2.plugin.zsh"
   "$DEMETER/submodules/fzf-tab/fzf-tab.plugin.zsh"
 )
-for plugin in $plugins 
+for plugin in $plugins
 do
   source "$plugin"
 done
@@ -79,7 +79,7 @@ done
 eval "$(zoxide init zsh)"
 
 # pnpm
-export PNPM_HOME="/Users/compux72/.config/pnpm"
+export PNPM_HOME="$HOME/.config/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;

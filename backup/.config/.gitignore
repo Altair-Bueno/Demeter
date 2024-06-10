@@ -10,6 +10,7 @@ desktop-directories/
 devhelp/
 Dictionaries/
 dleyna-renderer-service.conf
+EOS-arch-news.conf
 EOS-greeter.conf
 eos-update-notifier.first_init
 epiphany/
@@ -19,8 +20,9 @@ fnm/
 folks/
 fonts/
 geary/
-github-copilot/
 gedit/
+gh/
+github-copilot/
 gnome-*/
 GNOME-xdg-terminals.list
 goa-*/
@@ -54,18 +56,22 @@ okular/
 okularpartrc
 okularrc
 orca/
+org.gnome.SoundRecorder/
+org.gnome.TextEditor/
 pnpm/
 Postman/
 pulse/
 QtProject.conf
 recently-used.xbel
 rstudio/
+!rstudio/rstudio-prefs.json
 session/
 Session Storage/
 systemd/
 teams/
 TelegramDesktop/
 totem/
+transmission/
 Trash/
 user-dirs.dirs
 variety/
@@ -75,8 +81,6 @@ xdg-terminals.list
 xreader/
 yelp/
 zed/*
-zoxide
-
-!rstudio/rstudio-prefs.json
 !zed/keymap.json
 !zed/settings.json
+zoxide

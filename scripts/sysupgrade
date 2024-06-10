@@ -41,7 +41,7 @@ function update_config {
     git -C "$DEMETER" submodule update --recursive --remote
 }
 function update_flatpak {
-    flatpak update
+    flatpak update -y
 }
 
 ################################################################################
