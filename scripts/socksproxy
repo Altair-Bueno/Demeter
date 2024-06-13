@@ -7,7 +7,7 @@ from json import dump, load, loads
 from os import environ, kill, name, remove
 from os.path import exists
 from pathlib import Path
-from signal import SIGKILL
+from signal import SIG_IGN, SIGHUP, SIGKILL, signal
 from subprocess import DEVNULL, Popen
 
 TMP_DIR = Path(environ["TEMP"] if name == "nt" else "/tmp")
@@ -29,6 +29,7 @@ def start(remote: str, port: int, lock_file: Path, forward_addr: str, **_):
         raise FileExistsError(f"Lock file already exists: {lock_file}")
     cmd = ["ssh", "-D", f"{forward_addr}:{port}", remote, "tail -f /dev/null"]
     with open(DEFAULT_LOG_FILE, "w") as log_file:
+        signal(SIGHUP, SIG_IGN)
         process = Popen(cmd, stdin=DEVNULL, stdout=log_file, stderr=log_file)
 
     payload = LockPayload(
@@ -115,8 +116,10 @@ def main():
 
 
 if __name__ == "__main__":
-    import sys, gc
+    import gc
+    import sys
+
     sys.tracebacklimit = 0
     gc.disable()
-    
+
     main()
