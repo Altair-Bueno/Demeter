@@ -1,0 +1,10 @@
+#!/usr/bin/env -S zsh -eo pipefail
+${DOCKER:-docker} run \
+    --tty --interactive --rm --label drun --network host \
+    --env-file <(env | grep -v --regexp=^PATH --regexp=^CC --regexp=CXX --regexp=HOME --regexp=XDG) \
+    --env HOME=/tmp/home \
+    --user $(id -u ${USER}):$(id -g ${USER}) \
+    --volume "$PWD:$PWD" \
+    --volume "/tmp:/tmp" \
+    --workdir "$PWD" \
+    $@

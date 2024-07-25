@@ -41,5 +41,12 @@
       }
     }
   },
-  "theme": "One Dark"
+  "theme": "One Dark Pro",
+  "assistant": {
+    "version": "1",
+    "provider": {
+      "name": "ollama",
+      "api_url": "https://ollama.ertis.uma.es"
+    }
+  }
 }

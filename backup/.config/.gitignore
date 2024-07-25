@@ -34,6 +34,7 @@ grilo-plugins/
 gtk-*/
 gvfs-metadata/
 helm/
+htop
 ibus/
 icc/
 icons/
@@ -67,6 +68,7 @@ rstudio/
 !rstudio/rstudio-prefs.json
 session/
 Session Storage/
+Steam
 systemd/
 teams/
 TelegramDesktop/
@@ -81,6 +83,5 @@ xdg-terminals.list
 xreader/
 yelp/
 zed/*
-!zed/keymap.json
 !zed/settings.json
 zoxide
