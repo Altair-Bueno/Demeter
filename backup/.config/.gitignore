@@ -40,12 +40,16 @@ icc/
 icons/
 iterm2/AppSupport
 JetBrains/
+kactivitymanagerdrc
 keyrings/
+kglobalshortcutsrc
+libreoffice/
 libvirt/
 Local Storage/
 logs/
 menus/
 Microsoft*
+microsoft-edge/
 mimeapps.list
 MongoDB Compass/
 monitors.xml*
@@ -72,10 +76,13 @@ Steam
 systemd/
 teams/
 TelegramDesktop/
+tiling-assistant/
 totem/
 transmission/
 Trash/
+ubuntu-xdg-terminals.list
 user-dirs.dirs
+uv/
 variety/
 VisualParadigm/
 wireshark/

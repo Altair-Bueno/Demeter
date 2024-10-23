@@ -4,8 +4,8 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 [user]
-	name = Altair-Bueno
-	email = 67512202+Altair-Bueno@users.noreply.github.com
+	name = abueno
+	email = abueno@airzonesl.es
 [core]
 	excludesfile = /home/compux72/.gitignore_global
 	autocrlf = input
@@ -13,5 +13,5 @@
 	defaultBranch = master
 
 [credential]
-	helper = libsecret
+	helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
 	credentialStore = secretservice
