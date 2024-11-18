@@ -41,12 +41,14 @@
       }
     }
   },
-  "theme": "One Dark Pro",
+  "theme": "One Dark",
   "assistant": {
-    "version": "1",
-    "provider": {
-      "name": "ollama",
-      "api_url": "https://ollama.ertis.uma.es"
+    "version": "2",
+    "provider": null
+  },
+  "terminal": {
+    "shell": {
+      "program": "zsh"
     }
   }
 }

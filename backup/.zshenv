@@ -14,6 +14,9 @@ export NODE_REPL_HISTORY=""
 ################################################################################
 # SDKs
 ################################################################################
+# Altra corporación (Airzone)
+# source "$HOME/Developer/scripts/env.sh"
+
 path=(
     "$DEMETER/scripts"
     # Rust cargo
@@ -23,6 +26,8 @@ path=(
     '/usr/local/sbin'
     # Local binaries
     "$HOME/.local/bin"
+    # Altra corporación (Airzone)
+    "$HOME/Developer/scripts"
     $path
 )
 
