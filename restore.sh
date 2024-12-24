@@ -74,6 +74,7 @@ function setup_macos() {
   : Link macos config
   rm "$HOME/.gitconfig" || true
   ln -nfs "$DEMETER/macOS/.gitconfig" "$HOME/.gitconfig"
+  ln -nfs "$DEMETER/macOS/.Brewfile" "$HOME/.Brewfile"
 }
 
 function setup_linux {

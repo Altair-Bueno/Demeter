@@ -1,3 +1,0 @@
-homebrew/cask-fonts
-tako8ki/tap
-veeso/termscp

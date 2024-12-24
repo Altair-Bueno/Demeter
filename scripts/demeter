@@ -21,16 +21,9 @@ LOG_FILE="${LOG_FILE:-$DEMETER/gitlog.txt}"
 COMMIT_MESSAGE="[$(date '+%d/%m/%y')]: Scheduled job on $(uname -n)"
 COMMIT_MESSAGE="${1:-$COMMIT_MESSAGE}"
 
-BREW_TAP="${BREW_TAP:-$DEMETER/packages/brew/tap.txt}"
-BREW_PACKAGE="${BREW_PACKAGE:-$DEMETER/packages/brew/packages.txt}"
-BREW_CASK="${BREW_CASK:-$DEMETER/packages/brew/cask.txt}"
-
 if [[ $(uname) == 'Darwin' ]]
 then
-	mkdir -p "$(dirname "$BREW_TAP")" "$(dirname "$BREW_PACKAGE")" "$(dirname "$BREW_CASK")"
-	brew tap > "$BREW_TAP"
-	brew leaves > "$BREW_PACKAGE"
-	brew list --cask > "$BREW_CASK"
+	brew bundle dump --global
 else
 	echo Freezing packages is not supported on non-macOS systems
 fi
