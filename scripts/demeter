@@ -23,7 +23,7 @@ COMMIT_MESSAGE="${1:-$COMMIT_MESSAGE}"
 
 if [[ $(uname) == 'Darwin' ]]
 then
-	brew bundle dump --global
+	brew bundle dump --global -f
 else
 	echo Freezing packages is not supported on non-macOS systems
 fi

@@ -29,6 +29,7 @@ brew "kubernetes-cli"
 brew "less"
 brew "libtool"
 brew "macos-trash", link: true
+brew "mas"
 brew "maven"
 brew "mit-scheme"
 brew "neofetch"
@@ -75,3 +76,9 @@ cask "transmission"
 cask "visual-studio-code"
 cask "whatsapp"
 cask "zed"
+mas "AdGuard for Safari", id: 1440147259
+mas "Amphetamine", id: 937984704
+mas "LanguageTool", id: 1534275760
+mas "Microsoft Remote Desktop", id: 1295203466
+mas "Refined GitHub", id: 1519867270
+mas "Vimari", id: 1480933944
