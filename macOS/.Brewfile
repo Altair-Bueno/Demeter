@@ -68,6 +68,7 @@ cask "iterm2"
 cask "keka"
 cask "maccy"
 cask "microsoft-edge"
+cask "mqttx"
 cask "qlmarkdown"
 cask "steam"
 cask "syntax-highlight"
@@ -75,10 +76,11 @@ cask "telegram"
 cask "transmission"
 cask "visual-studio-code"
 cask "whatsapp"
+cask "wireshark"
 cask "zed"
 mas "AdGuard for Safari", id: 1440147259
 mas "Amphetamine", id: 937984704
 mas "LanguageTool", id: 1534275760
-mas "Microsoft Remote Desktop", id: 1295203466
 mas "Refined GitHub", id: 1519867270
 mas "Vimari", id: 1480933944
+mas "Windows App", id: 1295203466
