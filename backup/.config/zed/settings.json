@@ -7,6 +7,11 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "language_models": {
+    "ollama": {
+      "api_url": "https://ollama.ertis.uma.es"
+    }
+  },
   "autosave": "on_focus_change",
   "auto_update": false,
   "buffer_font_family": "JetBrainsMonoNL Nerd Font",
