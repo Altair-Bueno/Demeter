@@ -29,7 +29,7 @@ path=(
     # Local binaries
     "$HOME/.local/bin"
     # Altra corporación (Airzone)
-    "$HOME/Developer/scripts"
+    "$HOME/Developer/scripts/scripts"
     $path
 )
 

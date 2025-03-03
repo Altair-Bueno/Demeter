@@ -5,7 +5,7 @@
 	smudge = git-lfs smudge -- %f
 [user]
 	name = abueno
-	email = abueno@airzonesl.es
+	email = abueno@airzonecontrol.com
 [core]
 	excludesfile = /home/compux72/.gitignore_global
 	autocrlf = input
