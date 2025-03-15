@@ -1,7 +1,7 @@
 # Demeter
 
 Demeter is a backup git repository that contains config files on my current
-macOS enviroment. Althought all files were created using macOS commandline
+macOS environment. Although all files were created using macOS commandline
 utilities, they should work fine with any standard UNIX-like system that uses
 `zsh` as it's default shell.
 

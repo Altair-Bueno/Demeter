@@ -7,11 +7,11 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "language_models": {
-    "ollama": {
-      "api_url": "https://ollama.ertis.uma.es"
-    }
+  "icon_theme": "Material Icon Theme",
+  "features": {
+    "edit_prediction_provider": "zed"
   },
+  "base_keymap": "JetBrains",
   "autosave": "on_focus_change",
   "auto_update": false,
   "buffer_font_family": "JetBrainsMonoNL Nerd Font",
@@ -34,22 +34,6 @@
   "format_on_save": "on",
   "inlay_hints": {
     "enabled": true
-  },
-  "language_overrides": {
-    "Markdown": {
-      "soft_wrap": "editor_width",
-      "formatter": {
-        "external": {
-          "command": "prettier",
-          "arguments": ["--stdin-filepath=README.md", "--prose-wrap=always"]
-        }
-      }
-    }
-  },
-  "theme": "One Dark",
-  "assistant": {
-    "version": "2",
-    "provider": null
   },
   "terminal": {
     "shell": {
