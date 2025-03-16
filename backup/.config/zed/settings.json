@@ -8,8 +8,9 @@
 // from the command palette or from `Zed` application menu.
 {
   "icon_theme": "Material Icon Theme",
+  "double_click_in_multibuffer": "open",
   "features": {
-    "edit_prediction_provider": "zed"
+    "edit_prediction_provider": "copilot"
   },
   "base_keymap": "JetBrains",
   "autosave": "on_focus_change",
