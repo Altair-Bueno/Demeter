@@ -2,6 +2,7 @@ applications/
 autostart/
 budgie*
 Budgie-xdg-terminals.list
+CMakeTools/
 Code/
 Code Cache/
 connections.db
