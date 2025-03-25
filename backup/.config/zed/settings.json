@@ -7,7 +7,7 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "theme": "One Dark Pro",
+  "theme": "One Dark",
   "icon_theme": "Material Icon Theme",
   "double_click_in_multibuffer": "open",
   "features": {
