@@ -1,6 +1,6 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-right_format = """$cmd_duration$git_status$time"""
+right_format = """$cmd_duration$git_status$git_branch$time"""
 format = """$os$directory$character"""
 add_newline = false
 
@@ -9,13 +9,48 @@ disabled = false
 
 [os.symbols]
 Macos = ' '
+Ubuntu = ' '
 
-[time]
-disabled = false
-time_format = '%H:%M'
-format = '[ $time]($style) '
 
 [directory]
+style = "bold #0087af"
 truncate_to_repo = false
 truncation_length = 1
 fish_style_pwd_dir_length = 1
+
+
+[character]
+success_symbol = '[❯](bold #5fd700)'
+error_symbol = '[✗](bold red)'
+
+
+[cmd_duration]
+style = "bold #87875f"
+
+
+[git_branch]
+truncation_length = 8
+format = '[$symbol$branch]($style) '
+
+
+[git_status]
+disabled = false
+format = '[$all_status$ahead_behind]($style)'
+style = "none"
+stashed = '*${count} '
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "⇕${count} "
+conflicted = "=${count} "
+deleted = "✘${count} "
+renamed = "»${count} "
+modified = "[!${count}](178) "
+staged = "+${count} "
+untracked = "[?${count}](#0087af) "
+
+
+[time]
+disabled = false
+style = "bold #5f8787"
+time_format = '%H:%M'
+format = '[ $time]($style) '

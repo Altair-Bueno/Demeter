@@ -23,8 +23,10 @@ path=(
     "$DEMETER/scripts"
     # Rust cargo
     "$HOME/.cargo/bin"
+    # Pnpm
+    "$HOME/.config/pnpm"
     # Homebrew
-    '/usr/local/bin' 
+    '/usr/local/bin'
     '/usr/local/sbin'
     # Local binaries
     "$HOME/.local/bin"

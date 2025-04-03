@@ -1,14 +1,4 @@
 ################################################################################
-# P10k theme
-################################################################################
-ZSH_THEME="powerlevel10k/powerlevel10k"
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-# Customize P10k
-source "$DEMETER/backup/.config/zsh/.p10k.zsh"
-
-################################################################################
 # Shell settings
 ################################################################################
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.history"
@@ -43,7 +33,7 @@ skip_global_compinit=1
 alias cd='z'
 alias ls='eza --sort=type'
 alias venv='python -m venv'
-alias httpserv='python -m http.server'
+alias httpserv='python3 -m http.server'
 alias cat='bat'
 alias tree='eza --tree'
 alias jq="jaq"
@@ -66,7 +56,6 @@ plugins=(
   "$DEMETER/submodules/ohmyzsh/plugins/"{fzf/fzf,kubectl/kubectl}.plugin.zsh
   "$DEMETER/submodules/zsh-autopair/autopair.zsh"
   "$DEMETER/backup/.config/zsh/.iterm2_shell_integration.zsh"
-  "$DEMETER/submodules/powerlevel10k/powerlevel10k.zsh-theme"
   "$DEMETER/submodules/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
   "$DEMETER/submodules/zsh-no-ps2/zsh-no-ps2.plugin.zsh"
   "$DEMETER/submodules/fzf-tab/fzf-tab.plugin.zsh"
@@ -77,11 +66,4 @@ do
 done
 
 eval "$(zoxide init zsh)"
-
-# pnpm
-export PNPM_HOME="$HOME/.config/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
+eval "$(starship init zsh)"
