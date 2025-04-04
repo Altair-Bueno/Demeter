@@ -29,8 +29,10 @@ style = "bold #87875f"
 
 
 [git_branch]
-truncation_length = 8
+truncation_length = 6
 format = '[$symbol$branch]($style) '
+ignore_branches = ["master", "main"]
+symbol = ' '
 
 
 [git_status]
