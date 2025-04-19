@@ -55,10 +55,10 @@ plugins=(
   "$DEMETER/submodules/ohmyzsh/lib/"{completion,clipboard,directories,history}.zsh
   "$DEMETER/submodules/ohmyzsh/plugins/"{fzf/fzf,kubectl/kubectl}.plugin.zsh
   "$DEMETER/submodules/zsh-autopair/autopair.zsh"
-  "$DEMETER/backup/.config/zsh/.iterm2_shell_integration.zsh"
   "$DEMETER/submodules/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-  "$DEMETER/submodules/zsh-no-ps2/zsh-no-ps2.plugin.zsh"
-  "$DEMETER/submodules/fzf-tab/fzf-tab.plugin.zsh"
+  # "$DEMETER/backup/.config/zsh/.iterm2_shell_integration.zsh"
+  # "$DEMETER/submodules/zsh-no-ps2/zsh-no-ps2.plugin.zsh"
+  # "$DEMETER/submodules/fzf-tab/fzf-tab.plugin.zsh"
 )
 for plugin in $plugins
 do
