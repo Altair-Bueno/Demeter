@@ -3,6 +3,7 @@ gitlog.txt
 **/rclone
 # No idea what this is
 **/jgit
+backup/bin
 
 # IDE
 .vscode
