@@ -67,7 +67,6 @@ function setup_macos() {
   : Link macos config
   rm "$HOME/.gitconfig" || true
   ln -nfs "$DEMETER/macOS/.gitconfig" "$HOME/.gitconfig"
-  ln -nfs "$DEMETER/macOS/.Brewfile" "$HOME/.Brewfile"
 
   : Installing HomeBrew and software "https://github.com/Homebrew/install/#install-homebrew-on-macos-or-linux"
   export NONINTERACTIVE=1
