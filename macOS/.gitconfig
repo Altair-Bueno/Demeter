@@ -5,8 +5,8 @@
 	smudge = git-lfs smudge -- %f
 [user]
 	name = Altair-Bueno
-	email = altair.bueno@uma.es
-	# email = 67512202+Altair-Bueno@users.noreply.github.com
+	email = 67512202+Altair-Bueno@users.noreply.github.com
+	signingkey = 2963E09EECDE0ACC
 [core]
 	# excludesfile = /Users/compux72/.gitignore_global
 	autocrlf = input
@@ -33,6 +33,7 @@
 	sort = -committerdate
 [tag]
 	sort = version:refname
+	gpgSign = true
 [diff]
 	algorithm = histogram
 	colorMoved = plain
@@ -57,3 +58,5 @@
 	updateRefs = true
 [merge]
 	conflictstyle = zdiff3
+[commit]
+	gpgsign = true
