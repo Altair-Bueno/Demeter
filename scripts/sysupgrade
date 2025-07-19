@@ -27,10 +27,8 @@ function update_rust {
     rustup update stable
     cargo install-update -a
 }
-function update_pip {
-    python3 -m pip freeze | \
-        grep -v 'file://'| \
-        xargs python3 -m pip install --upgrade pip
+function update_uv {
+    uv tool upgrade --all
 }
 function update_pnpm {
     pnpm up -g
@@ -48,9 +46,9 @@ function update_flatpak {
 
 declare -A cli
 
-[[ -x "$(command -v pnpm)" ]]    && cli[node]=update_pnpm
-[[ -x "$(command -v python3)" ]] && cli[pip]=update_pip
-[[ -x "$(command -v rustup)" ]]  && cli[rust]=update_rust 
+[[ -x "$(command -v pnpm)" ]]    && cli[pnpm]=update_pnpm
+[[ -x "$(command -v uv)" ]] && cli[uv]=update_uv
+[[ -x "$(command -v rustup)" ]]  && cli[rust]=update_rust
 [[ -x "$(command -v brew)" ]]    && cli[brew]=update_homebrew
 [[ -x "$(command -v git)" ]]     && cli[conf]=update_config
 [[ -x "$(command -v flatpak)" ]] && cli[fltpk]=update_flatpak
@@ -68,4 +66,3 @@ do
 done
 
 wait
-
