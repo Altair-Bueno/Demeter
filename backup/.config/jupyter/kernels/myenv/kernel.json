@@ -1,7 +1,6 @@
 {
  "argv": [
-  "/home/abueno@airzonesl.es/Developer/network_problems/.venv/bin/python",
-  "-Xfrozen_modules=off",
+  "/home/abueno@airzonesl.es/Downloads/.venv/bin/python",
   "-m",
   "ipykernel_launcher",
   "-f",

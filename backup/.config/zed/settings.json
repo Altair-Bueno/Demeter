@@ -13,11 +13,11 @@
   },
   "agent": {
     "always_allow_tool_actions": true,
+    "default_profile": "write",
     "default_model": {
       "provider": "copilot_chat",
       "model": "gpt-4.1"
     },
-    "version": "2"
   },
   "theme": "One Dark",
   "icon_theme": "Material Icon Theme",
@@ -35,13 +35,6 @@
   },
   "buffer_font_size": 15.0,
   "lsp": {
-    "deno": {
-      "settings": {
-        "deno": {
-          "enable": true
-        }
-      }
-    },
     "rust-analyzer": {
       "initialization_options": {
         "imports": {
@@ -64,24 +57,6 @@
   "languages": {
     "Markdown": {
       "format_on_save": "on"
-    },
-    "TypeScript": {
-      "language_servers": [
-        "deno",
-        "!typescript-language-server",
-        "!vtsls",
-        "!eslint"
-      ],
-      "formatter": "language_server"
-    },
-    "TSX": {
-      "language_servers": [
-        "deno",
-        "!typescript-language-server",
-        "!vtsls",
-        "!eslint"
-      ],
-      "formatter": "language_server"
     }
   }
 }
