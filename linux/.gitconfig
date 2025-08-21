@@ -6,6 +6,7 @@
 [user]
 	name = abueno
 	email = abueno@airzonecontrol.com
+	signingkey = 45E7D475055B03D4DAAAB630F3B4D7D437C79DAA
 [core]
 	excludesfile = /home/compux72/.gitignore_global
 	autocrlf = input
@@ -46,3 +47,5 @@
 	updateRefs = true
 [merge]
 	conflictstyle = zdiff3 
+[commit]
+	gpgsign = true
