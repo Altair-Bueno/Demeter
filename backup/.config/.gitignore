@@ -3,6 +3,7 @@ autostart/
 budgie*
 Budgie-xdg-terminals.list
 CMakeTools/
+delta/
 Code/
 Code Cache/
 connections.db
@@ -24,6 +25,7 @@ geary/
 gedit/
 gh/
 github-copilot/
+gk/
 gnome-*/
 GNOME-xdg-terminals.list
 goa-*/
