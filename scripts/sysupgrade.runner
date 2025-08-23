@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# A runner script meant to be called by sysupgrade.make
+
+function main {
+    local command_to_run=( bash "$@")
+
+    printf "+%s\n" "$SYSUPGRADE_STEP_NAME"
+    trap 'printf "%s%s\n" "-" "$SYSUPGRADE_STEP_NAME"' EXIT
+    if [[ -n "$DEBUG" ]]; then
+        printf "[%s]\t\$ %s\n" "$SYSUPGRADE_STEP_NAME" "${command_to_run[*]}"
+    fi
+
+    local line
+    while IFS=$'\n' read -r line; do
+        printf "[%s]\t%s\n" "$SYSUPGRADE_STEP_NAME" "$line"
+    done < <( "${command_to_run[@]}" 2>&1)
+
+}
+
+main "$@"

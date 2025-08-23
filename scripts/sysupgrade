@@ -1,68 +1,91 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
-###############################################################################
-# sysupgrade 1.0                                                              #
-# Altair Bueno MIT license                                                    #
-# https://github.com/Altair-Bueno/Demeter                                     #
-#                                                                             #
-# Updates toolchains and software installed on a macOS system                 #
-#                                                                             #
-# Usage:                                                                      #
-# sysupgrade [toolchain]                                                      #
-###############################################################################
-function update_homebrew {
-    export HOMEBREW_COLOR=true
-    brew update
-    brew upgrade
-    brew list --cask | xargs brew upgrade --cask
-    brew autoremove
-    brew cleanup
-    unset HOMEBREW_COLOR
-}
-function update_arch {
-    yay
-}
-function update_rust {
-    rustup self update
-    rustup update stable
-    cargo install-update -a
-}
-function update_uv {
-    uv tool upgrade --all
-}
-function update_pnpm {
-    pnpm up -g
-}
-function update_config {
-    git -C "$DEMETER" pull
-    git -C "$DEMETER" submodule update --init --recursive
-    git -C "$DEMETER" submodule update --recursive --remote
-}
-function update_flatpak {
-    flatpak update -y
+# Shell configuration
+set -euo pipefail
+shopt -s nullglob globstar
+
+# Imports
+source "${DEMETER:-$HOME/.demeter}/submodules/bash-progress-bar/progress-bar.bash"
+
+# Constants
+SYSUPGRADE_MAKEFILE="$DEMETER/scripts/sysupgrade.make"
+# TODO replace with --print-targets when possible
+SYSUPGRADE_AVAILABLE_TARGETS=(brew rust arch python node flatpak sysconfig)
+
+function command-exists {
+    command -v "$1" >/dev/null 2>&1
 }
 
-################################################################################
+function fatal {
+    echo "$@" >&2
+    exit 1
+}
 
-declare -A cli
+function clear-last-line {
+    printf "\r\033[K"
+}
 
-[[ -x "$(command -v pnpm)" ]]    && cli[pnpm]=update_pnpm
-[[ -x "$(command -v uv)" ]] && cli[uv]=update_uv
-[[ -x "$(command -v rustup)" ]]  && cli[rust]=update_rust
-[[ -x "$(command -v brew)" ]]    && cli[brew]=update_homebrew
-[[ -x "$(command -v git)" ]]     && cli[conf]=update_config
-[[ -x "$(command -v flatpak)" ]] && cli[fltpk]=update_flatpak
+function draw-progress-bar {
+    local step="$1" total="$2"
 
-if [[ -z $* ]]
-then
-    upgrade_list=( ${(k)cli} )
-else
-    upgrade_list=( $* )
-fi
+    progress-bar -c "$step" -t "$total" -r -p
+}
 
-for upgrade in $upgrade_list
-do
-    ($cli[$upgrade] |& sed "s/^/[$upgrade]\t| /") &
-done
 
-wait
+function main {
+    local targets=() OPTIN OPTOUT opt
+
+    while getopts "ht:" opt; do
+        case "$opt" in
+            h)
+                echo "Usage: $0 [-h] [-t target] ..."
+                echo "Available targets: ${SYSUPGRADE_AVAILABLE_TARGETS[*]}"
+                exit 0
+            ;;
+            t)
+                if [[ ! " ${SYSUPGRADE_AVAILABLE_TARGETS[*]} " =~ " ${OPTARG} " ]]; then
+                    fatal "Unknown target: $target"
+                else
+                    targets+=("$OPTARG")
+                fi
+            ;;
+            *)
+                fatal "Invalid option: -$OPTARG"
+            ;;
+        esac
+    done
+
+    if [[ "${#targets[@]}" -eq 0 ]]; then
+        command-exists "brew" && targets+=(brew)
+        command-exists "rustup" && targets+=(rust)
+        command-exists "yay" && targets+=(arch)
+        command-exists "python3" && targets+=(python)
+        command-exists "node" && targets+=(node)
+        command-exists "flatpack" && targets+=(flatpak)
+        [[ -n "${DEMETER:+x}" ]] && targets+=(sysconfig)
+    fi
+
+
+    declare -g STARTED_JOBS=0 FINISHED_JOBS=0
+
+    # Set signal handlers
+    trap 'clear-last-line && draw-progress-bar "$FINISHED_JOBS" "$STARTED_JOBS"' SIGWINCH
+
+    local line
+    while read -r line; do
+        case "$line" in
+            +*) (( STARTED_JOBS+=1 )) ;;
+            -*) (( FINISHED_JOBS+=1 )) ;;
+            *)
+                clear-last-line
+                printf "%s\n" "$line" ;;
+        esac
+
+        clear-last-line
+        # We need to connect stdin so progress-bar can read the terminal size
+        draw-progress-bar "$FINISHED_JOBS" "$STARTED_JOBS" <&1
+    done < <(make -f "$SYSUPGRADE_MAKEFILE" -j "${targets[@]}")
+    trap - SIGWINCH SIGINT SIGTERM
+}
+
+main "$@"

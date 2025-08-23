@@ -19,3 +19,6 @@
 [submodule "submodules/fzf-tab"]
 	path = submodules/fzf-tab
 	url = https://github.com/Aloxaf/fzf-tab
+[submodule "submodules/bash-progress-bar"]
+	path = submodules/bash-progress-bar
+	url = https://github.com/Altair-Bueno/bash-progress-bar
