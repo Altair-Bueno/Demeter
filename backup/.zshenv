@@ -26,6 +26,8 @@ path=(
     # Pnpm
     "$HOME/.config/pnpm"
     # Homebrew
+    '/opt/homebrew/bin'
+    '/opt/homebrew/opt/make/libexec/gnubin'
     '/usr/local/bin'
     '/usr/local/sbin'
     # Local binaries
