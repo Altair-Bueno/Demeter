@@ -20,21 +20,21 @@ export HOMEBREW_BUNDLE_FILE_GLOBAL="$XDG_DATA_HOME/Brewfile-$(uname)"
 # source "$HOME/Developer/scripts/env.sh"
 
 path=(
+    # Altra corporación (Airzone)
+    "$HOME/Developer/scripts/scripts"
+    # Demeter scripts
     "$DEMETER/scripts"
     # Rust cargo
     "$HOME/.cargo/bin"
     # Pnpm
     "$HOME/.config/pnpm"
+    # Local binaries
+    "$HOME/.local/bin"
     # Homebrew
     '/opt/homebrew/bin'
     '/opt/homebrew/opt/make/libexec/gnubin'
-    '/usr/local/bin'
-    '/usr/local/sbin'
-    # Local binaries
-    "$HOME/.local/bin"
-    # Altra corporación (Airzone)
-    "$HOME/Developer/scripts/scripts"
-    $path
+    # System paths
+    "${path[@]}"
 )
 
 fpath=(
