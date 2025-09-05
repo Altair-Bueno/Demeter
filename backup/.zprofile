@@ -38,8 +38,8 @@ path=(
 )
 
 fpath=(
-    "$HOME/.rustup/toolchains/*/share/zsh/site-functions"
-    $fpath
+    "$HOME/.rustup/toolchains/"*/share/zsh/site-functions
+    "${fpath[@]}"
 )
 
 path=(${(u)path})
