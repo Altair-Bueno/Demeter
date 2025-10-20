@@ -13,6 +13,7 @@ export SCCACHE_CACHE_SIZE='5G'
 export NODE_REPL_HISTORY=""
 export HOMEBREW_BUNDLE_DUMP_NO_VSCODE=1
 export HOMEBREW_BUNDLE_FILE_GLOBAL="$XDG_DATA_HOME/Brewfile-$(uname)"
+export PNPM_HOME="$HOME/.config/pnpm"
 ################################################################################
 # SDKs
 ################################################################################
@@ -27,7 +28,7 @@ path=(
     # Rust cargo
     "$HOME/.cargo/bin"
     # Pnpm
-    "$HOME/.config/pnpm"
+    "$PNPM_HOME"
     # Local binaries
     "$HOME/.local/bin"
     # Homebrew
