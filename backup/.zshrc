@@ -56,7 +56,7 @@ plugins=(
   "$DEMETER/submodules/ohmyzsh/plugins/"{fzf/fzf,kubectl/kubectl}.plugin.zsh
   "$DEMETER/submodules/zsh-autopair/autopair.zsh"
   "$DEMETER/submodules/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-  "$DEMETER"/priv/plugin.zsh.d/*.zsh
+  "$DEMETER"/priv/plugin.zsh.d/*.zsh(N)
   # "$DEMETER/backup/.config/zsh/.iterm2_shell_integration.zsh"
   # "$DEMETER/submodules/zsh-no-ps2/zsh-no-ps2.plugin.zsh"
   # "$DEMETER/submodules/fzf-tab/fzf-tab.plugin.zsh"
