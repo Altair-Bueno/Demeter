@@ -38,6 +38,7 @@ alias cat='bat'
 alias tree='eza --tree'
 alias jq="jaq"
 alias watch='watch -c'
+alias neofetch="fastfetch"
 # Kubernetes releated
 alias k='kubectl'
 alias kget='kubectl get'
