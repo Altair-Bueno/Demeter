@@ -11,9 +11,14 @@ export BAT_STYLE='plain'
 export _ZO_ECHO=1
 export SCCACHE_CACHE_SIZE='5G'
 export NODE_REPL_HISTORY=""
+export PNPM_HOME="$HOME/.config/pnpm"
+export HOMEBREW_PREFIX="/opt/homebrew";
 export HOMEBREW_BUNDLE_DUMP_NO_VSCODE=1
 export HOMEBREW_BUNDLE_FILE_GLOBAL="$XDG_DATA_HOME/Brewfile-$(uname)"
-export PNPM_HOME="$HOME/.config/pnpm"
+export HOMEBREW_CELLAR="$HOMEBREW_PREFIX/Cellar"
+export HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX"
+export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}"
+
 ################################################################################
 # SDKs
 ################################################################################
@@ -39,6 +44,7 @@ path=(
 )
 
 fpath=(
+    "$HOMEBREW_PREFIX/share/zsh/site-functions"
     "$HOME/.rustup/toolchains/"*/share/zsh/site-functions
     "${fpath[@]}"
 )
