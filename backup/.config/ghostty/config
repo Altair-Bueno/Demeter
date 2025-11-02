@@ -1,6 +1,8 @@
 font-family = "JetBrainsMonoNL Nerd Font Mono"
 font-size = 14
 theme = Atom One Dark
-background-opacity = 0.8
+background-opacity = 0.85
 macos-titlebar-style = tabs
 macos-shortcuts = allow
+window-height = 48
+window-width = 160
