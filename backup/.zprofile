@@ -18,12 +18,13 @@ export HOMEBREW_BUNDLE_FILE_GLOBAL="$XDG_DATA_HOME/Brewfile-$(uname)"
 export HOMEBREW_CELLAR="$HOMEBREW_PREFIX/Cellar"
 export HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX"
 export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}"
+export FNM_PATH="$HOME/.config/fnm"
+export FNM_COREPACK_ENABLED="true"
+export MINICOM='-c on'
 
 ################################################################################
 # SDKs
 ################################################################################
-# Altra corporación (Airzone)
-# source "$HOME/Developer/scripts/env.sh"
 
 path=(
     # Altra corporación (Airzone)
@@ -34,6 +35,8 @@ path=(
     "$HOME/.cargo/bin"
     # Pnpm
     "$PNPM_HOME"
+    # Fnm
+    "$FNM_PATH"
     # Local binaries
     "$HOME/.local/bin"
     # Homebrew
@@ -46,8 +49,13 @@ path=(
 fpath=(
     "$HOMEBREW_PREFIX/share/zsh/site-functions"
     "$HOME/.rustup/toolchains/"*/share/zsh/site-functions
+    "$HOME/Developer/scripts/completions/zsh_completion.d"
     "${fpath[@]}"
 )
 
 path=(${(u)path})
 fpath=(${(u)fpath})
+
+if command -v fnm > /dev/null; then
+    eval "$(fnm env --use-on-cd --shell zsh)"
+fi
