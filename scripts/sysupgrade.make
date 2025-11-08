@@ -83,7 +83,8 @@ flatpack: flatpack-packages
 
 sysconfig-submodules: export SYSUPGRADE_STEP_NAME:=sysconfig-submodules
 sysconfig-submodules:
-	@git -C "${DEMETER}" submodule update --recursive --remote --init
+	@git -C "${DEMETER}" submodule foreach --recursive git fetch --quiet origin
+	@git -C "${DEMETER}" submodule foreach --recursive git checkout --quiet FETCH_HEAD
 
 sysconfig: export SYSUPGRADE_STEP_NAME:=sysconfig
 sysconfig: sysconfig-submodules
