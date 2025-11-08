@@ -80,8 +80,8 @@ function main {
                 sysupgrade-help
             ;;
             t)
-                if [[ ! " ${SYSUPGRADE_TARGETS[*]} " =~ " ${OPTARG} " ]]; then
-                    fatal "Unknown target: $target"
+                if [[ ! " ${!SYSUPGRADE_TARGETS[*]} " =~ " ${OPTARG} " ]]; then
+                    fatal "Unknown target: $OPTARG"
                 fi
 
                 targets+=("$OPTARG")
