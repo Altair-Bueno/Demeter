@@ -23,6 +23,7 @@ brew-casks: brew-update
 brew: export SYSUPGRADE_STEP_NAME:=brew
 brew: brew-casks brew-packages
 	@brew cleanup
+	@brew bundle dump --global -f
 
 .PHONY: brew brew-packages brew-casks brew-update
 
