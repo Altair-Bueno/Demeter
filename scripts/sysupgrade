@@ -9,11 +9,47 @@ source "${DEMETER:-$HOME/.demeter}/submodules/bash-progress-bar/progress-bar.bas
 
 # Constants
 SYSUPGRADE_MAKEFILE="$DEMETER/scripts/sysupgrade.make"
-# TODO replace with --print-targets when possible
-SYSUPGRADE_AVAILABLE_TARGETS=(brew rust arch python node flatpak sysconfig)
+declare -gA SYSUPGRADE_TARGETS=(
+    [brew]="brew"
+    [rust]="rustup"
+    [arch]="yay"
+    [python]="python3"
+    [node]="node"
+    [flatpak]="flatpak"
+    [sysconfig]="true"
+)
+
+# Global variables
+declare -gA STARTED_JOBS=() FINISHED_JOBS=()
 
 function command-exists {
     command -v "$1" >/dev/null 2>&1
+    return $?
+}
+
+function send-notification {
+    local title="$1" body="$2"
+    printf "\033]777;notify;%s;%s\007" "$title" "$body"
+}
+
+function init-term {
+    local lines
+    lines="$(tput lines)"
+    printf '\n\e7\e[%d;%dr\e8\e[1A\x1b]9;4;3\x07\e[?7l' 0 "$((lines - 1))"
+}
+
+function deinit-term {
+    local lines
+    lines="$(tput lines)"
+    printf '\e7\e[%d;%dr\e[%d;%dH\e[0K\e8\x1b]9;4;0\x07\e[?7h' 0 "$lines" "$lines" 0
+}
+
+function draw-progress-bar {
+    local lines
+    lines="$(tput lines)"
+    printf '\e7\e[%d;%dH\e[0K\e[0K%s\e8\x1b]9;4;1;%d\x07' \
+        "$lines" 0 \
+        "$(progress-bar -c "${#FINISHED_JOBS[@]}" -t "${#STARTED_JOBS[@]}" -w "$(tput cols)" -p)" "$(( 100 * ${#FINISHED_JOBS[@]} / ${#STARTED_JOBS[@]} ))"
 }
 
 function fatal {
@@ -21,71 +57,77 @@ function fatal {
     exit 1
 }
 
-function clear-last-line {
-    printf "\r\033[K"
+function sysupgrade-help {
+    cat <<-EOF
+Usage: sysupgrade [-h] [-q] [-t TARGET]...
+Options:
+  -h            Show this help message and exit
+  -q            Quiet mode, send notifications instead of printing to terminal
+  -t TARGET     Specify a target to upgrade (can be used multiple times)
+                Available targets: ${SYSUPGRADE_TARGETS[*]}
+                Default: all available targets
+If no targets are specified, all available targets will be upgraded.
+EOF
+    exit 0
 }
-
-function draw-progress-bar {
-    local step="$1" total="$2"
-
-    progress-bar -c "$step" -t "$total" -r -p
-}
-
 
 function main {
-    local targets=() OPTIN OPTOUT opt
+    local targets=() quiet OPTIN OPTOUT opt
 
-    while getopts "ht:" opt; do
+    while getopts "hqt:" opt; do
         case "$opt" in
             h)
-                echo "Usage: $0 [-h] [-t target] ..."
-                echo "Available targets: ${SYSUPGRADE_AVAILABLE_TARGETS[*]}"
-                exit 0
+                sysupgrade-help
             ;;
             t)
-                if [[ ! " ${SYSUPGRADE_AVAILABLE_TARGETS[*]} " =~ " ${OPTARG} " ]]; then
+                if [[ ! " ${SYSUPGRADE_TARGETS[*]} " =~ " ${OPTARG} " ]]; then
                     fatal "Unknown target: $target"
-                else
-                    targets+=("$OPTARG")
                 fi
+
+                targets+=("$OPTARG")
             ;;
-            *)
-                fatal "Invalid option: -$OPTARG"
+            q)
+                quiet=1
             ;;
+            *) fatal "Invalid option: -$OPTARG";;
         esac
     done
 
+
     if [[ "${#targets[@]}" -eq 0 ]]; then
-        command-exists "brew" && targets+=(brew)
-        command-exists "rustup" && targets+=(rust)
-        command-exists "yay" && targets+=(arch)
-        command-exists "python3" && targets+=(python)
-        command-exists "node" && targets+=(node)
-        command-exists "flatpack" && targets+=(flatpak)
-        [[ -n "${DEMETER:+x}" ]] && targets+=(sysconfig)
+        local target
+        for target in "${!SYSUPGRADE_TARGETS[@]}"; do
+            local command
+            command="${SYSUPGRADE_TARGETS["$target"]}"
+            if command-exists "$command" ; then
+                targets+=("$target")
+            fi
+        done
     fi
 
-
-    declare -g STARTED_JOBS=0 FINISHED_JOBS=0
-
-    # Set signal handlers
-    trap 'clear-last-line && draw-progress-bar "$FINISHED_JOBS" "$STARTED_JOBS"' SIGWINCH
+    trap deinit-term EXIT
+    init-term
+    trap draw-progress-bar SIGWINCH
 
     local line
     while read -r line; do
         case "$line" in
-            +*) (( STARTED_JOBS+=1 )) ;;
-            -*) (( FINISHED_JOBS+=1 )) ;;
-            *)
-                clear-last-line
-                printf "%s\n" "$line" ;;
+            +*)
+                local job="${line#+}"
+                STARTED_JOBS["$job"]="$(date +%s)"
+                [[ ${quiet:+x} != x ]] && send-notification "$job" "Started upgrade for ${job}"
+                ;;
+            -*)
+                local job="${line#-}" took
+                FINISHED_JOBS["$job"]="$(date +%s)"
+                took=$(( FINISHED_JOBS["$job"] - STARTED_JOBS["$job"] ))
+                [[ ${quiet:+x} != x ]] && send-notification "$job" "Finished upgrade for ${job} (took ${took}s)"
+                ;;
+            *) printf "%s\n" "$line" ;;
         esac
-
-        clear-last-line
         # We need to connect stdin so progress-bar can read the terminal size
-        draw-progress-bar "$FINISHED_JOBS" "$STARTED_JOBS" <&1
+        draw-progress-bar "${#FINISHED_JOBS[@]}" "${#STARTED_JOBS[@]}" <&1
     done < <(make -f "$SYSUPGRADE_MAKEFILE" -j "${targets[@]}")
-    trap - SIGWINCH SIGINT SIGTERM
 }
 
 main "$@"
