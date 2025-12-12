@@ -6,3 +6,4 @@ macos-titlebar-style = tabs
 macos-shortcuts = allow
 window-height = 48
 window-width = 160
+clipboard-paste-protection = false
