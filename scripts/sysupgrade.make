@@ -72,14 +72,14 @@ node: pnpm-packages
 
 .PHONY: node pnpm-packages
 
-flatpack-packages: export SYSUPGRADE_STEP_NAME:=flatpack-packages
-flatpack-packages:
+flatpak-packages: export SYSUPGRADE_STEP_NAME:=flatpak-packages
+flatpak-packages:
 	@flatpak update -y
 
-flatpack: export SYSUPGRADE_STEP_NAME:=flatpack
-flatpack: flatpack-packages
+flatpak: export SYSUPGRADE_STEP_NAME:=flatpack
+flatpak: flatpak-packages
 
-.PHONY: flatpack flatpack-packages
+.PHONY: flatpak flatpak-packages
 
 sysconfig-submodules: export SYSUPGRADE_STEP_NAME:=sysconfig-submodules
 sysconfig-submodules:
