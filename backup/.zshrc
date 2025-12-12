@@ -69,3 +69,4 @@ done
 
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
+eval "$(just --completions zsh)"

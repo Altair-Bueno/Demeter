@@ -1,133 +1,95 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S just --justfile
 
-# Shell configuration
-set -euo pipefail
-shopt -s nullglob globstar
+[default]
+all: brew-all rust-all python-all node-all flatpak-all sysconfig-all arch-all
 
-# Imports
-source "${DEMETER:-$HOME/.demeter}/submodules/bash-progress-bar/progress-bar.bash"
+[group("brew")]
+[parallel]
+brew-update:
+    brew update
 
-# Constants
-SYSUPGRADE_MAKEFILE="$DEMETER/scripts/sysupgrade.make"
-declare -gA SYSUPGRADE_TARGETS=(
-    [brew]="brew"
-    [rust]="rustup"
-    [arch]="yay"
-    [python]="python3"
-    [node]="node"
-    [flatpak]="flatpak"
-    [sysconfig]="true"
-)
+[group("brew")]
+[parallel]
+brew-packages: brew-update
+    brew upgrade
 
-# Global variables
-declare -gA STARTED_JOBS=() FINISHED_JOBS=()
+[group("brew")]
+[parallel]
+brew-casks: brew-update
+    brew upgrade --casks --greedy
 
-function command-exists {
-    command -v "$1" >/dev/null 2>&1
-    return $?
-}
+[group("brew")]
+[parallel]
+brew-all: brew-update brew-casks brew-packages
+    brew cleanup
+    brew bundle dump --global -f
 
-function send-notification {
-    local title="$1" body="$2"
-    printf "\033]777;notify;%s;%s\007" "$title" "$body"
-}
+[group("arch")]
+[parallel]
+arch-yay:
+    -yay
 
-function init-term {
-    local lines
-    lines="$(tput lines)"
-    printf '\n\e7\e[%d;%dr\e8\e[1A\x1b]9;4;3\x07\e[?7l' 0 "$((lines - 1))"
-}
+[group("arch")]
+[parallel]
+arch-all: arch-yay
 
-function deinit-term {
-    local lines
-    lines="$(tput lines)"
-    printf '\e7\e[%d;%dr\e[%d;%dH\e[0K\e8\x1b]9;4;0\x07\e[?7h' 0 "$lines" "$lines" 0
-}
+[group("rust")]
+[parallel]
+rust-rustup-self:
+    -rustup self update
 
-function draw-progress-bar {
-    local lines
-    lines="$(tput lines)"
-    printf '\e7\e[%d;%dH\e[0K\e[0K%s\e8\x1b]9;4;1;%d\x07' \
-        "$lines" 0 \
-        "$(progress-bar -c "${#FINISHED_JOBS[@]}" -t "${#STARTED_JOBS[@]}" -w "$(tput cols)" -p)" "$(( 100 * ${#FINISHED_JOBS[@]} / ${#STARTED_JOBS[@]} ))"
-}
+[group("rust")]
+[parallel]
+rust-rustup-release-stable: rust-rustup-self
+    rustup update stable
 
-function fatal {
-    echo "$@" >&2
-    exit 1
-}
+[group("rust")]
+[parallel]
+rust-cargo-packages: rust-rustup-release-stable
+    cargo install-update -a
 
-function sysupgrade-help {
-    cat <<-EOF
-Usage: sysupgrade [-h] [-q] [-t TARGET]...
-Options:
-  -h            Show this help message and exit
-  -q            Quiet mode, send notifications instead of printing to terminal
-  -t TARGET     Specify a target to upgrade (can be used multiple times)
-                Available targets: ${SYSUPGRADE_TARGETS[*]}
-                Default: all available targets
-If no targets are specified, all available targets will be upgraded.
-EOF
-    exit 0
-}
+[group("rust")]
+[parallel]
+rust-all: rust-rustup-self rust-rustup-release-stable rust-cargo-packages
 
-function main {
-    local targets=() quiet OPTIN OPTOUT opt
+[group("python")]
+[parallel]
+python-uv-packages:
+    -uv tool upgrade --all
 
-    while getopts "hqt:" opt; do
-        case "$opt" in
-            h)
-                sysupgrade-help
-            ;;
-            t)
-                if [[ ! " ${!SYSUPGRADE_TARGETS[*]} " =~ " ${OPTARG} " ]]; then
-                    fatal "Unknown target: $OPTARG"
-                fi
+[group("python")]
+[parallel]
+python-all: python-uv-packages
 
-                targets+=("$OPTARG")
-            ;;
-            q)
-                quiet=1
-            ;;
-            *) fatal "Invalid option: -$OPTARG";;
-        esac
-    done
+[group("node")]
+[parallel]
+node-pnpm-packages:
+    pnpm update -g
 
+[group("node")]
+[parallel]
+node-all: node-pnpm-packages
 
-    if [[ "${#targets[@]}" -eq 0 ]]; then
-        local target
-        for target in "${!SYSUPGRADE_TARGETS[@]}"; do
-            local command
-            command="${SYSUPGRADE_TARGETS["$target"]}"
-            if command-exists "$command" ; then
-                targets+=("$target")
-            fi
-        done
-    fi
+[group("flatpak")]
+[parallel]
+flatpak-packages:
+    -flatpak update -y
 
-    trap deinit-term EXIT
-    init-term
-    trap draw-progress-bar SIGWINCH
+[group("flatpak")]
+[parallel]
+flatpak-all: flatpak-packages
 
-    local line
-    while read -r line; do
-        case "$line" in
-            +*)
-                local job="${line#+}"
-                STARTED_JOBS["$job"]="$(date +%s)"
-                [[ ${quiet:+x} != x ]] && send-notification "$job" "Started upgrade for ${job}"
-                ;;
-            -*)
-                local job="${line#-}" took
-                FINISHED_JOBS["$job"]="$(date +%s)"
-                took=$(( FINISHED_JOBS["$job"] - STARTED_JOBS["$job"] ))
-                [[ ${quiet:+x} != x ]] && send-notification "$job" "Finished upgrade for ${job} (took ${took}s)"
-                ;;
-            *) printf "%s\n" "$line" ;;
-        esac
-        # We need to connect stdin so progress-bar can read the terminal size
-        draw-progress-bar "${#FINISHED_JOBS[@]}" "${#STARTED_JOBS[@]}" <&1
-    done < <(make -f "$SYSUPGRADE_MAKEFILE" -j "${targets[@]}")
-}
+[group("sysconfig")]
+[parallel]
+sysconfig-demeter:
+    git -C "${DEMETER}" pull origin master --quiet
 
-main "$@"
+[group("sysconfig")]
+[parallel]
+sysconfig-submodules: sysconfig-demeter
+    git -C "${DEMETER}" submodule foreach --recursive git fetch origin --quiet
+    git -C "${DEMETER}" submodule foreach --recursive git checkout FETCH_HEAD --quiet
+
+[group("sysconfig")]
+[parallel]
+sysconfig-all: sysconfig-demeter sysconfig-submodules
