@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+function main {
+	printf "%s\0" "${@:2}" | paste --zero-terminated --serial --delimiters="$1"
+}
+
+main "$@"
