@@ -49,3 +49,5 @@
 	conflictstyle = zdiff3 
 [commit]
 	gpgsign = true
+[color]
+	ui = auto
