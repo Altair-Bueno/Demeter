@@ -10,7 +10,7 @@ from sys import argv, stderr, stdin, stdout
 
 from tomllib import load
 
-_XDG_DATA_HOME = Path(getenv("XDG_DATA_HOME", "~/.config")).expanduser().resolve()
+_XDG_DATA_HOME = Path(getenv("XDG_CONFIG_HOME", "~/.config")).expanduser().resolve()
 SETTINGS_PATH = _XDG_DATA_HOME / "sew.toml"
 
 
