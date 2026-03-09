@@ -6,23 +6,23 @@ all: brew-all rust-all python-all node-all flatpak-all sysconfig-all arch-all
 [group("brew")]
 [parallel]
 brew-update:
-    brew update
+    -brew update
 
 [group("brew")]
 [parallel]
 brew-packages: brew-update
-    brew upgrade
+    -brew upgrade
 
 [group("brew")]
 [parallel]
 brew-casks: brew-update
-    brew upgrade --casks --greedy
+    -brew upgrade --casks --greedy
 
 [group("brew")]
 [parallel]
 brew-all: brew-update brew-casks brew-packages
-    brew cleanup
-    brew bundle dump --global -f
+    -brew cleanup
+    -brew bundle dump --global -f
 
 [group("arch")]
 [parallel]
@@ -64,7 +64,7 @@ python-all: python-uv-packages
 [group("node")]
 [parallel]
 node-pnpm-packages:
-    pnpm update -g
+    -pnpm update -g
 
 [group("node")]
 [parallel]
