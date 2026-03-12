@@ -46,6 +46,7 @@ path=(
     '/opt/homebrew/bin'
     '/opt/homebrew/opt/make/libexec/gnubin'
     # System paths
+    '/Library/Developer/CommandLineTools/usr/bin'
     "${path[@]}"
 )
 
