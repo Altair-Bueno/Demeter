@@ -1,6 +1,7 @@
 font-family = "JetBrainsMonoNL Nerd Font Mono"
 font-size = 14
 theme = Atom One Dark
+background-blur = macos-glass-clear
 background-opacity = 0.85
 macos-titlebar-style = tabs
 macos-shortcuts = allow
