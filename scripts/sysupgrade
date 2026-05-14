@@ -1,25 +1,22 @@
 #!/usr/bin/env -S just --justfile
 
 [default]
+[parallel]
 all: brew-all rust-all python-all node-all flatpak-all sysconfig-all arch-all
 
 [group("brew")]
-[parallel]
 brew-update:
     -brew update
 
 [group("brew")]
-[parallel]
 brew-packages: brew-update
     -brew upgrade
 
 [group("brew")]
-[parallel]
 brew-casks: brew-update
     -brew upgrade --casks --greedy
 
 [group("brew")]
-[parallel]
 brew-all: brew-update brew-casks brew-packages
     -brew cleanup
     -brew bundle dump --global -f
@@ -30,30 +27,25 @@ arch-yay:
     -yay
 
 [group("arch")]
-[parallel]
 arch-all: arch-yay
 
 [group("rust")]
-[parallel]
 rust-rustup-self:
     -rustup self update
 
 [group("rust")]
-[parallel]
 rust-rustup-release-stable: rust-rustup-self
-    rustup update stable
+    -rustup update stable
 
 [group("rust")]
-[parallel]
 rust-cargo-packages: rust-rustup-release-stable
-    cargo install-update -a
+    -cargo install-update -a
 
 [group("rust")]
 [parallel]
 rust-all: rust-rustup-self rust-rustup-release-stable rust-cargo-packages
 
 [group("python")]
-[parallel]
 python-uv-packages:
     -uv tool upgrade --all
 
@@ -62,7 +54,6 @@ python-uv-packages:
 python-all: python-uv-packages
 
 [group("node")]
-[parallel]
 node-pnpm-packages:
     -pnpm update -g
 
@@ -71,7 +62,6 @@ node-pnpm-packages:
 node-all: node-pnpm-packages
 
 [group("flatpak")]
-[parallel]
 flatpak-packages:
     -flatpak update -y
 
@@ -80,12 +70,10 @@ flatpak-packages:
 flatpak-all: flatpak-packages
 
 [group("sysconfig")]
-[parallel]
 sysconfig-demeter:
     git -C "${DEMETER}" pull origin master --quiet
 
 [group("sysconfig")]
-[parallel]
 sysconfig-submodules: sysconfig-demeter
     git -C "${DEMETER}" submodule foreach --recursive git fetch origin --quiet
     git -C "${DEMETER}" submodule foreach --recursive git checkout FETCH_HEAD --quiet
