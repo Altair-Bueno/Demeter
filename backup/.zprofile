@@ -1,6 +1,3 @@
-################################################################################
-# Environment variables
-################################################################################
 export DEMETER="$HOME/Demeter"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -20,14 +17,12 @@ export HOMEBREW_BUNDLE_DUMP_NO_VSCODE=1
 export HOMEBREW_BUNDLE_FILE_GLOBAL="$XDG_DATA_HOME/Brewfile-$(uname)"
 export HOMEBREW_CELLAR="$HOMEBREW_PREFIX/Cellar"
 export HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX"
+export HOMEBREW_NO_ASK=1
 export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}"
 export FNM_PATH="$HOME/.config/fnm"
 export FNM_COREPACK_ENABLED="true"
 export MINICOM='-c on'
-
-################################################################################
-# SDKs
-################################################################################
+export SDKROOT=$(xcrun --show-sdk-path)
 
 path=(
     # Altra corporación (Airzone)
@@ -45,6 +40,7 @@ path=(
     # Homebrew
     '/opt/homebrew/bin'
     '/opt/homebrew/opt/make/libexec/gnubin'
+    '/opt/homebrew/opt/rustup/bin'
     # System paths
     '/Library/Developer/CommandLineTools/usr/bin'
     "${path[@]}"

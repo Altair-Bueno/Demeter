@@ -1,0 +1,9 @@
+{
+  "trustedtaps": [
+    "narugit/tap",
+    "socktainer/tap",
+    "tako8ki/tap",
+    "terror/tap",
+    "veeso/termscp"
+  ]
+}
