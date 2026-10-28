@@ -22,7 +22,7 @@ export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}"
 export FNM_PATH="$HOME/.config/fnm"
 export FNM_COREPACK_ENABLED="true"
 export MINICOM='-c on'
-export SDKROOT=$(xcrun --show-sdk-path)
+(( $+commands[xcrun] )) && export SDKROOT=$(xcrun --show-sdk-path)
 
 path=(
     # Altra corporación (Airzone)
@@ -43,6 +43,7 @@ path=(
     '/opt/homebrew/opt/rustup/bin'
     # System paths
     '/Library/Developer/CommandLineTools/usr/bin'
+    /usr/lib/llvm-22/bin
     "${path[@]}"
 )
 
