@@ -71,5 +71,3 @@ eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 eval "$(just --completions zsh)"
 eval "$(uv generate-shell-completion zsh)"
-
-. "$HOME/.local/share/../bin/env"
