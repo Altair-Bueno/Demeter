@@ -5,5 +5,8 @@
     "tako8ki/tap",
     "terror/tap",
     "veeso/termscp"
+  ],
+  "trustedformulae": [
+    "rtk-ai/tap/icm"
   ]
 }
