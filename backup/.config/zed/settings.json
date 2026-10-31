@@ -54,7 +54,6 @@
     "threads_sidebar": {
       "position": "right"
     },
-    "sidebar_side": "right",
     "use_modifier_to_send": true,
     "terminal_init_command": "",
     "tool_permissions": {
@@ -128,15 +127,6 @@
   },
   "remove_trailing_whitespace_on_save": false,
   "ensure_final_newline_on_save": false,
-  "context_servers": {
-    "icm": {
-      "command": "/home/abueno@airzonesl.es/.local/bin/icm",
-      "args": [
-        "serve"
-      ],
-      "env": {}
-    }
-  },
   "git_hosting_providers": [
     {
       "provider": "gitlab",
@@ -178,7 +168,21 @@
   },
   "buffer_font_size": 14.0,
   "lsp": {
+    "clangd": {
+      "binary": {
+        "path": "/Library/Developer/CommandLineTools/usr/bin/clangd",
+      },
+    },
+    "ruff": {
+      "binary": {
+        "path": "/opt/homebrew/bin/ruff",
+        "arguments": ["server"],
+      },
+    },
     "rust-analyzer": {
+      "binary": {
+        "path": "/opt/homebrew/opt/rustup/bin/rust-analyzer",
+      },
       "initialization_options": {
         "imports": {
           "granularity": {
