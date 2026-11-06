@@ -151,7 +151,7 @@
       "default_config_options": {
         "ultracode": false,
         "fast": false,
-        "model": "opus[1m]",
+        "model": "opus",
         "mode": "bypassPermissions"
       },
       "type": "registry"

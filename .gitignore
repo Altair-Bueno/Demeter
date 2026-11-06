@@ -8,3 +8,6 @@ backup/bin
 # IDE
 .vscode
 .idea
+
+# Mole cleanup preview (generated)
+**/mole/clean-list.txt
