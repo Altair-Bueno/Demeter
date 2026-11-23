@@ -1,0 +1,6 @@
+[extraction]
+enabled = false
+
+[consolidate.summarizer]
+provider = "claude"
+timeout_secs = 300

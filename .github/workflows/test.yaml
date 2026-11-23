@@ -18,5 +18,5 @@ jobs:
         run: |
           test -d $HOME/Demeter
           test -f $HOME/.zshrc
-          test -f $HOME/.zshenv
+          test -f $HOME/.zprofile
           cat $HOME/.gitconfig | grep "67512202+Altair-Bueno@users.noreply.github.com"

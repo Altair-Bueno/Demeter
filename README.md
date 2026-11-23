@@ -1,9 +1,9 @@
 # Demeter
 
-Demeter is a backup git repository that contains config files on my current
-macOS environment. Although all files were created using macOS commandline
-utilities, they should work fine with any standard UNIX-like system that uses
-`zsh` as it's default shell.
+Demeter is a backup git repository that contains the config files of my macOS
+and Linux environments. `backup/` is symlinked into `$HOME`, so `~/.config`
+lives inside this repository; `backup/.config/.gitignore` is an allowlist of
+the configs worth tracking.
 
 ## Requisites
 
@@ -14,7 +14,6 @@ utilities, they should work fine with any standard UNIX-like system that uses
     [Gnome Keyring`](https://wiki.archlinux.org/title/GNOME/Keyring)
 - macOS: xcode tools will be automatically installed. No need to do anything
   other than upgrading the system.
-- Windows: ...
 
 ## Restore
 

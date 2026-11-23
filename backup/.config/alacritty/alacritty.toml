@@ -1,4 +1,4 @@
-import = ["/home/compux72/Demeter/submodules/alacritty-theme/themes/one_dark.toml"]
+import = ["~/Demeter/submodules/alacritty-theme/themes/one_dark.toml"]
 
 [shell]
 program = "zsh"

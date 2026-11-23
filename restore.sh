@@ -1,16 +1,10 @@
 #!/bin/zsh
 
 ###############################################################################
-# Restore 1.0                                                                 #
 # Altair Bueno MIT license                                                    #
 # https://github.com/Altair-Bueno/Demeter                                     #
 #                                                                             #
-# This script will only setup the symlinks required for commandline utilities #
-# such as vim, git or zsh. For some utilities, you may need some extra        #
-# configuration, specially if the target system is not macOS (eg: setting zsh #
-# as the default shell)                                                       #
-#                                                                             #
-# To see the full list of installed utilities, see [README.md](README.md)     #
+# Clones Demeter and symlinks its configs into $HOME on macOS and Linux.      #
 ###############################################################################
 
 ###############################################################################
@@ -80,12 +74,6 @@ function setup_linux {
 	ln -nfs "$DEMETER/linux/.gitconfig" "$HOME/.gitconfig"
 }
 
-function setup_freebsd {
-	# FreeBSD specific config
-	rm "$HOME/.gitconfig"
-	ln -nfs "$DEMETER/bsd/.gitconfig" "$HOME/.gitconfig"
-}
-
 ###############################################################################
 # Script
 preamble
@@ -98,9 +86,6 @@ case $(uname) in
     ;;
   'Linux')
     setup_linux
-    ;;
-  'FreeBSD')
-    setup_freebsd
     ;;
 esac
 
